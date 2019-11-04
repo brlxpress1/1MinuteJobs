@@ -342,7 +342,7 @@ public class Job_Seeker_Login extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Job_Seeker_Login.this, "Server error,please check your internet connection 2!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(Job_Seeker_Login.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         // hideLoadingBar();
                         Log.d(TAG,String.valueOf(error));

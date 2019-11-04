@@ -1207,7 +1207,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
 
-                        finish();
+                        finishAffinity();
                     }
                 })
                 .setNegativeText("Cancel")

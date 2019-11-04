@@ -2,6 +2,8 @@ package com.brl.oneminutejobs;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +13,14 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.brl.oneminutejobs.company.Company_Dashboard;
@@ -31,98 +40,58 @@ public class Splash extends AppCompatActivity {
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
     private String TAG = "Splash";
-    private FirebaseRemoteConfig firebaseRemoteConfig;
+    private DatabaseReference mDatabase;
+    private String versionCodeFromFirebase = "";
+    private String serverURLFromFirebase = "";
+    private int increaser = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setConfigSettings(new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(true)
-                .build());
 
-                 String tempS = firebaseRemoteConfig.getString("master_server_url");
-            Log.d("5555","Master server url : "+tempS);
-                */
 
 
         setContentView(R.layout.activity_splash);
 
+
         if (Connectivity.isConnected(Splash.this)) {
 
+            //--
 
-
-           // firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-
-
-
-
-
-
-
-
+            Log.d(TAG,"--------- Working ----------");
 
             //--
-            SharedPreferences prefs1 = getSharedPreferences("UserType", MODE_PRIVATE);
-            int userType = prefs1.getInt("type", 0);
-            Log.d(TAG,"Logging with user type : "+ String.valueOf(userType));
+            // Get a reference to our posts
+            DatabaseReference ref=
+                    FirebaseDatabase.getInstance().getReference();
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
 
-            if(userType == 1){
+                        serverURLFromFirebase = dataSnapshot.child("version").child("app_data").child("server_url").getValue().toString();
+                        versionCodeFromFirebase = dataSnapshot.child("version").child("app_data").child("version_code").getValue().toString();
 
-                //--
-                SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
-                String userIdLocal = prefs.getString("userid", "");
-                Log.d(TAG,userIdLocal);
+                        ConstantsHolder.rawServer = serverURLFromFirebase;
 
-                if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
-
-                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_SearchBoard.class);
-                    startActivity(openJobSeekerSignUp);
-                    finish();
-
-                }else {
-
-                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_Signup_1.class);
-                    startActivity(openJobSeekerSignUp);
-                    finish();
-                }
-                //-------------
-
-            }else if(userType == 2){
-
-                //--
-                SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-                String userIdLocal = prefs.getString("userid", "");
-                Log.d(TAG,userIdLocal);
-
-                if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
-
-                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Modified_Dashboard.class);
-                    startActivity(openJobSeekerSignUp);
-                    finish();
-
-                }else {
-
-                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Verify_1.class);
-                    startActivity(openJobSeekerSignUp);
-                    finish();
-                }
-                //-------------
-
-            }else {
+                        int versionCode = BuildConfig.VERSION_CODE;
+                        String versionCodeString =  String.valueOf(versionCode);
+                        if(versionCodeFromFirebase.equalsIgnoreCase(versionCodeString)){
 
 
-                Intent openJobSeekerSignUp = new Intent(Splash.this, Intro.class);
-                startActivity(openJobSeekerSignUp);
-                finish();
+                            //---
 
-            }
+                            //----------------------
 
 
-            //------------
+
+
+
+
+
+                            // firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
 
 
@@ -132,12 +101,115 @@ public class Splash extends AppCompatActivity {
 
 
 
+                            //--
+                            SharedPreferences prefs1 = getSharedPreferences("UserType", MODE_PRIVATE);
+                            int userType = prefs1.getInt("type", 0);
+                            Log.d(TAG,"Logging with user type : "+ String.valueOf(userType));
+
+                            if(userType == 1){
+
+                                //--
+                                SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+                                String userIdLocal = prefs.getString("userid", "");
+                                Log.d(TAG,userIdLocal);
+
+                                if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
+
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_SearchBoard.class);
+                                    startActivity(openJobSeekerSignUp);
+                                    finish();
+
+                                }else {
+
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_Signup_1.class);
+                                    startActivity(openJobSeekerSignUp);
+                                    finish();
+                                }
+                                //-------------
+
+                            }else if(userType == 2){
+
+                                //--
+                                SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+                                String userIdLocal = prefs.getString("userid", "");
+                                Log.d(TAG,userIdLocal);
+
+                                if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
+
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Modified_Dashboard.class);
+                                    startActivity(openJobSeekerSignUp);
+                                    finish();
+
+                                }else {
+
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Verify_1.class);
+                                    startActivity(openJobSeekerSignUp);
+                                    finish();
+                                }
+                                //-------------
+
+                            }else {
+
+
+                                Intent openJobSeekerSignUp = new Intent(Splash.this, Intro.class);
+                                startActivity(openJobSeekerSignUp);
+                                finish();
+
+                            }
+
+
+                            //------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            //-------------------
+
+
+
+                        }else{
+
+                            showUpdateDialogue();
+
+                        }
+
+
+                        Log.d(TAG,serverURLFromFirebase+"-----------------------------"+versionCodeFromFirebase+"------------------- Current : "+versionCodeString);
+                    }
+                }//onDataChange
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }//onCancelled
+            });
+
+
+            //---------------------
         } else {
 
-            //Toasty.error(Splash.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
-            showErrorDialogue();
+        //Toasty.error(Splash.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+        showErrorDialogue();
 
-        }
+    }
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -161,6 +233,51 @@ public class Splash extends AppCompatActivity {
             }
             })
                 .show();
+    }
+
+    public void showUpdateDialogue(){
+
+        new MaterialStyledDialog.Builder(this)
+                .setIcon(R.drawable.update_icon)
+                .setHeaderColor(R.color.infoColor)
+                .setTitle("Update available!")
+                .setDescription("New version is available to download. Press update button.")
+                .setPositiveText("Update")
+                .setCancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        openAppInPlayStore();
+                    }
+                })
+                .show();
+    }
+
+    public void openAppInPlayStore(){
+
+        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(increaser > 0){
+
+            Intent openAgain = new Intent(Splash.this,Splash.class);
+            startActivity(openAgain);
+            finish();
+        }
+        increaser++;
+/*
+
+        */
     }
 }
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -34,6 +35,7 @@ public class Intro extends AppCompatActivity {
     private Button hire_now;
     private Button find_job;
     private boolean isConnectedToNet;
+    private TextView app_version_txt;
 
 
 
@@ -45,6 +47,10 @@ public class Intro extends AppCompatActivity {
 
         hire_now = (Button) findViewById(R.id.hire_now_button);
         find_job = (Button) findViewById(R.id.find_job_button);
+        app_version_txt = (TextView)findViewById(R.id.app_version);
+
+
+        app_version_txt.setText("Version : "+BuildConfig.VERSION_NAME);
 
         //-- other call
 

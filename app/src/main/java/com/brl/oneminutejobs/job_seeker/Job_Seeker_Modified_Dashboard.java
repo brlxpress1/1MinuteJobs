@@ -436,7 +436,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
 
-                        finish();
+                        finishAffinity();
                     }
                 })
                 .setNegativeText("Cancel")

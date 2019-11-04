@@ -360,7 +360,7 @@ public class Employee_Details extends AppCompatActivity {
                 Log.e("Error: ", e.getMessage());
             }
 
-            return "Something went wrong";
+            return "Resume is not uploaded yet!";
         }
 
         /**

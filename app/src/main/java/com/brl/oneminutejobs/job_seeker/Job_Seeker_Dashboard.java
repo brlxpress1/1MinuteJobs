@@ -2794,7 +2794,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                 Log.e("Error: ", e.getMessage());
             }
 
-            return "Something went wrong";
+            return "Resume is not uploaded yet!";
         }
 
         /**
