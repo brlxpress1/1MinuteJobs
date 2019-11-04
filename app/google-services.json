@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "106677075847",
+    "firebase_url": "https://minutejobs-ae366.firebaseio.com",
+    "project_id": "minutejobs-ae366",
+    "storage_bucket": "minutejobs-ae366.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106677075847:android:b9ccdd2a7afaf44ff95d22",
+        "android_client_info": {
+          "package_name": "com.brl.oneminutejobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106677075847-j9bp84gi5hkkmsh63geqpam2bp07fo60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brl.oneminutejobs",
+            "certificate_hash": "8b45321b6e7317c13d7062b1a5e9e1adc88869b6"
+          }
+        },
+        {
+          "client_id": "106677075847-go7jnkiperd5j62mdbdondlhg9082oj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLR3h5M5FrpjF2aGKyEBkwiH92xXuPE1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106677075847-go7jnkiperd5j62mdbdondlhg9082oj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
