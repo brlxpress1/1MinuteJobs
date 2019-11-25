@@ -31,5 +31,9 @@ public class ConstantsHolder {
     public static String directoryName = "oneminutejob";
 
 
+    public static String createJobPost = "createJobPost";
+    public static String findUserAllJobPost = "findUserAllJobPost";
+
+
 
 }

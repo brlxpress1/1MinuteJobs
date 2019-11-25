@@ -52,6 +52,37 @@
 
     </string-array>
 
+
+
+
+    <string-array name="job_type__array">
+
+        <item>Office</item>
+        <item>Remote</item>
+
+
+    </string-array>
+
+
+    <string-array name="job_time__array">
+
+        <item>Full-time</item>
+        <item>Part-time</item>
+
+
+    </string-array>
+
+
+    <string name="catagory_prompt">Please select a category</string>
+    <string-array name="catagory_array">
+
+        <item>IT/Telecommunication</item>
+        <item>Marketing</item>
+        <item>Other</item>
+
+    </string-array>
+
+
     <string-array name="prepared_location">
 
         <item>Dhanmondi</item>
@@ -61,6 +92,9 @@
         <item>Puran Dhaka</item>
 
     </string-array>
+
+
+    <string name="applicant_list"><font fgcolor='#0000FF'><u>Applicant List</u></font></string>
 
 
 </resources>
