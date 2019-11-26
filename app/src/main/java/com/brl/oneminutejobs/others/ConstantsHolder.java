@@ -34,6 +34,9 @@ public class ConstantsHolder {
     public static String createJobPost = "createJobPost";
     public static String findUserAllJobPost = "findUserAllJobPost";
     public static String setPostPriority = "setPostPriority";
+    public static String postStatusUpdate = "postStatusUpdate";
+    public static String updateJobPost = "updateJobPost";
+
 
 
 

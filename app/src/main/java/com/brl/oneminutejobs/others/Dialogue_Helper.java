@@ -653,7 +653,7 @@ public class Dialogue_Helper {
     }
 
     //-- Showing prepered location input
-    public void job_post_popup(Context ct, int pos, Company_Fetch_All_Jobs company_fetch_all_jobs,int priority) {
+    public void job_post_popup(Context ct, int id, Company_Fetch_All_Jobs company_fetch_all_jobs,int priority,int position) {
 
 
 
@@ -673,7 +673,7 @@ public class Dialogue_Helper {
         final Button edit_post = (Button) promptsView
                 .findViewById(R.id.edit_post);
 
-        final Button input_name = (Button) promptsView
+        final Button delete_post = (Button) promptsView
                 .findViewById(R.id.delete_post);
 
 
@@ -696,17 +696,43 @@ public class Dialogue_Helper {
 
                 if(priority > 0){
 
-                    setFavourite(pos,0,ct,company_fetch_all_jobs);
+                    setFavourite(id,0,ct,company_fetch_all_jobs);
 
                 }else{
 
-                    setFavourite(pos,1,ct,company_fetch_all_jobs);
+                    setFavourite(id,1,ct,company_fetch_all_jobs);
 
                 }
 
 
             }
         });
+
+        edit_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                company_fetch_all_jobs.openEditWindow(id,position);
+               // Toasty.success(ct,String.valueOf(position),Toasty.LENGTH_LONG,true).show();
+
+
+            }
+        });
+
+
+        delete_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                setStatus(id,0,ct,company_fetch_all_jobs);
+
+
+            }
+        });
+
+
 
 
 
@@ -872,6 +898,92 @@ public class Dialogue_Helper {
 
 
         dialog.dismiss();
+
+    }
+
+    public void setStatus(int postID, int statusMod, Context ct, Company_Fetch_All_Jobs company_fetch_all_jobs){
+
+
+        showLoadingBarAlert(ct);
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("postId", postID);
+            parameters.put("postStaus", 0);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(ct);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+                        hideLoadingBar();
+
+                        int status = response.optInt("status");
+
+                        if(status == 200){
+
+                            Toasty.success(ct, "Post deleted successfully!", Toast.LENGTH_LONG, true).show();
+
+
+                            Intent reload = new Intent(ct,Company_Fetch_All_Jobs.class);
+                            ct.startActivity(reload);
+                            company_fetch_all_jobs.finishThis();
+
+                        }else{
+
+                            Toasty.error(ct, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(ct, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
 
     }
 

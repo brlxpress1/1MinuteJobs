@@ -2,20 +2,29 @@ package com.brl.oneminutejobs.company;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CpuUsageInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -31,7 +40,10 @@ import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.database.DatabaseReference;
+import com.ybs.countrypicker.CountryPicker;
+import com.ybs.countrypicker.CountryPickerListener;
 
 
 import org.json.JSONArray;
@@ -41,14 +53,16 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class Company_Fetch_All_Jobs extends AppCompatActivity {
+public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
@@ -120,7 +134,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     ArrayList<Integer> server_job_category_temp = new ArrayList<Integer>();
     ArrayList<Integer> server_job_priority_temp = new ArrayList<Integer>();
 
-    private LinearLayout detailsPanel;
+
 
     private TextView titleShow;
     private TextView descriptionShow;
@@ -136,6 +150,54 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     private ScrollView detailedScroll;
 
     private Button closeButton;
+
+    //--------------------
+
+    private EditText job_title;
+    private  EditText job_description;
+    private EditText job_qualification;
+
+    private Spinner job_type;
+    private ImageView job_type_opener;
+
+    private EditText job_vacancies;
+
+    private Spinner job_time;
+    private ImageView job_time_opener;
+
+    private EditText job_salary;
+
+    private EditText job_location;
+    private ImageView job_location_opener;
+
+    private EditText job_deadline;
+    private ImageView job_deadline_opener;
+
+    private Spinner job_catagory;
+    private ImageView job_catagory_opener;
+
+    private Button job_post_button;
+
+    CountryPicker picker;
+
+
+   //-------------------------
+    private int temp_id = 0;
+    private int temp_priority = 0;
+    private int temp_position = 0;
+
+    private LinearLayout popup_button_panel;
+    private LinearLayout postEditPanel;
+    private LinearLayout detailsPanel;
+    private LinearLayout listViewPanel;
+    //-----------------------------
+
+    private Button favouriteButton;
+    private Button editPostButton;
+    private Button deletePostButton;
+    private Button closePopupButton;
+
+    private int backButtonValue = 1;
 
 
 
@@ -155,7 +217,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
         expired_job_button = (Button)findViewById(R.id.expired_job_button);
 
 
-        detailsPanel = (LinearLayout)findViewById(R.id.detailsPanel);
+
         titleShow = (TextView)findViewById(R.id.titleshow);
         descriptionShow = (TextView)findViewById(R.id.descriptionshow);
         qualificationShow = (TextView)findViewById(R.id.qualificationShow);
@@ -169,8 +231,58 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
         closeButton = (Button)findViewById(R.id.closeButton);
         detailedScroll = (ScrollView)findViewById(R.id.detailedScroll);
 
+        popup_button_panel = (LinearLayout)findViewById(R.id.popup_button_panel);
+        listViewPanel = (LinearLayout)findViewById(R.id.listViewPanel);
+        detailsPanel = (LinearLayout)findViewById(R.id.detailsPanel);
+        postEditPanel = (LinearLayout)findViewById(R.id.editJobPostPanel);
 
-        detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+
+
+
+
+        //--
+
+
+        picker = CountryPicker.newInstance("Select Location");
+
+        job_title = (EditText)findViewById(R.id.job_title);
+        job_description = (EditText)findViewById(R.id.job_description);;
+        job_qualification = (EditText)findViewById(R.id.job_qualification);;
+
+        job_type = (Spinner)findViewById(R.id.job_type);;
+        job_type_opener = (ImageView)findViewById(R.id.job_type_opener);;
+
+        job_vacancies = (EditText)findViewById(R.id.job_vavacies);;
+
+        job_time = (Spinner)findViewById(R.id.job_time);;
+        job_time_opener = (ImageView)findViewById(R.id.job_time_opener);;
+
+        job_salary = (EditText)findViewById(R.id.job_salary);
+
+        job_location = (EditText)findViewById(R.id.job_location);
+        job_location_opener = (ImageView)findViewById(R.id.job_location_opener);
+
+        job_deadline = (EditText) findViewById(R.id.job_deadline);;
+        job_deadline_opener = (ImageView)findViewById(R.id.job_deadline_opener);;
+
+        job_catagory = (Spinner)findViewById(R.id.job_catagory);;
+        job_catagory_opener = (ImageView)findViewById(R.id.job_catagory_opener);;
+
+        job_post_button = (Button)findViewById(R.id.job_post_button);
+
+
+
+
+
+
+        favouriteButton = (Button)findViewById(R.id.favourite_post);
+        editPostButton = (Button)findViewById(R.id.edit_post);
+        deletePostButton = (Button)findViewById(R.id.delete_post);
+        closePopupButton= (Button)findViewById(R.id.close_popup);
+
+
+        showLayout(4);//turzo
+        //-----------
 
         fetch_all_jobs(1);
 
@@ -189,7 +301,11 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                    all_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                     current_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                     expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+
+
                     all_job_list.smoothScrollToPosition(0);
+                    current_job_list.smoothScrollToPosition(0);
+                    expired_job_list.smoothScrollToPosition(0);
 
                 }else{
 
@@ -210,7 +326,11 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                    all_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    current_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                    expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+
+
+                    all_job_list.smoothScrollToPosition(0);
                     current_job_list.smoothScrollToPosition(0);
+                    expired_job_list.smoothScrollToPosition(0);
 
                 }else{
 
@@ -231,6 +351,10 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                     all_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    current_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+
+                    all_job_list.smoothScrollToPosition(0);
+                    current_job_list.smoothScrollToPosition(0);
                     expired_job_list.smoothScrollToPosition(0);
 
                 }else{
@@ -247,11 +371,311 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
 
                 closeButton.startAnimation(buttonClick);
 
-                detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                //detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                // detailsPanel.setVisibility(View.GONE);
+                showLayout(4);
 
             }
         });
+
+
+//------------------------------------------------------------------
+        picker.setListener(new CountryPickerListener() {
+            @Override
+            public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+
+                job_location.setText(name);
+                picker.dismiss();
+            }
+        });
+
+
+
+
+        job_type_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                job_type_opener.startAnimation(buttonClick);
+                job_type.startAnimation(buttonClick);
+
+                job_type.performClick();
+
+
+            }
+        });
+
+        job_location_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+
+            }
+        });
+
+        job_deadline_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                showDatePickerDialog();
+
+            }
+        });
+
+        //--
+        job_post_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                boolean titleFlag = false;
+                boolean descriptionFlag = false;
+                boolean educationalQualificationFlag = false;
+                boolean jobTypeFlag = false;
+                boolean vacancyFlag = false;
+                boolean timeFlag = false;
+                boolean salaryFlag = false;
+                boolean locationFlag = false;
+                boolean deadlineFlag = false;
+                boolean catagoryFlag = false;
+
+
+                String titleTxt = job_title.getText().toString();
+                String descriptionTxt = job_description.getText().toString();
+                String educationalQualificationTxt = job_qualification.getText().toString();
+                String jobTypeTxt = job_type.getSelectedItem().toString();
+                String vacancyTxt = job_vacancies.getText().toString();
+                String timeTxt = job_time.getSelectedItem().toString();
+                String salaryTxt = job_salary.getText().toString();
+                String locationTxt = job_location.getText().toString();
+                String deadlineTxt = job_deadline.getText().toString();
+                int catagoryTxt = job_catagory.getSelectedItemPosition();
+
+
+
+                //--
+                if(titleTxt.equalsIgnoreCase("")){
+
+                    titleFlag = false;
+                }else{
+                    titleFlag = true;
+                }
+
+                //--
+                if(descriptionTxt .equalsIgnoreCase("")){
+                    descriptionFlag = false;
+                }else{
+                    descriptionFlag = true;
+                }
+
+                //--
+                if(educationalQualificationTxt.equalsIgnoreCase("")){
+                    educationalQualificationFlag = false;
+                }else {
+                    educationalQualificationFlag = true;
+                }
+
+
+                //--
+                if(vacancyTxt.equalsIgnoreCase("")){
+                    vacancyFlag = false;
+                }else{
+                    vacancyFlag = true;
+                }
+
+                //--
+                if(locationTxt .equalsIgnoreCase("")){
+
+                    locationFlag = false;
+
+                }else{
+
+                    locationFlag = true;
+                }
+
+                //--
+                if(deadlineTxt .equalsIgnoreCase("")){
+                    deadlineFlag = false;
+                }else{
+                    deadlineFlag = true;
+                }
+
+                int jobTypeValue = 0;
+                int jobTimeValue = 0;
+                float jobSalaryValue = 0.0f;
+                int vacancyVlue = 0;
+
+                //--
+
+                if(jobTypeTxt.equalsIgnoreCase("office")){
+
+                    jobTypeValue = 1;
+
+                }else if(jobTypeTxt.equalsIgnoreCase("remote")){
+
+                    jobTypeValue = 2;
+
+                }
+
+
+
+                if(timeTxt.equalsIgnoreCase("full-time")){
+
+                    jobTimeValue = 1;
+
+                }else if(timeTxt.equalsIgnoreCase("part-time")){
+
+                    jobTimeValue = 2;
+
+                }
+
+
+                if(vacancyTxt.equalsIgnoreCase("")){
+
+
+                }else{
+
+                    vacancyVlue = Integer.parseInt(vacancyTxt);
+                }
+
+                //--
+                if(salaryTxt.equalsIgnoreCase("")){
+
+
+                }else{
+
+                    jobSalaryValue = Float.parseFloat(salaryTxt);
+                }
+
+
+
+
+
+
+                if(titleFlag && descriptionFlag && educationalQualificationFlag && vacancyFlag && locationFlag && deadlineFlag){
+
+                    // to do
+                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_LONG,true).show();
+
+                    editJobPost(temp_id,titleTxt,descriptionTxt,educationalQualificationTxt,jobTypeValue,vacancyVlue,jobTimeValue,jobSalaryValue,locationTxt,deadlineTxt,catagoryTxt,temp_priority);
+
+
+                }else{
+
+                    String msg = "";
+
+                    if(!titleFlag){
+
+                        msg = msg + "- Please type a Title for this job."+"\n\n";
+                    }
+
+                    if(!descriptionFlag){
+
+                        msg = msg + "- Add a description."+"\n\n";
+                    }
+
+                    if(!educationalQualificationFlag){
+
+                        msg = msg + "- Add required educational qualification for this job."+"\n\n";
+                    }
+
+                    if(!vacancyFlag){
+
+                        msg = msg + "- Add how many number of employees do you want."+"\n\n";
+                    }
+
+                    /*
+
+                    if(!salaryFlag){
+
+                        msg = msg + "- Enter the amount of salary for this job post."+"\n\n";
+                    }
+                    */
+
+
+                    if(!locationFlag){
+
+                        msg = msg + "- Select your preferred location to find the employees."+"\n\n";
+                    }
+
+                    showErrortDialogue(msg);
+
+
+
+
+
+                }
+
+
+
+                //------------------
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+        //---------------------
+
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if(temp_priority > 0){
+
+                    setFavourite(temp_id,0);
+
+                }else{
+
+                    setFavourite(temp_id,1);
+                }
+
+            }
+        });
+
+        editPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                showLayout(2);//turzo
+                openEditWindow(temp_id,temp_position);
+
+            }
+        });
+
+        deletePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                setStatus(temp_id);
+
+            }
+        });
+
+        closePopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                showLayout(4);
+
+            }
+        });
+
+
+        //------------------------------------------------------------- End of oncreate function
+        //--------------------------------------------------------------
 
 
     }
@@ -592,7 +1016,9 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
 
 public void openDetailsWindow(int postID){
 
+    backButtonValue = 1;
 
+        showLayout(3);
 
         titleShow.setText(server_job_title.get(postID));
         descriptionShow.setText(furnishedString(server_job_description.get(postID)));
@@ -706,7 +1132,448 @@ public void finishThis(){
 }
 
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        //String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
+        // String date2 = dayOfMonth+"-"+month+"-"+year;
+
+        String day1 = completeNumber(dayOfMonth);
+        String month1 = completeNumber(month+1);
+
+        String niceFormat = day1+"-"+month1+"-"+year;
+
+        job_deadline.setText(niceFormat);
+
+        //-- update date api
+        //UpdateUserBirthdate(Integer.parseInt(userIdLocal),1,String.valueOf(dayOfMonth),String.valueOf(month),String.valueOf(year));
+
+    }
+
+    private String completeNumber(int data){
+        String temp = "";
+        if(data < 10 ){
+
+            temp = "0"+String.valueOf(data);
+        }else {
+
+            temp = String.valueOf(data);
+        }
+
+        return temp;
+    }
+
+    //-- edit job post
+    // this method will store the info of user to  database
+    private void editJobPost(int idP,String titleP,String descriptionP,String qualificationP,int jobTypeP,int vacancyP,int timeP,float salaryP, String locationP,String deadlineP,int catagoryP,int priority) {
+
+
+        showLoadingBarAlert();
+
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+
+
+            parameters.put("id", idP);
+            parameters.put("title", titleP);
+            parameters.put("description", descriptionP);
+            parameters.put("educationQualification",qualificationP);
+            parameters.put("jobTypeId", jobTypeP);
+            parameters.put("noOfOpening", vacancyP);
+            parameters.put("salary", salaryP);
+            parameters.put("location", locationP);
+            parameters.put("deadLine", deadlineP);
+            parameters.put("category", catagoryP);
+            parameters.put("priority", priority);
+            parameters.put("status", 1);
+           // parameters.put("creator", 1);
+            //parameters.put("applicantList", applicantList);
+            Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.updateJobPost, parameters, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+
+                        String status =response.optString("status");
+
+                        if(status.equalsIgnoreCase("200")){
+
+                            Toasty.success(Company_Fetch_All_Jobs.this,"Job edited successfully",Toasty.LENGTH_LONG,true).show();
+
+
+                        }else{
+
+                            Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
+                        }
+
+                        hideLoadingBar();
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+
+    }
+
+    public void showErrortDialogue(String msg){
+
+        new MaterialStyledDialog.Builder(this)
+                .setIcon(R.drawable.error_custom)
+                .setHeaderColor(R.color.error_red)
+                .setTitle("Error")
+                .setDescription(msg)
+
+                .setCancelable(false)
+                .setPositiveText("OK")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+
+
+                    }
+                })
+
+                .show();
+    }
+
+    public void openEditWindow(int id, int position){
+
+        //Toasty.info(this,server_job_title.get(position),Toasty.LENGTH_LONG,true).show();
+        backButtonValue = 1;
+
+        job_title.setText(server_job_title.get(position));
+        job_description.setText(furnishedString(server_job_description.get(position)));
+        job_qualification.setText(furnishedString(server_job_qualification.get(position)));
+
+        //job_type = (Spinner)findViewById(R.id.job_type);;
+        //job_type_opener = (ImageView)findViewById(R.id.job_type_opener);;
+
+        job_vacancies.setText(String.valueOf(server_job_noOfOpening.get(position)));
+
+        //job_time = (Spinner)findViewById(R.id.job_time);;
+        //job_time_opener = (ImageView)findViewById(R.id.job_time_opener);;
+
+        job_salary.setText(String.valueOf(String.valueOf(server_job_salary.get(position))));
+
+        job_location.setText(server_job_location.get(position));
+        //job_location_opener = (ImageView)findViewById(R.id.job_location_opener);
+
+        job_deadline.setText(String.valueOf(server_job_deadline.get(position)));
+        //job_deadline_opener = (ImageView)findViewById(R.id.job_deadline_opener);;
+
+        //job_catagory = (Spinner)findViewById(R.id.job_catagory);;
+        //job_catagory_opener = (ImageView)findViewById(R.id.job_catagory_opener);
+
+        postEditPanel.setVisibility(View.VISIBLE);
+        temp_id = id;
+
+    }
+
+
+    public void showDatePickerDialog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    private void showLayout(int i){
+
+
+        popup_button_panel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        postEditPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        listViewPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        //Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(i),Toasty.LENGTH_LONG).show();
+
+
+        if(i == 1){
+
+            popup_button_panel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));//turzo
+
+        }else if(i == 2){
+
+            postEditPanel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        }else if(i == 3){
+
+            detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        }else if(i == 4){
+
+            listViewPanel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        }else{
+
+            listViewPanel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }
+    }
+
+    public void showPopUp(int id, int position, int priority){
+
+        backButtonValue = 1;
+
+        if(priority > 0){
+
+            favouriteButton.setText("Remove from favourite");
+
+        }else{
+
+            favouriteButton.setText("Save to Favourite");
+
+        }
+
+
+        temp_id = id;
+        temp_priority = priority;
+        temp_position = position;
+        showLayout(1);
+    }
+
+    public void setFavourite(int postID, int priorityStatus){
+
+
+        showLoadingBarAlert();
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("postId", postID);
+            parameters.put("postStaus", priorityStatus);
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+                        hideLoadingBar();
+
+                        int status = response.optInt("status");
+
+                        if(status == 200){
+
+                            if(priorityStatus > 0){
+                                Toasty.success(Company_Fetch_All_Jobs.this, "Post added to your favourite list!", Toast.LENGTH_LONG, true).show();
+                            }else{
+                                Toasty.success(Company_Fetch_All_Jobs.this, "Post removed from your favourite list!", Toast.LENGTH_LONG, true).show();
+                            }
+
+
+                            Intent reload = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            startActivity(reload);
+                            finish();
+
+                        }else{
+
+                            Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
+
+    }
+
+    public void setStatus(int postID){
+
+
+        showLoadingBarAlert();
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("postId", postID);
+            parameters.put("postStaus", 0);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+                        hideLoadingBar();
+
+                        int status = response.optInt("status");
+
+                        if(status == 200){
+
+                            Toasty.success(Company_Fetch_All_Jobs.this, "Post deleted successfully!", Toast.LENGTH_LONG, true).show();
+
+
+                            Intent reload = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            startActivity(reload);
+                            finish();
+
+                        }else{
+
+                            Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
+
+    }
+
+
 
 
     //----------------
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+       // Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(backButtonValue),Toasty.LENGTH_LONG,false).show();
+        //backButtonValue--;
+        if(backButtonValue == 1){
+            showLayout(4);
+            backButtonValue  = 0;
+        }else{
+
+            finish();
+        }
+    }
 }

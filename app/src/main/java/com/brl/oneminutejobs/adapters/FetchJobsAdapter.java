@@ -206,7 +206,9 @@ public class FetchJobsAdapter extends BaseAdapter {
                 int temp = server_job_id.get(position);
 
 
-                ((Company_Fetch_All_Jobs)context).openDetailsWindow(temp-1);
+                ((Company_Fetch_All_Jobs)context).openDetailsWindow(position);
+
+
             }
 
         });
@@ -216,12 +218,14 @@ public class FetchJobsAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 //Toast.makeText( context, "Long click!", Toast.LENGTH_SHORT).show();
-                int temp = server_job_id.get(position);
-                Company_Fetch_All_Jobs company_fetch_all_jobs = new Company_Fetch_All_Jobs();
+                int id = server_job_id.get(position);
+                //Company_Fetch_All_Jobs company_fetch_all_jobs = new Company_Fetch_All_Jobs();
 
 
-                Dialogue_Helper dh = new Dialogue_Helper();
-                dh.job_post_popup(context,temp, company_fetch_all_jobs,server_job_priority.get(position));
+                //Dialogue_Helper dh = new Dialogue_Helper();
+                //dh.job_post_popup(context,id, company_fetch_all_jobs,server_job_priority.get(position),position);
+
+                ((Company_Fetch_All_Jobs)context).showPopUp(server_job_id.get(position),position,server_job_priority.get(position));
 
                 return true;
             }
