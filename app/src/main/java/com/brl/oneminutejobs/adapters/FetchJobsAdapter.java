@@ -31,6 +31,7 @@ public class FetchJobsAdapter extends BaseAdapter {
     ArrayList<Integer> server_job_id;
     ArrayList<String> server_job_title;
     ArrayList<String> server_job_deadline;
+    ArrayList<Integer> server_job_priority;
 
 
     Context context;
@@ -39,7 +40,7 @@ public class FetchJobsAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater=null;
 
-    public FetchJobsAdapter(Company_Fetch_All_Jobs company_fetch_all_jobs, int count1, ArrayList<Integer> server_job_id1,ArrayList<String> server_job_title1,ArrayList<String> server_job_deadline1) {
+    public FetchJobsAdapter(Company_Fetch_All_Jobs company_fetch_all_jobs, int count1, ArrayList<Integer> server_job_id1,ArrayList<String> server_job_title1,ArrayList<String> server_job_deadline1,ArrayList<Integer> server_job_priority1) {
 
         // TODO Auto-generated constructor stub
 
@@ -52,6 +53,7 @@ public class FetchJobsAdapter extends BaseAdapter {
         server_job_id = server_job_id1;
         server_job_title = server_job_title1;
         server_job_deadline = server_job_deadline1;
+        server_job_priority = server_job_priority1;
 
         context=company_fetch_all_jobs;
 
@@ -109,6 +111,7 @@ public class FetchJobsAdapter extends BaseAdapter {
         TextView deadline;
         TextView applicantList;
         Button detailsButton;
+        ImageView star_icon;
 
 
     }
@@ -135,6 +138,7 @@ public class FetchJobsAdapter extends BaseAdapter {
         holder.deadline = (TextView) rowView.findViewById(R.id.deadline);
         holder.applicantList = (TextView) rowView.findViewById(R.id.applicant_button);
         holder.detailsButton = (Button) rowView.findViewById(R.id.button);
+        holder.star_icon = (ImageView)rowView.findViewById(R.id.star_icon);
 
        char temp  = server_job_title.get(position).toLowerCase().charAt(0);
 
@@ -154,6 +158,15 @@ public class FetchJobsAdapter extends BaseAdapter {
 
         holder.title.setText(server_job_title.get(position));
         holder.deadline.setText("Deadline : "+server_job_deadline.get(position));
+
+        if(server_job_priority.get(position) > 0){
+
+            holder.star_icon.setVisibility(View.VISIBLE);
+
+        }else{
+
+            holder.star_icon.setVisibility(View.INVISIBLE);
+        }
 
 
         holder.applicantList.setOnClickListener(new View.OnClickListener() {

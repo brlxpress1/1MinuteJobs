@@ -77,14 +77,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".8"
-                android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/right_arrow" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/detailed_button_panel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/right_arrow" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight=".7"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/star_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/favourite_star" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

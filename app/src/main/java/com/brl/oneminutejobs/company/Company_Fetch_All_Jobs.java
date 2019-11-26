@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +74,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     ArrayList<String> server_job_location = new ArrayList<String>();
     ArrayList<String> server_job_deadline = new ArrayList<String>();
     ArrayList<Integer> server_job_category = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_priority = new ArrayList<Integer>();
 
     //------------------------
 
@@ -87,6 +89,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     ArrayList<String> server_job_location2 = new ArrayList<String>();
     ArrayList<String> server_job_deadline2 = new ArrayList<String>();
     ArrayList<Integer> server_job_category2 = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_priority2 = new ArrayList<Integer>();
 
     //-----------------------------------
     ArrayList<Integer> server_job_id3 = new ArrayList<Integer>();
@@ -100,6 +103,21 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     ArrayList<String> server_job_location3 = new ArrayList<String>();
     ArrayList<String> server_job_deadline3 = new ArrayList<String>();
     ArrayList<Integer> server_job_category3 = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_priority3 = new ArrayList<Integer>();
+
+    //-----------------------------------
+    ArrayList<Integer> server_job_id_temp = new ArrayList<Integer>();
+    ArrayList<String> server_job_title_temp = new ArrayList<String>();
+    ArrayList<String> server_job_description_temp = new ArrayList<String>();
+    ArrayList<String> server_job_qualification_temp = new ArrayList<String>();
+    ArrayList<Integer> server_job_jobTypeId_temp = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_noOfOpening_temp = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_timing_temp = new ArrayList<Integer>();
+    ArrayList<Float> server_job_salary_temp = new ArrayList<Float>();
+    ArrayList<String> server_job_location_temp = new ArrayList<String>();
+    ArrayList<String> server_job_deadline_temp = new ArrayList<String>();
+    ArrayList<Integer> server_job_category_temp = new ArrayList<Integer>();
+    ArrayList<Integer> server_job_priority_temp = new ArrayList<Integer>();
 
     private LinearLayout detailsPanel;
 
@@ -113,6 +131,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
     private TextView locationShow;
     private TextView deadlineShow;
     private TextView categoryShow;
+
+    private ScrollView detailedScroll;
 
     private Button closeButton;
 
@@ -146,6 +166,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
         deadlineShow = (TextView)findViewById(R.id.deadlineShow);
         categoryShow = (TextView)findViewById(R.id.catagoryShow);
         closeButton = (Button)findViewById(R.id.closeButton);
+        detailedScroll = (ScrollView)findViewById(R.id.detailedScroll);
 
 
         detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
@@ -223,6 +244,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                 closeButton.startAnimation(buttonClick);
 
                 detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+               // detailsPanel.setVisibility(View.GONE);
+
             }
         });
 
@@ -373,27 +396,80 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
             for(int i=0; i<size; i++){
 
                 JSONObject newObj = newArray.optJSONObject(i);
-                //Log.d(TAG,newObj.optString("id"));
-                server_job_id.add(newObj.optInt("id"));
-                server_job_title.add(newObj.optString("title"));
-                server_job_description.add(newObj.optString("description"));
-                server_job_qualification.add(newObj.optString("educationQualification"));
-                server_job_jobTypeId.add(newObj.optInt("jobTypeId"));
-                server_job_noOfOpening.add(newObj.optInt("noOfOpening"));
-                server_job_timing.add(newObj.optInt("timing"));
-                server_job_salary.add((float)newObj.optInt("salary"));
-                server_job_location.add(newObj.optString("location"));
-                server_job_deadline.add(newObj.optString("deadLine"));
-                server_job_category.add(newObj.optInt("category"));
+
+
+
+
+                if(newObj.optInt("priority") > 0){
+
+                    server_job_id.add(newObj.optInt("id"));
+                    server_job_title.add(newObj.optString("title"));
+                    server_job_description.add(newObj.optString("description"));
+                    server_job_qualification.add(newObj.optString("educationQualification"));
+                    server_job_jobTypeId.add(newObj.optInt("jobTypeId"));
+                    server_job_noOfOpening.add(newObj.optInt("noOfOpening"));
+                    server_job_timing.add(newObj.optInt("timing"));
+                    server_job_salary.add((float)newObj.optInt("salary"));
+                    server_job_location.add(newObj.optString("location"));
+                    server_job_deadline.add(newObj.optString("deadLine"));
+                    server_job_category.add(newObj.optInt("category"));
+                    server_job_priority.add(newObj.optInt("priority"));
+                    //server_job_priority.add(newObj.optInt("priority"));
+
+                }else{
+
+                    server_job_id_temp.add(newObj.optInt("id"));
+                    server_job_title_temp.add(newObj.optString("title"));
+                    server_job_description_temp.add(newObj.optString("description"));
+                    server_job_qualification_temp.add(newObj.optString("educationQualification"));
+                    server_job_jobTypeId_temp.add(newObj.optInt("jobTypeId"));
+                    server_job_noOfOpening_temp.add(newObj.optInt("noOfOpening"));
+                    server_job_timing_temp.add(newObj.optInt("timing"));
+                    server_job_salary_temp.add((float)newObj.optInt("salary"));
+                    server_job_location_temp.add(newObj.optString("location"));
+                    server_job_deadline_temp.add(newObj.optString("deadLine"));
+                    server_job_category_temp.add(newObj.optInt("category"));
+                    server_job_priority_temp.add(newObj.optInt("priority"));
+                    //server_job_priority_temp.add(newObj.optInt("priority"));
+
+
+                }
+
+
+
 
 
             }
+
+            //--
+
+            //-- Concate
+            for(int j=0; j<server_job_id_temp.size();j++){
+
+
+                server_job_id.add(server_job_id_temp.get(j));
+                server_job_title.add(server_job_title_temp.get(j));
+                server_job_description.add(server_job_description_temp.get(j));
+                server_job_qualification.add(server_job_qualification_temp.get(j));
+                server_job_jobTypeId.add(server_job_jobTypeId_temp.get(j));
+                server_job_noOfOpening.add(server_job_noOfOpening_temp.get(j));
+                server_job_timing.add(server_job_timing_temp.get(j));
+                server_job_salary.add(server_job_salary_temp.get(j));
+                server_job_location.add(server_job_location_temp.get(j));
+                server_job_deadline.add(server_job_deadline_temp.get(j));
+                server_job_category.add(server_job_category_temp.get(j));
+                server_job_priority.add(server_job_priority_temp.get(j));
+            }
+
+
+
+            //---------------
         }
 
         //Log.d(TAG,server_job_title.toString());
         if(server_job_id.size() > 0 ){
 
-            all_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id.size(),server_job_id,server_job_title,server_job_deadline));
+            all_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id.size(),server_job_id,server_job_title,server_job_deadline,server_job_priority));
             readyAllListView();
 
         }else{
@@ -435,6 +511,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                     server_job_location3.add(server_job_location.get(i));
                     server_job_deadline3.add(server_job_deadline.get(i));
                     server_job_category3.add(server_job_category.get(i));
+                    server_job_priority3.add(server_job_priority.get(i));
 
                 }else{
 
@@ -449,6 +526,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                     server_job_location2.add(server_job_location.get(i));
                     server_job_deadline2.add(server_job_deadline.get(i));
                     server_job_category2.add(server_job_category.get(i));
+                    server_job_priority2.add(server_job_priority.get(i));
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -458,12 +536,12 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
 
         if(server_job_id2.size() > 0){
 
-            current_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id2.size(),server_job_id2,server_job_title2,server_job_deadline2));
+            current_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id2.size(),server_job_id2,server_job_title2,server_job_deadline2,server_job_priority2));
         }
 
         if(server_job_id3.size() > 0 ){
 
-            expired_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id3.size(),server_job_id3,server_job_title3,server_job_deadline3));
+            expired_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id3.size(),server_job_id3,server_job_title3,server_job_deadline3,server_job_priority3));
         }
 
 
@@ -503,6 +581,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
         scaleDown3.play(scaleDownX3).with(scaleDownY3);
 
         scaleDown3.start();
+
+        lv3.smoothScrollToPosition(0);
     }
 
 
@@ -511,8 +591,8 @@ public void openDetailsWindow(int postID){
 
 
         titleShow.setText(server_job_title.get(postID));
-        descriptionShow.setText(server_job_description.get(postID));
-        qualificationShow.setText(server_job_qualification.get(postID));
+        descriptionShow.setText(furnishedString(server_job_description.get(postID)));
+        qualificationShow.setText(furnishedString(server_job_qualification.get(postID)));
 
         if(server_job_jobTypeId.get(postID) == 1){
 
@@ -551,6 +631,7 @@ public void openDetailsWindow(int postID){
         }
 
 
+        //detailsPanel.setVisibility(View.VISIBLE);
         detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
     ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(detailsPanel, "scaleX", 0.0f,1.0f);
@@ -563,8 +644,56 @@ public void openDetailsWindow(int postID){
     scaleDown.play(scaleDownX).with(scaleDownY);
 
     scaleDown.start();
+    detailedScroll.fullScroll(ScrollView.FOCUS_UP);
+    //detailsPanel.smoothScrollToPosition(0);
 
 
+}
+
+public String furnishedString(String original){
+
+        String furnished = "";
+        String tempText = "";
+
+        for(int i=0; i<original.length(); i++){
+
+            if(original.charAt(i) == '\r' || original.charAt(i) == '\n'){
+
+            }else{
+                tempText = tempText + original.charAt(i);
+
+            }
+        }
+
+        for(int i=0; i<tempText.length(); i++){
+
+            if(i==0){
+
+                furnished = furnished + "⚫ ";
+                furnished =  furnished + tempText.charAt(i);
+
+            }else{
+
+                if(i < tempText.length()-2){
+
+
+                    if(tempText.charAt(i) == '.'){
+
+                        furnished =  furnished +tempText.charAt(i)+"\n\n"+"⚫ ";
+                    }else{
+                        furnished =  furnished + tempText.charAt(i);
+                    }
+                }else{
+
+                    furnished =  furnished + tempText.charAt(i);
+                }
+
+
+            }
+        }
+
+
+        return  furnished;
 }
 
 
