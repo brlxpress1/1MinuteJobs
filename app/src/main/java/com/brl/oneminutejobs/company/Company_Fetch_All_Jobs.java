@@ -3,6 +3,7 @@ package com.brl.oneminutejobs.company;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -188,6 +189,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                    all_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                     current_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                     expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                    all_job_list.smoothScrollToPosition(0);
 
                 }else{
 
@@ -208,6 +210,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                    all_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    current_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                    expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+                    current_job_list.smoothScrollToPosition(0);
 
                 }else{
 
@@ -228,6 +231,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
                     all_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    current_job_list.setLayoutParams(new LinearLayout.LayoutParams(0,0));
                    expired_job_list.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    expired_job_list.smoothScrollToPosition(0);
 
                 }else{
 
@@ -582,7 +586,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity {
 
         scaleDown3.start();
 
-        lv3.smoothScrollToPosition(0);
+
     }
 
 
@@ -695,6 +699,13 @@ public String furnishedString(String original){
 
         return  furnished;
 }
+
+public void finishThis(){
+
+        finish();
+}
+
+
 
 
     //----------------

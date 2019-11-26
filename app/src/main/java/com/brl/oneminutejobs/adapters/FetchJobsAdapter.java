@@ -6,15 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.company.Company_SearchBoard;
+import com.brl.oneminutejobs.others.Dialogue_Helper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -112,6 +115,7 @@ public class FetchJobsAdapter extends BaseAdapter {
         TextView applicantList;
         Button detailsButton;
         ImageView star_icon;
+        LinearLayout itemClick;
 
 
     }
@@ -139,6 +143,7 @@ public class FetchJobsAdapter extends BaseAdapter {
         holder.applicantList = (TextView) rowView.findViewById(R.id.applicant_button);
         holder.detailsButton = (Button) rowView.findViewById(R.id.button);
         holder.star_icon = (ImageView)rowView.findViewById(R.id.star_icon);
+        holder.itemClick = (LinearLayout)rowView.findViewById(R.id.item_click);
 
        char temp  = server_job_title.get(position).toLowerCase().charAt(0);
 
@@ -202,6 +207,23 @@ public class FetchJobsAdapter extends BaseAdapter {
 
 
                 ((Company_Fetch_All_Jobs)context).openDetailsWindow(temp-1);
+            }
+
+        });
+
+        holder.itemClick.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                //Toast.makeText( context, "Long click!", Toast.LENGTH_SHORT).show();
+                int temp = server_job_id.get(position);
+                Company_Fetch_All_Jobs company_fetch_all_jobs = new Company_Fetch_All_Jobs();
+
+
+                Dialogue_Helper dh = new Dialogue_Helper();
+                dh.job_post_popup(context,temp, company_fetch_all_jobs,server_job_priority.get(position));
+
+                return true;
             }
 
         });

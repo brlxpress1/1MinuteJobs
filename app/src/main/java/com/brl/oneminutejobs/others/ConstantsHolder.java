@@ -33,6 +33,8 @@ public class ConstantsHolder {
 
     public static String createJobPost = "createJobPost";
     public static String findUserAllJobPost = "findUserAllJobPost";
+    public static String setPostPriority = "setPostPriority";
+
 
 
 

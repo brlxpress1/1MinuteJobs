@@ -2,23 +2,44 @@ package com.brl.oneminutejobs.others;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.Intent;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
+import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.company.Company_SearchBoard;
 import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.security.auth.callback.Callback;
 
@@ -26,6 +47,9 @@ import es.dmoral.toasty.Toasty;
 
 
 public class Dialogue_Helper {
+
+    public String TAG = "Dialogue_Helper";
+    private Dialog dialog;
 
 
 
@@ -628,10 +652,228 @@ public class Dialogue_Helper {
         alertDialog.show();
     }
 
+    //-- Showing prepered location input
+    public void job_post_popup(Context ct, int pos, Company_Fetch_All_Jobs company_fetch_all_jobs,int priority) {
+
+
+
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(ct);
+        View promptsView = li.inflate(R.layout.item_post_job_popup, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                ct,R.style.AppTheme);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final Button favourite_post = (Button) promptsView
+                .findViewById(R.id.favourite_post);
+
+        final Button edit_post = (Button) promptsView
+                .findViewById(R.id.edit_post);
+
+        final Button input_name = (Button) promptsView
+                .findViewById(R.id.delete_post);
+
+
+        if(priority > 0){
+
+            favourite_post.setText("Remove from favourite");
+
+        }else{
+
+            favourite_post.setText("Save to Favourite");
+
+        }
+
+
+
+        favourite_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if(priority > 0){
+
+                    setFavourite(pos,0,ct,company_fetch_all_jobs);
+
+                }else{
+
+                    setFavourite(pos,1,ct,company_fetch_all_jobs);
+
+                }
+
+
+            }
+        });
+
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Close",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+
+
+
+                            }
+                        })
+                /*
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+
+
+                                //String nameTemp = "";
+                                String nameTemp = input_name.getText().toString();
+
+                                if(nameTemp.equals("")){
+
+                                }else {
+
+                                }
+                            }
+                        })
+                        */
+        ;
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+
+    }
+
 
 
 
     //-------------------
+
+    public void setFavourite(int postID, int statusMod, Context ct, Company_Fetch_All_Jobs company_fetch_all_jobs){
+
+
+        showLoadingBarAlert(ct);
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("postId", postID);
+            parameters.put("postStaus", statusMod);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(ct);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+                        hideLoadingBar();
+
+                        int status = response.optInt("status");
+
+                        if(status == 200){
+
+                            if(statusMod > 0){
+                                Toasty.success(ct, "Post added to your favourite list!", Toast.LENGTH_LONG, true).show();
+                            }else{
+                                Toasty.success(ct, "Post removed from your favourite list!", Toast.LENGTH_LONG, true).show();
+                            }
+
+
+                            Intent reload = new Intent(ct,Company_Fetch_All_Jobs.class);
+                            ct.startActivity(reload);
+                            company_fetch_all_jobs.finishThis();
+
+                        }else{
+
+                            Toasty.error(ct, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(ct, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
+
+    }
+
+    private void showLoadingBarAlert(Context ct){
+
+
+        dialog = new Dialog(ct);
+
+        dialog.setContentView(R.layout.loading);
+
+        dialog.setTitle("Please wait!");
+
+        dialog.setCancelable(false);
+
+
+
+       // DisplayMetrics displayMetrics = new DisplayMetrics();
+
+       // ct.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        dialog.show();
+
+    }
+
+
+
+    private void hideLoadingBar(){
+
+
+
+        dialog.dismiss();
+
+    }
 
 
 }
