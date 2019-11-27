@@ -113,7 +113,7 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
         TextView deadline;
         TextView applicantList;
         Button detailsButton;
-        ImageView star_icon;
+        ImageView push_icon;
         LinearLayout itemClick;
 
 
@@ -141,23 +141,23 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
         holder.deadline = (TextView) rowView.findViewById(R.id.deadline);
         holder.applicantList = (TextView) rowView.findViewById(R.id.company_name);
         holder.detailsButton = (Button) rowView.findViewById(R.id.button);
-        holder.star_icon = (ImageView)rowView.findViewById(R.id.star_icon);
+        holder.push_icon = (ImageView)rowView.findViewById(R.id.push_icon);
         holder.itemClick = (LinearLayout)rowView.findViewById(R.id.item_click);
 
         char temp  = server_job_title.get(position).toLowerCase().charAt(0);
 
         holder.applicantList.setText(server_job_companyName.get(position));
 
-        holder.applicantList.setText(server_job_pinned.get(position));
+        //holder.applicantList.setText(server_job_pinned.get(position));
 
         if(server_job_pinned.get(position).equalsIgnoreCase("true")){
 
-            holder.star_icon.setVisibility(View.VISIBLE);
+            holder.push_icon.setVisibility(View.VISIBLE);
 
 
         }else{
 
-            holder.star_icon.setVisibility(View.INVISIBLE);
+            holder.push_icon.setVisibility(View.GONE);
         }
 
 
@@ -177,14 +177,7 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
         holder.title.setText(server_job_title.get(position));
         holder.deadline.setText("Deadline : "+server_job_deadline.get(position));
 
-        if(server_job_priority.get(position) > 0){
 
-            holder.star_icon.setVisibility(View.VISIBLE);
-
-        }else{
-
-            holder.star_icon.setVisibility(View.INVISIBLE);
-        }
 
 
         holder.applicantList.setOnClickListener(new View.OnClickListener() {
@@ -242,7 +235,7 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
                 //dh.job_post_popup(context,id, company_fetch_all_jobs,server_job_priority.get(position),position);
 
                 //((EmployeeJobSearch)context).showDetailedWindow(server_job_id.get(position),position,server_job_priority.get(position));
-                ((EmployeeJobSearch)context). makePinnedPost(server_job_id.get(position),position,server_job_priority.get(position));
+                ((EmployeeJobSearch)context). makePinnedPost(server_job_id.get(position),position,server_job_priority.get(position),server_job_pinned.get(position));
 
                 return true;
             }

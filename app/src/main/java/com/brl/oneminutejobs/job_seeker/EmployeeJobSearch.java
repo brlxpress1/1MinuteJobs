@@ -640,35 +640,65 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
     }
 
-    public void makePinnedPost(int postID,int position,int post_priority){
+    public void makePinnedPost(int postID,int position,int post_priority,String isPinned){
 
         temp_job_id = postID;
-        add_pinned_post(101,temp_job_id);
+       // if(isPinned.equalsIgnoreCase("true")){
+
+            add_pinned_post(101,temp_job_id,isPinned);
+      //  }
+
 
 
     }
 
     // this method will store the info of user to  database
-    private void add_pinned_post(int userID,int jobPostId) {
+    private void add_pinned_post(int userID,int jobPostId,String pinnedOrNot) {
 
         showLoadingBarAlert();
 
         JSONObject parameters = new JSONObject();
-        try {
+
+        if(pinnedOrNot.equalsIgnoreCase("true")){
+
+            try {
 
 
-            parameters.put("userId", userID);
-            parameters.put("postId", jobPostId);
+                parameters.put("userId", userID);
+                parameters.put("postId", jobPostId);
+                parameters.put("status", false);
 
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+
+
+            try {
+
+
+                parameters.put("userId", userID);
+                parameters.put("postId", jobPostId);
+                parameters.put("status", true);
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
+
+
+
 
         Log.d(TAG,parameters.toString());
 
         RequestQueue rq = Volley.newRequestQueue(this);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, "http://192.168.70.165:8090/"+ ConstantsHolder.saveJob, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
@@ -688,11 +718,24 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
                         if(status == 200){
 
-                            Toasty.success(EmployeeJobSearch.this, "Job pinned successfully!", Toast.LENGTH_LONG, true).show();
+                            if (pinnedOrNot.equalsIgnoreCase("true")) {
 
-                            Intent openAgain = new Intent(EmployeeJobSearch.this,EmployeeJobSearch.class);
-                            startActivity(openAgain);
-                            finish();
+                                Toasty.success(EmployeeJobSearch.this, "Job removed form pinned list successfully!", Toast.LENGTH_LONG, true).show();
+
+                                Intent openAgain = new Intent(EmployeeJobSearch.this,EmployeeJobSearch.class);
+                                startActivity(openAgain);
+                                finish();
+                            } else {
+
+
+
+                                Toasty.success(EmployeeJobSearch.this, "Job pinned successfully!", Toast.LENGTH_LONG, true).show();
+
+                                Intent openAgain = new Intent(EmployeeJobSearch.this,EmployeeJobSearch.class);
+                                startActivity(openAgain);
+                                finish();
+
+                            }
 
 
                         }else{
