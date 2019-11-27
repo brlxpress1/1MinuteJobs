@@ -77,8 +77,36 @@
     <string-array name="catagory_array">
 
         <item>IT/Telecommunication</item>
-        <item>Marketing</item>
-        <item>Other</item>
+
+        <item>Accounting/Finance</item>
+        <item>Bank/ Non-Bank Financial Institution</item>
+        <item>Commercial/Supply Chain</item>
+        <item>Education/Training</item>
+        <item>Engineer/Architects</item>
+        <item>Garments/Textile</item>
+        <item>HR/Organization Development</item>
+        <item>General Management/Admin</item>
+        <item>Design/Creative</item>
+        <item>Production/Operation</item>
+        <item>Hospitality/ Travel/ Tourism</item>
+        <item>Beauty Care/ Health &amp; Fitness</item>
+        <item>Electrician/ Construction/ Repair</item>
+        <item>Marketing/Sales</item>
+        <item>Customer Support/Call Center</item>
+        <item>Media/Advertisement/Event Management</item>
+        <item>Medical/Pharmaceuticals</item>
+        <item>Agriculture (Plant/Animal/Fisheries)</item>
+        <item>NGO/Development</item>
+        <item>Research/Consultancy</item>
+        <item>Secretary/Receptionist</item>
+        <item>Data Entry/Operator</item>
+        <item>Driving/Motor Technician</item>
+        <item>Security/Support Service</item>
+        <item>Law/Legal</item>
+        <item>Others</item>
+
+
+
 
     </string-array>
 

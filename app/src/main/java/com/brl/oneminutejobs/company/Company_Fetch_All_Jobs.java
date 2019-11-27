@@ -1099,7 +1099,7 @@ public String furnishedString(String original){
 
             if(i==0){
 
-                furnished = furnished + "⚫ ";
+                furnished = furnished + "* ";
                 furnished =  furnished + tempText.charAt(i);
 
             }else{
@@ -1109,7 +1109,7 @@ public String furnishedString(String original){
 
                     if(tempText.charAt(i) == '.'){
 
-                        furnished =  furnished +tempText.charAt(i)+"\n\n"+"⚫ ";
+                        furnished =  furnished +tempText.charAt(i)+"\n\n"+"* ";
                     }else{
                         furnished =  furnished + tempText.charAt(i);
                     }
