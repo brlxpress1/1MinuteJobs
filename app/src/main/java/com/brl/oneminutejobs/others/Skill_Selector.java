@@ -406,7 +406,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
     }
 
     // Update skill
-    private void UpdateUserSkill(int userID,ArrayList<Integer> skillId) {
+    private void UpdateUserSkill(int userID,ArrayList<Integer> skillId) {//turzo
 
         showLoadingBarAlert();
 

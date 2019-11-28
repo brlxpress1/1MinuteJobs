@@ -271,8 +271,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_weight=".3"
-                                    android:background="@drawable/round_dashboard_button1"
-                                    android:text="23"
+                                    android:background="@drawable/search_job_button"
                                     android:textAlignment="center"
                                     android:textColor="#ffffff"
                                     android:textSize="36sp"
@@ -283,10 +282,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".7"
-                                    android:text="Who viewed your profile ?"
+                                    android:text="Search Jobs"
                                     android:textAlignment="center"
+                                    android:textAllCaps="true"
                                     android:textColor="#ffffff"
-                                    android:textSize="12sp" />
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -308,8 +309,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_weight=".3"
-                                    android:background="@drawable/round_dashboard_button2"
-                                    android:text="10"
+                                    android:background="@drawable/applied"
                                     android:textAlignment="center"
                                     android:textColor="#ffffff"
                                     android:textSize="36sp"
@@ -320,10 +320,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".7"
-                                    android:text="Who downloaded your CV?"
+                                    android:text="Jobs you Applied"
                                     android:textAlignment="center"
+                                    android:textAllCaps="true"
                                     android:textColor="#ffffff"
-                                    android:textSize="12sp" />
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -346,5 +348,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/drawer_employee" />
 </androidx.drawerlayout.widget.DrawerLayout>

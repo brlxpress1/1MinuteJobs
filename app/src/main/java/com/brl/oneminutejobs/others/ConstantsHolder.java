@@ -40,6 +40,7 @@ public class ConstantsHolder {
     public static String applyJobPostPost = "applyJobPostPost";
     public static String saveJob = "saveJob";
     public static String findAllMyJobs = "findAllMyJobs";
+    public static String jobSeekerCategoryUpdate = "UserDetails/JobSeeker/CatagoryUpdate";
 
 
 

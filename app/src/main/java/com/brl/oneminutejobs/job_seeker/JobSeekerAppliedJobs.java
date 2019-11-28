@@ -3,6 +3,8 @@ package com.brl.oneminutejobs.job_seeker;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -147,7 +149,13 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
         showLayout(1);
 
-        fetch_all_jobs(101);
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+
+
+        String userIdLocal = prefs.getString("userid", "");
+
+        fetch_all_jobs(Integer.parseInt(userIdLocal));
 
         appliedJobsView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -693,7 +701,10 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
             backButtonValue = 0;
         }else{
 
-            finish();;
+            Intent openSearchJob = new Intent(JobSeekerAppliedJobs.this,Job_Seeker_Modified_Dashboard.class);
+            startActivity(openSearchJob);
+            finish();
+
         }
     }
 }

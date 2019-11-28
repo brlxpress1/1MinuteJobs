@@ -647,9 +647,9 @@
                                             android:focusable="false"
                                             android:hint="4"
                                             android:inputType="number"
+                                            android:maxLength="2"
                                             android:textColor="#000000"
                                             android:textSize="16sp"
-                                            android:maxLength="2"
                                             android:theme="@style/EditTextTheme1" />
                                     </LinearLayout>
 
@@ -909,6 +909,71 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/panel10_2_Category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:fontFamily="serif"
+                                android:text="Select Category"
+                                android:textColor="@color/color2"
+                                android:textSize="16sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="2dp"
+                                android:layout_weight=".5"
+                                android:background="@drawable/underline_shape"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight=".2"
+                                        android:orientation="vertical">
+
+                                        <Spinner
+                                            android:id="@+id/categoryBox"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@android:color/transparent"
+                                            android:clickable="false"
+                                            android:entries="@array/catagory_array"
+                                            android:focusable="false"
+                                            android:longClickable="false"
+                                            android:prompt="@string/catagory_prompt" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight=".8"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/categoryBoxOpener"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_gravity="right"
+                                            app:srcCompat="@drawable/arrow" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/panel11_preferred_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -956,7 +1021,6 @@
 
                                             android:ems="10"
                                             android:focusable="false"
-                                            android:hint="Dhanmondi"
                                             android:inputType="textPersonName"
                                             android:textColor="#000000"
                                             android:textSize="16sp"

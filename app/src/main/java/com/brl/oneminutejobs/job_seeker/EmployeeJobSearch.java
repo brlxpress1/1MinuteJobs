@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -145,7 +146,13 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
 
         showPanels(1);
-       fetch_all_jobs(101);
+
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+
+
+        String userIdLocal = prefs.getString("userid", "");
+
+       fetch_all_jobs(Integer.parseInt(userIdLocal));
 
        applyButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -645,7 +652,12 @@ public class EmployeeJobSearch extends AppCompatActivity {
         temp_job_id = postID;
        // if(isPinned.equalsIgnoreCase("true")){
 
-            add_pinned_post(101,temp_job_id,isPinned);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+
+
+        String userIdLocal = prefs.getString("userid", "");
+
+            add_pinned_post(Integer.parseInt(userIdLocal),temp_job_id,isPinned);
       //  }
 
 
@@ -790,7 +802,12 @@ public class EmployeeJobSearch extends AppCompatActivity {
             backButtonValue = 0;
 
         }else{
+
+            Intent openSearchJob = new Intent(EmployeeJobSearch.this,Job_Seeker_Modified_Dashboard.class);
+            startActivity(openSearchJob);
             finish();
+
+
         }
     }
 }

@@ -222,7 +222,10 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
             public void onClick(View view) {
 
                 whoVisitedClick.startAnimation(buttonClick);
-                Toasty.success(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+                //Toasty.success(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+                Intent openSearchJob = new Intent(Job_Seeker_Modified_Dashboard.this,EmployeeJobSearch.class);
+                startActivity(openSearchJob);
+                finish();
             }
         });
 
@@ -231,7 +234,10 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
             public void onClick(View view) {
 
                 whowDownloadedClick.startAnimation(buttonClick);
-                Toasty.success(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+
+                Intent openSearchJob = new Intent(Job_Seeker_Modified_Dashboard.this,JobSeekerAppliedJobs.class);
+                startActivity(openSearchJob);
+                finish();
             }
         });
 

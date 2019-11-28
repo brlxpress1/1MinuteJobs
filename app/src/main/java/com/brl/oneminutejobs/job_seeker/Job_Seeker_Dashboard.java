@@ -97,6 +97,8 @@ import com.brl.oneminutejobs.others.ImagePickerActivity;
 import com.brl.oneminutejobs.others.SaveImage;
 import com.brl.oneminutejobs.others.ServiceGenerator;
 import com.brl.oneminutejobs.others.Skill_Selector;
+import com.ybs.countrypicker.CountryPicker;
+import com.ybs.countrypicker.CountryPickerListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -210,9 +212,17 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
     //private static final int ACTIVITY_CHOOSE_FILE = 3;
 
+    ArrayList<Integer> categoryForServer = new ArrayList<>();
+    JSONObject finalobject = new JSONObject();
+
+    CountryPicker picker;
+
     //---------------
 
 
+    private Spinner categoryBox;
+    private ImageView categoryBoxOpener;
+    private int categoryBoxEnabler = 0;
 
 
 
@@ -222,7 +232,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
         setContentView(R.layout.activity_job_seeker_dashboard);
 
 
-
+        picker = CountryPicker.newInstance("Select Location");
 
         changeProfile = (TextView)findViewById(R.id.change_profile);
         profileImage = (CircleImageView)findViewById(R.id.profile_image);
@@ -270,9 +280,11 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
         filePath = (EditText)findViewById(R.id.file_path);
         uploadButton = (Button)findViewById(R.id.upload_button);
 
+        categoryBox = (Spinner)findViewById(R.id.categoryBox);
+        categoryBoxOpener = (ImageView)findViewById(R.id.categoryBoxOpener);
+
 
         //---------------
-
 
 
 
@@ -457,12 +469,29 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
             @Override
             public void onClick(View view) {
 
-                openLocationInput();
+               // openLocationInput();
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
 
 
 
             }
         });
+
+
+
+        preferredBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // openLocationInput();
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+
+
+
+            }
+        });
+
+
 
         cvDownloadClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -616,6 +645,52 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
             startActivity(openJobSeekerSignUp);
             finish();
         }
+
+        categoryBoxOpener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                categoryBox.performClick();
+            }
+        });
+
+        categoryBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+
+                if(categoryBoxEnabler > 0){
+
+                    categoryForServer.clear();
+                    categoryForServer.add(position+1);
+                    UpdateJobSeekerCategory(Integer.parseInt(userIdLocal),categoryForServer);
+                }else{
+
+                    categoryBoxEnabler = 1;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+       // categoryForServer.add(1);//turzo
+      //  UpdateJobSeekerSkills(Integer.parseInt(userIdLocal),categoryForServer);
+
+        picker.setListener(new CountryPickerListener() {
+            @Override
+            public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+
+                preferredBox.setText(name);
+                picker.dismiss();
+            }
+        });
+
+
 
 
 
@@ -2899,6 +2974,111 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                 })
 
                 .show();
+    }
+
+    // Update category
+    private void UpdateJobSeekerCategory(int userID,ArrayList<Integer> categoryId) {
+
+        showLoadingBarAlert();
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+            parameters.put("id", userID);
+            parameters.put("categoryList", categoryId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+        //Log.d(TAG,returnPureStringObject(parameters.toString()));
+
+
+        try {
+            finalobject = new JSONObject(returnPureStringObject(parameters.toString()));
+            Log.d(TAG,finalobject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.jobSeekerCategoryUpdate, finalobject, new com.android.volley.Response.Listener<JSONObject>() {
+
+
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        int status = response.optInt("status");
+
+                        if(status == 200){
+
+                            Toasty.success(Job_Seeker_Dashboard.this,"Category updated successfully!",Toast.LENGTH_LONG, true).show();
+
+                            //Intent openJobSeekerSignUp = new Intent(Job_Seeker_Dashboard.this, Job_Seeker_Dashboard.class);
+                            //startActivity(openJobSeekerSignUp);
+                            //finish();
+
+                        }else {
+
+                            Toasty.error(Job_Seeker_Dashboard.this,"Can't update Job_Seeker_Dashboard! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
+
+                        }
+
+                        hideLoadingBar();
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(Job_Seeker_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        hideLoadingBar();
+
+                    }
+                }){
+
+
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+
+
+        //-----------------
+
+    }
+
+    private String returnPureStringObject(String st){
+
+        String temp =  "";
+        String part = ":"+"\"";
+        String part2 = "]"+"\"";
+
+        temp = st.replaceAll(part,":");
+        temp =  temp.replaceAll(part2,"]");
+
+        return temp;
     }
 
 
