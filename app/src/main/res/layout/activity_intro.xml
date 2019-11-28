@@ -80,7 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".5"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"
+            android:visibility="gone"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,13 +106,21 @@
                     android:layout_weight=".2"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Sign in as :"
+                        android:textAlignment="center"
+                        android:textStyle="bold" />
+
                     <Button
                         android:id="@+id/hire_now_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color1"
                         android:fontFamily="@font/roboto_black"
-                        android:text="Sign in as Employer"
+                        android:text="Employer / Company"
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
@@ -123,7 +132,7 @@
                         android:layout_marginTop="15dp"
                         android:background="@color/color2"
                         android:fontFamily="@font/roboto_black"
-                        android:text="Sign in as Employee"
+                        android:text="Employee"
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />

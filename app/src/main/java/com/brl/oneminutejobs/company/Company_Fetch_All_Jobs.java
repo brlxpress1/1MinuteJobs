@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CpuUsageInfo;
 import android.util.DisplayMetrics;
@@ -284,7 +285,14 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
         showLayout(4);//turzo
         //-----------
 
-        fetch_all_jobs(1);
+
+        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+
+
+        String userIdLocal = prefs.getString("userid", "");
+
+
+        fetch_all_jobs(Integer.parseInt(userIdLocal));
 
 
         all_job_button.setOnClickListener(new View.OnClickListener() {
@@ -735,7 +743,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.findUserAllJobPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.findUserAllJobPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -920,13 +928,25 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
 
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-            Date strDate = null;
+           // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+
             try {
+
+                //--
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String currentDateandTime = sdf.format(new Date());
+                Date strDate = null;
+
+
+
+                //---------
 
 
                 strDate = sdf.parse(server_job_deadline.get(i));
+                //Log.d("DateChecker","--------------------> Expired"+"--------- "+" System Date : "+currentDateandTime+"  ---- Job Date : "+server_job_deadline.get(i)+" --- System Time : "+String.valueOf(System.currentTimeMillis())+"   ------- Job Time : "+strDate.getTime());
                 if (System.currentTimeMillis() > strDate.getTime()) {
+
 
                     server_job_id3.add(server_job_id.get(i));
                     server_job_title3.add(server_job_title.get(i));
@@ -943,6 +963,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                 }else{
 
+                    Log.d("DateChecker","Current <-------------------- ");
                     server_job_id2.add(server_job_id.get(i));
                     server_job_title2.add(server_job_title.get(i));
                     server_job_description2.add(server_job_description.get(i));
@@ -955,6 +976,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_deadline2.add(server_job_deadline.get(i));
                     server_job_category2.add(server_job_category.get(i));
                     server_job_priority2.add(server_job_priority.get(i));
+
+
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -1190,7 +1213,7 @@ public void finishThis(){
             parameters.put("status", 1);
            // parameters.put("creator", 1);
             //parameters.put("applicantList", applicantList);
-            Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
+           // Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
 
 
 
@@ -1205,7 +1228,7 @@ public void finishThis(){
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.updateJobPost, parameters, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.updateJobPost, parameters, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -1219,13 +1242,21 @@ public void finishThis(){
 
                             Toasty.success(Company_Fetch_All_Jobs.this,"Job edited successfully",Toasty.LENGTH_LONG,true).show();
 
+                            hideLoadingBar();
+
+                            Intent openAgain = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            startActivity(openAgain);
+                            finish();
+
 
                         }else{
 
                             Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
+
+                            hideLoadingBar();
                         }
 
-                        hideLoadingBar();
+
 
 
                     }
@@ -1401,7 +1432,7 @@ public void finishThis(){
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -1491,7 +1522,7 @@ public void finishThis(){
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -1573,6 +1604,8 @@ public void finishThis(){
             backButtonValue  = 0;
         }else{
 
+            Intent openJobSeekerSignUp = new Intent(Company_Fetch_All_Jobs.this, Company_SearchBoard.class);
+            startActivity(openJobSeekerSignUp);
             finish();
         }
     }

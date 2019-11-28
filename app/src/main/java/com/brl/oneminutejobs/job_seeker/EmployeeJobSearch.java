@@ -210,7 +210,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ ConstantsHolder.findEmployeeAllPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.findEmployeeAllPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -574,7 +574,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ ConstantsHolder.applyJobPostPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.applyJobPostPost, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -700,7 +700,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
         RequestQueue rq = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ ConstantsHolder.saveJob, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.saveJob, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {

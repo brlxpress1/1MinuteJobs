@@ -124,6 +124,9 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     private Button secondarySearchClick;
     private LinearLayout gender_input2;
 
+    private TextView searchTypeText;
+    private int backButtonValue = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +170,8 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         locationBox= (EditText)findViewById(R.id.locationBox);
         secondarySearchClick = (Button)findViewById(R.id.searchbutton);
         gender_input2 = (LinearLayout)findViewById(R.id.gender_input);
+
+        searchTypeText = (TextView)findViewById(R.id.searchTypeText);
 
 
 
@@ -251,7 +256,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
 
-                showBasicSearchWindow();
+
             }
         });
 
@@ -260,11 +265,11 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
 
-                showAdvanceSearchWindow();
+
             }
         });
 
-        showBasicSearchWindow();
+        showLayout(1);
 
 
         //------------
@@ -498,7 +503,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     search_title_name.setText(autoCompleteTextView.getText().toString());
                     // panel_1_normal_search.getLayoutParams().height = 0;
                     //searchView.setAdapter(null);
-                    showSearchResultWindow();
+
                     searchView.setAdapter(new SearchResultExample(this,jobSeekerId.size(),jobSeekerId,jobSeekerPhotoUrl,jobSeekerName,jobSeekerDesignation,jobSeekerExperience,jobSeekerExpectedSalary));
 
 
@@ -645,10 +650,12 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                             Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                             hideLoadingBar();
+                            showLayout(1);
 
                         }else {
 
                             parseAdvanceSearchData(response);
+
                         }
 
 
@@ -727,9 +734,12 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     search_title_name.setText(autoCompleteTextView.getText().toString());
                     // panel_1_normal_search.getLayoutParams().height = 0;
                     //searchView.setAdapter(null);
-                    showSearchResultWindow();
+
                     searchView.setAdapter(new SearchResultExample(this,jobSeekerId.size(),jobSeekerId,jobSeekerPhotoUrl,jobSeekerName,jobSeekerDesignation,jobSeekerExperience,jobSeekerExpectedSalary));
 
+
+                    backButtonValue = 1;
+                    showLayout(2);
                     //-------------------
 
 
@@ -857,6 +867,24 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Intro.class);
             startActivity(openJobSeekerSignUp);
             finish();
+
+
+        }else if(id == R.id.post_a_job){
+
+            //Toasty.info(Company_SearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+
+            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Job_Post.class);
+            startActivity(openJobSeekerSignUp);
+            finish();
+
+        }else if(id == R.id.posted_jobs){
+
+            //Toasty.info(Company_SearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+
+            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Fetch_All_Jobs.class);
+            startActivity(openJobSeekerSignUp);
+            finish();
+
         }
 
         return true;
@@ -1014,26 +1042,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     }
 
 
-    private void showBasicSearchWindow(){
 
-        panel_1_normal_search.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        panel_2_search_window.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        panel_3_advanceSearchWindow.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-    }
-
-    private void showSearchResultWindow(){
-
-        panel_1_normal_search.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-        panel_2_search_window.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        panel_3_advanceSearchWindow.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-    }
-
-    private void showAdvanceSearchWindow(){
-
-        panel_1_normal_search.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-        panel_2_search_window.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-        panel_3_advanceSearchWindow.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-    }
 
     //-----------------
 
@@ -1171,23 +1180,14 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
 
 
-        if(backButtonBehaviour == 1){
+        if(backButtonValue == 1){
 
-            showBasicSearchWindow();
-            backButtonBehaviour = 0;
-
-        }else if(backButtonBehaviour == 2){
-
-            //to do
-           showSearchResultWindow();
-            backButtonBehaviour = 1;
-
-        }else if(backButtonBehaviour == 0 ){
-
-            //to do
+            showLayout(1);
+            backButtonValue = 0;
+        }else{
             showExitDialogue();
-
         }
+
 
         //Toast.makeText(this,String.valueOf(backButtonBehaviour),Toast.LENGTH_LONG).show();
     }
@@ -1219,6 +1219,23 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     }
                 })
                 .show();
+    }
+
+    private void showLayout(int i){
+
+
+        panel_1_normal_search.setVisibility(View.GONE);
+        panel_2_search_window.setVisibility(View.GONE);
+        panel_3_advanceSearchWindow.setVisibility(View.GONE);
+
+        if(i == 1){
+
+            panel_3_advanceSearchWindow.setVisibility(View.VISIBLE);
+
+        }else if(i == 2){
+
+            panel_2_search_window.setVisibility(View.VISIBLE);
+        }
     }
 
 

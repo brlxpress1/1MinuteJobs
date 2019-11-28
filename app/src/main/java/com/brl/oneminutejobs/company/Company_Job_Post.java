@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -166,6 +167,16 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
             }
         });
 
+        job_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+
+            }
+        });
+
         job_location_opener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,6 +188,16 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
         });
 
         job_deadline_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                showDatePickerDialog();
+
+            }
+        });
+
+        job_deadline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -493,6 +514,11 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
         showLoadingBarAlert();
 
 
+        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+
+
+        String userIdLocal = prefs.getString("userid", "");
+
         JSONObject parameters = new JSONObject();
         try {
 
@@ -508,9 +534,9 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
             parameters.put("location", locationP);
             parameters.put("deadLine", deadlineP);
             parameters.put("category", catagoryP);
-            parameters.put("priority", 2);
+            parameters.put("priority", 0);
             parameters.put("status", 1);
-            parameters.put("creator", 1);
+            parameters.put("creator", Integer.parseInt(userIdLocal));
             //parameters.put("applicantList", applicantList);
 
 
@@ -526,7 +552,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.createJobPost, parameters, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.createJobPost, parameters, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -539,6 +565,11 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                         if(status.equalsIgnoreCase("200")){
 
                             Toasty.success(Company_Job_Post.this,"Job posted successfully",Toasty.LENGTH_LONG,true).show();
+
+                            Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_Job_Post.class);
+                            startActivity(openJobSeekerSignUp);
+                            finish();
+
                         }else{
 
                             Toasty.error(Company_Job_Post.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
@@ -582,7 +613,11 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
     @Override
     public void onBackPressed() {
+
+        Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_SearchBoard.class);
+        startActivity(openJobSeekerSignUp);
         finish();
+
     }
 
 

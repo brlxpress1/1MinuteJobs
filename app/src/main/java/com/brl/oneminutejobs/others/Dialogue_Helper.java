@@ -801,7 +801,7 @@ public class Dialogue_Helper {
 
         RequestQueue rq = Volley.newRequestQueue(ct);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.setPostPriority, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -922,7 +922,7 @@ public class Dialogue_Helper {
 
         RequestQueue rq = Volley.newRequestQueue(ct);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ConstantsHolder.postStatusUpdate, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {

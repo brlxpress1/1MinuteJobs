@@ -10,6 +10,16 @@
             android:icon="@drawable/privacy"
             android:title="Privacy policy" />
 
+        <item
+            android:id="@+id/post_a_job"
+            android:icon="@drawable/ic_job_post"
+            android:title="Post a Job" />
+
+        <item
+            android:id="@+id/posted_jobs"
+            android:icon="@drawable/ic_posted_job"
+            android:title="Posted Jobs" />
+
     </group>
 
     <group android:id="@+id/group_menu">

@@ -425,7 +425,6 @@
                                 android:background="@drawable/flag_transparent"
                                 android:ems="10"
                                 android:focusable="false"
-                                android:hint="Example : Software Engineer"
                                 android:inputType="textPersonName"
                                 android:textColorHint="@color/delete_message_text"
                                 android:textSize="14sp" />

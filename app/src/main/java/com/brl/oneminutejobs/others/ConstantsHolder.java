@@ -3,7 +3,7 @@ package com.brl.oneminutejobs.others;
 public class ConstantsHolder {
 
     public static String rawServer = "http://35.226.65.139:8080/jobsportalsapi/";
-    //public static String rawServer = "http://192.168.70.165:8090/";//"http://35.226.65.139:8080/jobsportalsapi/";
+    //public static String rawServer = ConstantsHolder.rawServer;//"http://35.226.65.139:8080/jobsportalsapi/";
 
     public static String phoneCheck = "UserCheck";
     public static String signupUser = "UserSignUp";

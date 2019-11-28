@@ -272,7 +272,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, "http://192.168.70.165:8090/"+ ConstantsHolder.findAllMyJobs, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.findAllMyJobs, parameters, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {

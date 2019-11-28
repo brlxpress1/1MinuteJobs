@@ -234,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:background="@drawable/flag_transparent"
-                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890"
                             android:ems="10"
                             android:hint="Example : Software Engineer"
                             android:inputType="textPersonName"
