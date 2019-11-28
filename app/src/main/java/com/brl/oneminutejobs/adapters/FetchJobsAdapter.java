@@ -187,6 +187,8 @@ public class FetchJobsAdapter extends BaseAdapter {
                 //(int userID, String photoUrl, String userName, String email, String Experience, String expectedSalary)
                 //((Company_SearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
 
+                ((Company_Fetch_All_Jobs)context).showApplicantList(position);
+
             }
 
         });

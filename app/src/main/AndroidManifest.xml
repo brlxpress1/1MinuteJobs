@@ -58,6 +58,7 @@
         <activity android:name=".company.Company_Fetch_All_Jobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
         <activity android:name=".job_seeker.EmployeeJobSearch" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
         <activity android:name=".job_seeker.JobSeekerAppliedJobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.Company_applicant_list" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
 
 
 

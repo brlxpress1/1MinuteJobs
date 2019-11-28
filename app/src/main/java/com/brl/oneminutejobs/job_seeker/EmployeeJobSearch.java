@@ -72,6 +72,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
     ArrayList<String> server_job_companyName = new ArrayList<String>();
     ArrayList<String> server_job_pinned = new ArrayList<String>();
 
+
     //------------------------
     ArrayList<Integer> server_job_id_temp = new ArrayList<Integer>();
     ArrayList<String> server_job_title_temp = new ArrayList<String>();
@@ -88,6 +89,8 @@ public class EmployeeJobSearch extends AppCompatActivity {
     ArrayList<String> server_job_applied_temp = new ArrayList<String>();
     ArrayList<String> server_job_companyName_temp = new ArrayList<String>();
     ArrayList<String> server_job_pinned_temp = new ArrayList<String>();
+
+
 
 
     private ListView searchedJobList;
@@ -160,7 +163,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
                applyButton.startAnimation(buttonClick);
 
-               app_for_job(101,temp_job_id);
+               app_for_job(Integer.parseInt(userIdLocal),temp_job_id);//turzo
            }
        });
     }
@@ -330,6 +333,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
                     server_job_applied.add(newObj.optString("appliad"));
                     server_job_companyName.add(newObj.optString("companyName"));
                     server_job_pinned.add(newObj.optString("pined"));
+
                     ////server_job_priority.add(newObj.optInt("priority"));
 
                 }else{
@@ -349,6 +353,8 @@ public class EmployeeJobSearch extends AppCompatActivity {
                     server_job_applied_temp.add(newObj.optString("appliad"));
                     server_job_companyName_temp.add(newObj.optString("companyName"));
                     server_job_pinned_temp.add(newObj.optString("pined"));
+
+
                     //server_job_priority_temp.add(newObj.optInt("priority"));
 
 
@@ -381,6 +387,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
                 server_job_applied.add(server_job_applied_temp.get(j));
                 server_job_companyName.add(server_job_companyName_temp.get(j));
                 server_job_pinned.add(server_job_pinned_temp.get(j));
+
             }
 
 

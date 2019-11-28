@@ -91,6 +91,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     ArrayList<String> server_job_deadline = new ArrayList<String>();
     ArrayList<Integer> server_job_category = new ArrayList<Integer>();
     ArrayList<Integer> server_job_priority = new ArrayList<Integer>();
+    ArrayList<JSONArray> server_job_applicantList = new ArrayList<JSONArray>();
 
     //------------------------
 
@@ -106,6 +107,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     ArrayList<String> server_job_deadline2 = new ArrayList<String>();
     ArrayList<Integer> server_job_category2 = new ArrayList<Integer>();
     ArrayList<Integer> server_job_priority2 = new ArrayList<Integer>();
+    ArrayList<JSONArray> server_job_applicantList2 = new ArrayList<JSONArray>();
 
     //-----------------------------------
     ArrayList<Integer> server_job_id3 = new ArrayList<Integer>();
@@ -120,6 +122,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     ArrayList<String> server_job_deadline3 = new ArrayList<String>();
     ArrayList<Integer> server_job_category3 = new ArrayList<Integer>();
     ArrayList<Integer> server_job_priority3 = new ArrayList<Integer>();
+    ArrayList<JSONArray> server_job_applicantList3 = new ArrayList<JSONArray>();
 
     //-----------------------------------
     ArrayList<Integer> server_job_id_temp = new ArrayList<Integer>();
@@ -134,6 +137,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     ArrayList<String> server_job_deadline_temp = new ArrayList<String>();
     ArrayList<Integer> server_job_category_temp = new ArrayList<Integer>();
     ArrayList<Integer> server_job_priority_temp = new ArrayList<Integer>();
+    ArrayList<JSONArray> server_job_applicantList_temp = new ArrayList<JSONArray>();
 
 
 
@@ -199,6 +203,9 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     private Button closePopupButton;
 
     private int backButtonValue = 1;
+
+    public static    ArrayList<Integer> applicant_list_show_id = new ArrayList<Integer>();
+    public static   ArrayList<String> applicant_list_show_name = new ArrayList<String>();
 
 
 
@@ -850,6 +857,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_deadline.add(newObj.optString("deadLine"));
                     server_job_category.add(newObj.optInt("category"));
                     server_job_priority.add(newObj.optInt("priority"));
+                    server_job_applicantList.add(newObj.optJSONArray("applicantList"));
                     //server_job_priority.add(newObj.optInt("priority"));
 
                 }else{
@@ -866,6 +874,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_deadline_temp.add(newObj.optString("deadLine"));
                     server_job_category_temp.add(newObj.optInt("category"));
                     server_job_priority_temp.add(newObj.optInt("priority"));
+                    server_job_applicantList_temp.add(newObj.optJSONArray("applicantList"));
                     //server_job_priority_temp.add(newObj.optInt("priority"));
 
 
@@ -895,6 +904,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                 server_job_deadline.add(server_job_deadline_temp.get(j));
                 server_job_category.add(server_job_category_temp.get(j));
                 server_job_priority.add(server_job_priority_temp.get(j));
+                server_job_applicantList.add(server_job_applicantList_temp.get(j));
             }
 
 
@@ -960,6 +970,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_deadline3.add(server_job_deadline.get(i));
                     server_job_category3.add(server_job_category.get(i));
                     server_job_priority3.add(server_job_priority.get(i));
+                    server_job_applicantList3.add( server_job_applicantList.get(i));
 
                 }else{
 
@@ -976,6 +987,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_deadline2.add(server_job_deadline.get(i));
                     server_job_category2.add(server_job_category.get(i));
                     server_job_priority2.add(server_job_priority.get(i));
+                    server_job_applicantList2.add( server_job_applicantList.get(i));
 
 
                 }
@@ -1584,6 +1596,49 @@ public void finishThis(){
         rq.add(jsonObjectRequest);
 
         //-----------------
+
+    }
+
+    public void showApplicantList(int position){
+
+        applicant_list_show_id.clear();
+        applicant_list_show_name.clear();
+
+        JSONArray jbj = new JSONArray();
+        jbj = server_job_applicantList.get(position);
+        //Log.e(TAG,jbj.toString());
+
+        if(jbj.toString().equalsIgnoreCase("[]")){
+
+            Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_LONG,true).show();
+        }else{
+
+            int size  = jbj.length();
+            if(size>0){
+
+                for(int i=0; i<size; i++) {
+
+                    JSONObject newObj = jbj.optJSONObject(i);
+                    applicant_list_show_id.add(newObj.optInt("userId"));
+                    applicant_list_show_name.add(newObj.optString("name"));
+
+                    //Log.e(TAG,"REsdfdsfdsfdf " + newObj.optString("name"));
+                }
+
+                Intent openApplicantList = new Intent(Company_Fetch_All_Jobs.this,Company_applicant_list.class);
+                startActivity(openApplicantList);
+
+
+            }else{
+
+                Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_LONG,true).show();
+            }
+        }
+
+        /*
+
+
+        */
 
     }
 
