@@ -678,6 +678,8 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
         });
 
+
+
        // categoryForServer.add(1);//turzo
       //  UpdateJobSeekerSkills(Integer.parseInt(userIdLocal),categoryForServer);
 
@@ -1532,6 +1534,29 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                makeArrayAdapterFromJsonObj(jobSeekerModel);
                 hideLoadingBar();
+
+
+                SharedPreferences prefs = getSharedPreferences("category_update", MODE_PRIVATE);
+
+
+                int tempInt = prefs.getInt("count", 0);
+               // Log.d(TAG,"Trying to fetch user data with the user ID save in shared preference : "+userIdLocal);
+                if(tempInt <= 0){
+                    forceCategoryUpdate();
+
+                    SharedPreferences.Editor editor = getSharedPreferences("category_update", MODE_PRIVATE).edit();
+
+                    editor.putInt("count", 1);
+                    editor.apply();
+
+
+                }else{
+
+
+
+                }
+
+                //forceCategoryUpdate();
 
 
 
@@ -2738,7 +2763,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                                        retrofit2.Response<UploadFileResponse> response) {
                     //Log.v("112233", response.body().getFileName()+"-------- "+response.body().getFileDownloadUri());
                     //Toasty.success(Job_Seeker_CV_Upload.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
-                    Log.d(TAG,response.body().getFileDownloadUri());
+                   // Log.d(TAG,response.body().getFileDownloadUri());
 
 
                     if(response.body().getStatus() == 200){
@@ -3018,7 +3043,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                         if(status == 200){
 
-                            Toasty.success(Job_Seeker_Dashboard.this,"Category updated successfully!",Toast.LENGTH_LONG, true).show();
+                           Toasty.success(Job_Seeker_Dashboard.this,"Category updated successfully!",Toast.LENGTH_LONG, true).show();
 
                             //Intent openJobSeekerSignUp = new Intent(Job_Seeker_Dashboard.this, Job_Seeker_Dashboard.class);
                             //startActivity(openJobSeekerSignUp);
@@ -3081,6 +3106,14 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
         return temp;
     }
 
+    public void forceCategoryUpdate(){
+
+        categoryForServer.clear();
+        categoryForServer.add(1);
+        UpdateJobSeekerCategory(Integer.parseInt(userIdLocal),categoryForServer);
+
+    }
+
 
 
     @Override
@@ -3094,6 +3127,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
     }
 
     //--------------------------------------
+
 
 
 }

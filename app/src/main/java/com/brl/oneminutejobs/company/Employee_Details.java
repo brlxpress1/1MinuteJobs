@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,8 @@ public class Employee_Details extends AppCompatActivity {
 
     private String downloadedFileName;
 
+    private LinearLayout panel_4_skills;
+
 
 
 
@@ -96,6 +99,7 @@ public class Employee_Details extends AppCompatActivity {
         skillsDisplay = (TextView)findViewById(R.id.skillsDisplay);
         expectedSalaryDisplay = (TextView)findViewById(R.id.expectedSalary);
         cvDownloadButtonClick = (Button)findViewById(R.id.dowload_button);
+        panel_4_skills = (LinearLayout)findViewById(R.id.panel_4_skills);
 
         SharedPreferences prefs = getSharedPreferences("UserDetailsData", MODE_PRIVATE);
         //userIdLocal = prefs.getString("userid", "");
@@ -163,6 +167,7 @@ public class Employee_Details extends AppCompatActivity {
         }
 
 
+
         if(localExperience != null && !localExperience.equalsIgnoreCase("") && !localExperience.equalsIgnoreCase("0")){
 
             experienceDisplay.setText(localExperience+" years");
@@ -181,7 +186,17 @@ public class Employee_Details extends AppCompatActivity {
             expectedSalaryDisplay.setText("N/A");
         }
 
-        skillsDisplay.setText(localSkills);
+        if(localSkills.equalsIgnoreCase("donot")){
+
+            //skillsDisplay.setVisibility(View.GONE);
+           // Toasty.info(Employee_Details.this,localSkills,Toasty.LENGTH_LONG,true).show();
+            panel_4_skills.setVisibility(View.GONE);
+
+        }else{
+
+            skillsDisplay.setText(localSkills);
+        }
+
 
         cvDownloadButtonClick.setOnClickListener(new View.OnClickListener() {
             @Override

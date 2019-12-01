@@ -33,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.brl.oneminutejobs.others.ImagePickerActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -50,6 +51,8 @@ import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.Dialogue_Helper;
 import com.brl.oneminutejobs.others.Skill_Selector;
+import com.ybs.countrypicker.CountryPicker;
+import com.ybs.countrypicker.CountryPickerListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,12 +130,15 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     private TextView searchTypeText;
     private int backButtonValue = 0;
 
+    CountryPicker picker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_searchboard);
 
+        picker = CountryPicker.newInstance("Select Location");
 
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
@@ -172,6 +178,8 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         gender_input2 = (LinearLayout)findViewById(R.id.gender_input);
 
         searchTypeText = (TextView)findViewById(R.id.searchTypeText);
+
+
 
 
 
@@ -287,11 +295,24 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-                openLocationInput(locationBox);
+                //openLocationInput(locationBox);
+                //Toasty.info(Company_SearchBoard.this,"Clicked",Toasty.LENGTH_LONG,false).show();
+               // turzo
+
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
 
             }
         });
 
+
+        picker.setListener(new CountryPickerListener() {
+            @Override
+            public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+
+                locationBox.setText(name);
+                picker.dismiss();
+            }
+        });
 
         secondarySearchClick.setOnClickListener(new View.OnClickListener() {
             @Override

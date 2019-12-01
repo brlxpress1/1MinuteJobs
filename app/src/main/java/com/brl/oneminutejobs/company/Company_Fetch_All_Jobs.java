@@ -1627,6 +1627,7 @@ public void finishThis(){
 
                 Intent openApplicantList = new Intent(Company_Fetch_All_Jobs.this,Company_applicant_list.class);
                 startActivity(openApplicantList);
+                backButtonValue = 0;
 
 
             }else{
