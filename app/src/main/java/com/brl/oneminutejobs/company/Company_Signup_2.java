@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +69,7 @@ public class Company_Signup_2 extends AppCompatActivity {
 
     private String otpID;
     private FirebaseAuth fbAuth;
+    private LinearLayout verifyPanel;
 
 
 
@@ -79,6 +82,7 @@ public class Company_Signup_2 extends AppCompatActivity {
         otpCodeInput = (EditText)findViewById(R.id.otp_code_input);
         verifyButton = (Button)findViewById(R.id.verify_button);
         resendButton = (TextView)findViewById(R.id.resend_button);
+        verifyPanel = (LinearLayout)findViewById(R.id.verifyPanel);
 
 
         //-- Changing selection effect of input fields
@@ -153,6 +157,8 @@ public class Company_Signup_2 extends AppCompatActivity {
 
             }
         });
+
+        verifyPanel.setVisibility(View.INVISIBLE);
 
 
 
@@ -232,6 +238,8 @@ public class Company_Signup_2 extends AppCompatActivity {
                         this,               // Activity (for callback binding)
 
                         verificationCallbacks);
+
+                startCountDownTimer();
 
 
 
@@ -359,6 +367,7 @@ public class Company_Signup_2 extends AppCompatActivity {
                 otpID = verificationId;
 
                 Toasty.info(Company_Signup_2.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
+                verifyPanel.setVisibility(View.VISIBLE);
                 hideLoadingBar();
 
 
@@ -655,6 +664,22 @@ public class Company_Signup_2 extends AppCompatActivity {
 
     }
 
+
+    public void startCountDownTimer(){
+
+        new CountDownTimer(ConstantsHolder.otpLifeTime, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                resendButton.setText(String.valueOf(millisUntilFinished / 1000) );
+                // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //mTextField.setText("done!");
+                resendButton.setText("Did not get your code? Resend");
+            }
+        }.start();
+    }
 
 
     //---------------

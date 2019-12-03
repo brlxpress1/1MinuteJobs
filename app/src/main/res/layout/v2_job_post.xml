@@ -69,7 +69,7 @@
                         android:hint="Example : Software Engineer"
                         android:inputType="textPersonName"
                         android:textColorHint="@color/delete_message_text"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+
                         android:textSize="14sp" />
                 </LinearLayout>
 

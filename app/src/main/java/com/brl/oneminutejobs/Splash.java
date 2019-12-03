@@ -74,8 +74,8 @@ public class Splash extends AppCompatActivity {
                         serverURLFromFirebase = dataSnapshot.child("version").child("app_data").child("server_url").getValue().toString();
                         versionCodeFromFirebase = dataSnapshot.child("version").child("app_data").child("version_code").getValue().toString();
 
-                       // ConstantsHolder.rawServer = serverURLFromFirebase;
-                        ConstantsHolder.rawServer = "http://192.168.70.165:8090/";
+                      ConstantsHolder.rawServer = serverURLFromFirebase;
+                        //ConstantsHolder.rawServer = "http://192.168.70.165:8090/";
 
                         int versionCode = BuildConfig.VERSION_CODE;
                         String versionCodeString =  String.valueOf(versionCode);

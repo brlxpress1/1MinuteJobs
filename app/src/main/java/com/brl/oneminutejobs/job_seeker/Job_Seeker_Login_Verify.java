@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +66,9 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
 
     private String otpID;
     private FirebaseAuth fbAuth;
+    private LinearLayout  verifyPanel;
+    private String tempUserIDforDestroyApp = "";
+    private String tempUserTypeforDestroyApp = "";
 
 
 
@@ -76,7 +81,9 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
         otpCodeInput = (EditText)findViewById(R.id.otp_code_input);
         verifyButton = (Button)findViewById(R.id.verify_button);
         resendButton = (TextView)findViewById(R.id.resend_button);
+        verifyPanel = (LinearLayout)findViewById(R.id.verifyPanel);
 
+        verifyPanel.setVisibility(View.INVISIBLE);
 
         //-- Changing selection effect of input fields
         otpCodeInput.setOnFocusChangeListener((view, b) -> {
@@ -150,6 +157,13 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
 
             }
         });
+
+        //SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+
+       // logOutTheUser();
+        tempUserIDforDestroyApp = prefs.getString("userid", "");
+        logOutTheUser();
+
 
 
 
@@ -226,6 +240,8 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
                     this,               // Activity (for callback binding)
 
                     verificationCallbacks);
+
+            startCountDownTimer();
 
 
 
@@ -358,6 +374,7 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
                 otpID = verificationId;
 
                 Toasty.info(Job_Seeker_Login_Verify.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
+                verifyPanel.setVisibility(View.VISIBLE);
                 hideLoadingBar();
 
 
@@ -397,6 +414,17 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
 
 
                             //--
+
+                            SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
+                            editor.putString("userid", tempUserIDforDestroyApp);
+                            //editor.putString("userphone", "");
+                            editor.apply();
+
+
+                            SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
+                            typeEditor.putInt("type", 2);
+                            typeEditor.apply();
+
                             Intent openSecondVerifier = new Intent(Job_Seeker_Login_Verify.this,Job_Seeker_Modified_Dashboard.class);
                             startActivity(openSecondVerifier);
                             finish();
@@ -509,7 +537,32 @@ public class Job_Seeker_Login_Verify extends AppCompatActivity {
 
     //-------------------------
 
+    public void startCountDownTimer(){
 
+        new CountDownTimer(ConstantsHolder.otpLifeTime, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                resendButton.setText(String.valueOf(millisUntilFinished / 1000) );
+                // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //mTextField.setText("done!");
+                resendButton.setText("Did not get your code? Resend");
+            }
+        }.start();
+    }
+
+    public void logOutTheUser(){
+
+        SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
+        editor.putString("userid", "");
+        editor.apply();
+
+        SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
+        typeEditor.putInt("type", 0);
+        typeEditor.apply();
+    }
 
 
 

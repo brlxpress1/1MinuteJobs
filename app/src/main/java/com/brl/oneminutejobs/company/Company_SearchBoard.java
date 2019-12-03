@@ -1,5 +1,6 @@
 package com.brl.oneminutejobs.company;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,9 +9,11 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -85,7 +88,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
 
     String[] professions ={"Android Developer","Java","Software Engineer","3D Artist","2D Artist","Marketing Assitant","Human Resource"};
-    private AutoCompleteTextView autoCompleteTextView;
+    //private AutoCompleteTextView autoCompleteTextView;
 
     private Dialog dialog;
 
@@ -99,7 +102,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
     ArrayList<String> jobSeekerCVUrl = new ArrayList<>();
 
-    private LinearLayout panel_1_normal_search;
+    //private LinearLayout panel_1_normal_search;
     private LinearLayout panel_2_search_window;
     private LinearLayout panel_3_advanceSearchWindow;
     private ListView searchView;
@@ -109,8 +112,8 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     ArrayList<String> skillIdList = new ArrayList<String>();
     ArrayList<String> skillNameList = new ArrayList<String>();
 
-    private LinearLayout drawerOpener;
-    private LinearLayout basicSearchClick;
+   // private LinearLayout drawerOpener;
+   // private LinearLayout basicSearchClick;
 
     private DrawerLayout drawer_layout;
 
@@ -131,6 +134,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     private int backButtonValue = 0;
 
     CountryPicker picker;
+    private Button drawer_opener;
 
 
     @Override
@@ -151,15 +155,15 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         View header = navigationView.getHeaderView(0);
         avatarPhoto = (CircleImageView) header.findViewById(R.id.avatar_pic);
         avatarName = (TextView) header.findViewById(R.id.nav_header_textView);
-        autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView2);
 
-        panel_1_normal_search = (LinearLayout)findViewById(R.id.panel_1_normal_search);
+
+       // panel_1_normal_search = (LinearLayout)findViewById(R.id.panel_1_normal_search);
         panel_2_search_window = (LinearLayout)findViewById(R.id.panel_2_search_window);
         panel_3_advanceSearchWindow = (LinearLayout)findViewById(R.id.panel_3_advanced_filters);
         searchView = (ListView)findViewById(R.id.searchView);
 
-        drawerOpener = (LinearLayout)findViewById(R.id.draweropener);
-        basicSearchClick = (LinearLayout)findViewById(R.id.basicSearchButton);
+
+
         drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         basic_search_option = (Button)findViewById(R.id.basic_search_option);
@@ -178,6 +182,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         gender_input2 = (LinearLayout)findViewById(R.id.gender_input);
 
         searchTypeText = (TextView)findViewById(R.id.searchTypeText);
+        drawer_opener = (Button)findViewById(R.id.drawer_opener);
 
 
 
@@ -226,37 +231,9 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             }
         });
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, int pos,
-                                    long id) {
-
-                //Toast.makeText(Company_SearchBoard.this," selected", Toast.LENGTH_LONG).show();
-                showSearchResult(autoCompleteTextView.getText().toString(),0,100);
-                //Log.d(TAG,autoCompleteTextView.getText().toString());
 
 
-            }
-        });
 
-        basicSearchClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                basicSearchClick.startAnimation(buttonClick);
-                showSearchResult(autoCompleteTextView.getText().toString(),0,100);
-
-            }
-        });
-
-        drawerOpener.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                drawer_layout.openDrawer(Gravity.LEFT);
-            }
-        });
 
 
         basic_search_option.setOnClickListener(new View.OnClickListener() {
@@ -371,7 +348,48 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         });
 
 
+        //-- Hide keyboard
 
+        /*
+        secondarySearchBox.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            //addCourseFromTextBox();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+        */
+
+        drawer_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               // Toasty.info(Company_SearchBoard.this,"Working",Toasty.LENGTH_SHORT,true).show();
+                drawer_opener.startAnimation(buttonClick);
+                drawer_layout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+
+
+        //-----------------------
 
 
 
@@ -521,7 +539,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
 
                     backButtonBehaviour = 1;
-                    search_title_name.setText(autoCompleteTextView.getText().toString());
+
                     // panel_1_normal_search.getLayoutParams().height = 0;
                     //searchView.setAdapter(null);
 
@@ -752,7 +770,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
 
                     backButtonBehaviour = 2;
-                    search_title_name.setText(autoCompleteTextView.getText().toString());
+
                     // panel_1_normal_search.getLayoutParams().height = 0;
                     //searchView.setAdapter(null);
 
@@ -1150,7 +1168,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
 
                 professions = skillNameList.toArray(new String[skillNameList.size()]);
-                readyProfesionBox(autoCompleteTextView);
+
                 readyProfesionBox2(secondarySearchBox);
 
                 hideLoadingBar();
@@ -1245,7 +1263,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     private void showLayout(int i){
 
 
-        panel_1_normal_search.setVisibility(View.GONE);
+     //   panel_1_normal_search.setVisibility(View.GONE);
         panel_2_search_window.setVisibility(View.GONE);
         panel_3_advanceSearchWindow.setVisibility(View.GONE);
 

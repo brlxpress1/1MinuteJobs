@@ -428,7 +428,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
         // String date2 = dayOfMonth+"-"+month+"-"+year;
 
         String day1 = completeNumber(dayOfMonth);
-        String month1 = completeNumber(month);
+        String month1 = completeNumber(month+1);
 
         String niceFormat = day1+"-"+month1+"-"+year;
 
@@ -566,7 +566,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
                             Toasty.success(Company_Job_Post.this,"Job posted successfully",Toasty.LENGTH_LONG,true).show();
 
-                            Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_Job_Post.class);
+                            Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_Fetch_All_Jobs.class);
                             startActivity(openJobSeekerSignUp);
                             finish();
 

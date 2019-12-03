@@ -42,6 +42,8 @@ public class ConstantsHolder {
     public static String findAllMyJobs = "findAllMyJobs";
     public static String jobSeekerCategoryUpdate = "UserDetails/JobSeeker/CatagoryUpdate";
 
+    public static long otpLifeTime = 60000;
+
 
 
 

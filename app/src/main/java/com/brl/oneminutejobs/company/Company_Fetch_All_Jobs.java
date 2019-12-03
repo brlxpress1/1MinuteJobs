@@ -202,7 +202,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     private Button deletePostButton;
     private Button closePopupButton;
 
-    private int backButtonValue = 1;
+    private int backButtonValue = 0;
 
     public static    ArrayList<Integer> applicant_list_show_id = new ArrayList<Integer>();
     public static   ArrayList<String> applicant_list_show_name = new ArrayList<String>();
