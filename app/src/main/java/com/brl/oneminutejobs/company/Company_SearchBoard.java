@@ -34,6 +34,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.others.ImagePickerActivity;
@@ -135,6 +136,9 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
     CountryPicker picker;
     private Button drawer_opener;
+
+    private JSONArray tempCategorySaver = new JSONArray();
+    private int originalCategory = 1;
 
 
     @Override
@@ -1276,6 +1280,8 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             panel_2_search_window.setVisibility(View.VISIBLE);
         }
     }
+
+
 
 
 }

@@ -7,12 +7,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.CpuUsageInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -32,6 +34,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
@@ -207,6 +210,11 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     public static    ArrayList<Integer> applicant_list_show_id = new ArrayList<Integer>();
     public static   ArrayList<String> applicant_list_show_name = new ArrayList<String>();
 
+    ArrayList<String> categoryFromServerNormalArray = new ArrayList<String>();
+    private int originalCategory = 1;
+
+    ArrayList<String> categoryFromServerNormalArray2 = new ArrayList<String>();
+
 
 
     @Override
@@ -322,6 +330,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     current_job_list.smoothScrollToPosition(0);
                     expired_job_list.smoothScrollToPosition(0);
 
+                    //getCategoryAll2();
+
                 }else{
 
                     Toasty.warning(Company_Fetch_All_Jobs.this, "No jobs post data available!", Toast.LENGTH_LONG, true).show();
@@ -346,6 +356,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     all_job_list.smoothScrollToPosition(0);
                     current_job_list.smoothScrollToPosition(0);
                     expired_job_list.smoothScrollToPosition(0);
+
+
 
                 }else{
 
@@ -467,7 +479,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                 String salaryTxt = job_salary.getText().toString();
                 String locationTxt = job_location.getText().toString();
                 String deadlineTxt = job_deadline.getText().toString();
-                int catagoryTxt = job_catagory.getSelectedItemPosition();
+                int catagoryTxt = job_catagory.getSelectedItemPosition()+1;
 
 
 
@@ -664,6 +676,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
 
                 showLayout(2);//turzo
+                getCategoryAll();
                 openEditWindow(temp_id,temp_position);
 
             }
@@ -690,6 +703,9 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
 
         //------------------------------------------------------------- End of oncreate function
+
+
+
         //--------------------------------------------------------------
 
 
@@ -732,7 +748,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     }
 
     // this method will store the info of user to  database
-    private void fetch_all_jobs(int userID) {
+    private void fetch_all_jobs(int userID) {//turzo
 
         showLoadingBarAlert();
 
@@ -746,7 +762,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
             e.printStackTrace();
         }
 
-        Log.d(TAG,parameters.toString());
+        Log.e(TAG,parameters.toString());
+        Log.e(TAG,ConstantsHolder.rawServer+ConstantsHolder.findUserAllJobPost);
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -912,7 +929,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
             //---------------
         }
 
-        //Log.d(TAG,server_job_title.toString());
+        Log.e(TAG,server_job_category.toString());
         if(server_job_id.size() > 0 ){
 
             all_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id.size(),server_job_id,server_job_title,server_job_deadline,server_job_priority));
@@ -1007,6 +1024,8 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
             expired_job_list.setAdapter(new FetchJobsAdapter(this,server_job_id3.size(),server_job_id3,server_job_title3,server_job_deadline3,server_job_priority3));
         }
 
+        getCategoryAll2();
+
 
     }
 
@@ -1049,7 +1068,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     }
 
 
-public void openDetailsWindow(int postID){
+public void openDetailsWindow(int postID, int anotherID){
 
     backButtonValue = 1;
 
@@ -1087,6 +1106,69 @@ public void openDetailsWindow(int postID){
         locationShow.setText(server_job_location.get(postID));
         deadlineShow.setText(server_job_deadline.get(postID));
 
+    String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+
+    /*
+    for(int i=0; i<stringArray.length; i++){
+
+        Log.e(TAG,stringArray[i]);
+    }
+    */
+   // Log.e(TAG,"Value from server "+server_job_category.get(postID-1));
+
+
+/*
+    if(server_job_category.get(postID) <= 0){
+
+        categoryShow.setText(stringArray[0]);
+    }else{
+
+        categoryShow.setText(stringArray[server_job_category.get(postID-1)]);
+    }
+    */
+//Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(server_job_category.get(postID)),Toasty.LENGTH_SHORT,true).show(); //turzo
+
+   // categoryShow.setText(categoryFromServerNormalArray.get(postID));
+    //Log.e(TAG,categoryFromServerNormalArray.toString());
+
+    for(int i=0; i<server_job_category.size(); i++){
+
+        /*
+        if(server_job_category.get(i) == postID){
+
+            categoryShow.setText(server_job_category.get(i));
+        }
+        */
+
+
+    }
+
+   Log.e(TAG,"_____________"+server_job_category.toString());
+  Log.e(TAG,"_____________"+String.valueOf(server_job_category.get(postID)));
+  int id = server_job_category.get(postID);
+    Log.e(TAG,"_____________"+String.valueOf(id));
+
+    id--;
+
+
+    if(id < 0){
+
+        //Log.e(TAG,"No category selected");
+        categoryShow.setText("No category selected");
+
+    }else{
+
+
+        categoryShow.setText(categoryFromServerNormalArray2.get(id));
+        //Log.e(TAG,categoryFromServerNormalArray2.get(id));
+    }
+
+   // categoryShow.setText(categoryFromServerNormalArray2.get(server_job_category.get(postID)));
+
+
+
+
+    /*
         if(server_job_category.get(postID) == 1){
 
             categoryShow.setText("IT/Telecommunication");
@@ -1094,6 +1176,7 @@ public void openDetailsWindow(int postID){
 
             categoryShow.setText("Industrial");
         }
+        */
 
 
         //detailsPanel.setVisibility(View.VISIBLE);
@@ -1234,7 +1317,8 @@ public void finishThis(){
             e.printStackTrace();
         }
 
-        Log.d(TAG,parameters.toString());
+        Log.e(TAG,parameters.toString());
+        Log.e(TAG,ConstantsHolder.rawServer+ConstantsHolder.updateJobPost);
 
 
 
@@ -1250,9 +1334,9 @@ public void finishThis(){
 
                         String status =response.optString("status");
 
-                        if(status.equalsIgnoreCase("200")){
+                        if(status.equalsIgnoreCase("200")){//turzo
 
-                            Toasty.success(Company_Fetch_All_Jobs.this,"Job edited successfully",Toasty.LENGTH_LONG,true).show();
+                            Toasty.success(Company_Fetch_All_Jobs.this,"Job updated successfully",Toasty.LENGTH_LONG,true).show();
 
                             hideLoadingBar();
 
@@ -1266,6 +1350,7 @@ public void finishThis(){
                             Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
 
                             hideLoadingBar();
+
                         }
 
 
@@ -1354,6 +1439,8 @@ public void finishThis(){
 
         postEditPanel.setVisibility(View.VISIBLE);
         temp_id = id;
+
+        originalCategory = server_job_category.get(position);
 
     }
 
@@ -1641,6 +1728,199 @@ public void finishThis(){
 
         */
 
+    }
+
+
+    //-- Get category all
+    // this method will store the info of user to  database
+    private void getCategoryAll() {
+
+
+        showLoadingBarAlert();
+
+        categoryFromServerNormalArray.clear();
+
+
+
+
+
+        //--
+
+        // Initialize a new RequestQueue instance
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize a new JsonArrayRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConstantsHolder.rawServer+ ConstantsHolder.findCategoryAll,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Log.d(TAG,response.toString());
+
+
+
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject student = response.optJSONObject(i);
+
+                                // Get the current student (json object) data
+                                String name = student.getString("name");
+
+                                //Log.e(TAG,name);
+
+                                //categoryShow.setText(name);
+                                categoryFromServerNormalArray.add(name);
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+                        //--
+                        String[] mStringArray = new String[categoryFromServerNormalArray.size()];
+                        mStringArray = categoryFromServerNormalArray.toArray(mStringArray);
+
+                        readyCategorySpinner(mStringArray);
+
+
+
+                        //---------------
+
+                        hideLoadingBar();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+
+                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }
+        );
+
+
+
+        //--------------------
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.getCache().clear();
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    //-- Get category all
+    // this method will store the info of user to  database
+    private void getCategoryAll2() {
+
+
+        //showLoadingBarAlert();
+
+        categoryFromServerNormalArray.clear();
+
+
+
+
+
+        //--
+
+        // Initialize a new RequestQueue instance
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize a new JsonArrayRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConstantsHolder.rawServer+ ConstantsHolder.findCategoryAll,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Log.d(TAG,response.toString());
+
+
+
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject student = response.optJSONObject(i);
+
+                                // Get the current student (json object) data
+                                String name = student.getString("name");
+
+                                //Log.e(TAG,name);
+
+                                //categoryShow.setText(name);
+                                categoryFromServerNormalArray2.add(name);
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+
+                        //---------------
+
+                       // hideLoadingBar();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+
+                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                       // hideLoadingBar();
+
+                    }
+                }
+        );
+
+
+
+        //--------------------
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.getCache().clear();
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    public void readyCategorySpinner(String[] temp){
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, temp);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        job_catagory.setAdapter(spinnerArrayAdapter);
+
+        int position = originalCategory - 1;
+        if(position < 0){
+            position = 0;
+        }
+        job_catagory.setSelection(position);
     }
 
 

@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -226,6 +227,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         String respo=response.toString();
                         Log.d(TAG,respo);
+                        Log.d(TAG,ConstantsHolder.rawServer+ ConstantsHolder.findEmployeeAllPost);
 
                         //Log.d(TAG,respo);
 
@@ -470,6 +472,13 @@ public class EmployeeJobSearch extends AppCompatActivity {
         locationShow.setText(server_job_location.get(position));
         deadlineShow.setText(server_job_deadline.get(position));
 
+
+        String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+
+        categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+
+        /*
+
         if(server_job_category.get(position) == 1){
 
             categoryShow.setText("IT/Telecommunication");
@@ -477,6 +486,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
             categoryShow.setText("Industrial");
         }
+        */
 
 
         //detailsPanel.setVisibility(View.VISIBLE);

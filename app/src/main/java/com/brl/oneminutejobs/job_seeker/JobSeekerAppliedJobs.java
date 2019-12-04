@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -526,6 +527,19 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            locationShow.setText(server_job_location.get(position));
            deadlineShow.setText(server_job_deadline.get(position));
 
+           String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+
+           try{
+
+               categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+
+           }catch (Resources.NotFoundException ex){
+
+               Log.d(TAG,"Category array conflicted......");
+           }
+
+
+           /*
            if(server_job_category.get(position) == 1){
 
                categoryShow.setText("IT/Telecommunication");
@@ -533,6 +547,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
                categoryShow.setText("Industrial");
            }
+           */
 
 
            //detailsPanel.setVisibility(View.VISIBLE);
@@ -591,6 +606,12 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            locationShow.setText(server_job_location2.get(position));
            deadlineShow.setText(server_job_deadline2.get(position));
 
+           String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+
+           categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+
+           /*
+
            if(server_job_category2.get(position) == 1){
 
                categoryShow.setText("IT/Telecommunication");
@@ -598,6 +619,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
                categoryShow.setText("Industrial");
            }
+           */
 
 
            //detailsPanel.setVisibility(View.VISIBLE);

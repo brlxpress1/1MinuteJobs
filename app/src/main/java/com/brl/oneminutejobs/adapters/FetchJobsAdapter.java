@@ -208,7 +208,7 @@ public class FetchJobsAdapter extends BaseAdapter {
                 int temp = server_job_id.get(position);
 
 
-                ((Company_Fetch_All_Jobs)context).openDetailsWindow(position);
+                ((Company_Fetch_All_Jobs)context).openDetailsWindow(position,temp);
 
 
             }

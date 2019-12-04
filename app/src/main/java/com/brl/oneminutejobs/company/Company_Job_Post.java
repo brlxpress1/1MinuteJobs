@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,13 +31,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
+import com.brl.oneminutejobs.job_seeker.EmployeeJobSearch;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -46,6 +50,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,6 +62,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,6 +110,12 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
     private Dialog dialog;
 
     int[] applicantList;
+
+
+   // String[] categoryFromServerNormalArray;
+   ArrayList<String> categoryFromServerNormalArray = new ArrayList<String>();
+    private int originalCategory = 1;
+
 
 
 
@@ -234,7 +246,10 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                 String salaryTxt = job_salary.getText().toString();
                 String locationTxt = job_location.getText().toString();
                 String deadlineTxt = job_deadline.getText().toString();
-                int catagoryTxt = job_catagory.getSelectedItemPosition();
+                int catagoryTxt = job_catagory.getSelectedItemPosition()+1;
+                //Toasty.info(Company_Job_Post.this,String.valueOf(catagoryTxt),Toasty.LENGTH_SHORT).show();
+
+
 
 
 
@@ -369,13 +384,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                         msg = msg + "- Add how many number of employees do you want."+"\n\n";
                     }
 
-                    /*
 
-                    if(!salaryFlag){
-
-                        msg = msg + "- Enter the amount of salary for this job post."+"\n\n";
-                    }
-                    */
 
 
                     if(!locationFlag){
@@ -407,6 +416,8 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
 
         //---------------------
+
+        getCategoryAll();
 
 
 
@@ -607,6 +618,107 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
         rq.add(jsonObjectRequest);
 
 
+    }
+
+
+    //-- Get category all
+    // this method will store the info of user to  database
+    private void getCategoryAll() {
+
+
+        showLoadingBarAlert();
+
+
+
+
+
+
+        //--
+
+        // Initialize a new RequestQueue instance
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize a new JsonArrayRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConstantsHolder.rawServer+ ConstantsHolder.findCategoryAll,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Log.d(TAG,response.toString());
+
+
+
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject student = response.optJSONObject(i);
+
+                                // Get the current student (json object) data
+                                String name = student.getString("name");
+
+                                //Log.e(TAG,name);
+
+                                categoryFromServerNormalArray.add(name);
+                              // categoryFromServerNormalArray[i] = name;
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+                        //--
+
+                       String[] mStringArray = new String[categoryFromServerNormalArray.size()];
+                        mStringArray = categoryFromServerNormalArray.toArray(mStringArray);
+
+                        readyCategorySpinner(mStringArray);
+
+
+
+                        //---------------
+
+                        hideLoadingBar();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+
+                        Toasty.error(Company_Job_Post.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }
+        );
+
+
+
+        //--------------------
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.getCache().clear();
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    public void readyCategorySpinner(String[] temp){
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, temp);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        job_catagory.setAdapter(spinnerArrayAdapter);
     }
 
 

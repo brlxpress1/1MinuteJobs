@@ -44,6 +44,8 @@ public class ConstantsHolder {
 
     public static long otpLifeTime = 60000;
 
+    public static String findCategoryAll = "findCategoryAll";
+
 
 
 

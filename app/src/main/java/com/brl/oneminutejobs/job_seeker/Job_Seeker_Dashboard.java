@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -50,8 +51,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.brl.oneminutejobs.company.Company_Job_Post;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.downloader.Error;
@@ -223,6 +226,11 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
     private Spinner categoryBox;
     private ImageView categoryBoxOpener;
     private int categoryBoxEnabler = 0;
+
+    ArrayList<String> categoryFromServerNormalArray = new ArrayList<String>();
+
+    private JSONArray tempCategorySaver = new JSONArray();
+    private int originalCategory = 1;
 
 
 
@@ -664,6 +672,8 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                     categoryForServer.clear();
                     categoryForServer.add(position+1);
                     UpdateJobSeekerCategory(Integer.parseInt(userIdLocal),categoryForServer);
+                   // Toasty.error(Job_Seeker_Dashboard.this,"Category selected forecefully",Toasty.LENGTH_SHORT).show();
+
                 }else{
 
                     categoryBoxEnabler = 1;
@@ -673,7 +683,10 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+
                 // your code here
+
+
             }
 
         });
@@ -1315,7 +1328,8 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                     @Override
                     public void onResponse(JSONObject response) {
                         String respo=response.toString();
-                        Log.d("1212",respo);
+                        Log.d(TAG,respo);
+                        Log.d(TAG,ConstantsHolder.rawServer+ConstantsHolder.fetchUserData);
 
                         //Log.d(TAG,respo);
 
@@ -1533,14 +1547,26 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
 
                makeArrayAdapterFromJsonObj(jobSeekerModel);
+
+
                 hideLoadingBar();
 
 
-                SharedPreferences prefs = getSharedPreferences("category_update", MODE_PRIVATE);
+               // SharedPreferences prefs = getSharedPreferences("category_update", MODE_PRIVATE);
 
 
-                int tempInt = prefs.getInt("count", 0);
+              //  int tempInt = prefs.getInt("count", 0);
                // Log.d(TAG,"Trying to fetch user data with the user ID save in shared preference : "+userIdLocal);
+
+                getCategoryAll();
+
+                tempCategorySaver = jobSeekerModel.optJSONArray("categorys");
+                Log.d(TAG,tempCategorySaver.toString()+"----------------------------");
+                JSONObject tempJ = new JSONObject();
+                tempJ = tempCategorySaver.optJSONObject(0);
+                originalCategory = tempJ.optInt("categoryId");
+
+                /*
                 if(tempInt <= 0){
                     forceCategoryUpdate();
 
@@ -1555,6 +1581,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
 
                 }
+                */
 
                 //forceCategoryUpdate();
 
@@ -3004,7 +3031,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
     // Update category
     private void UpdateJobSeekerCategory(int userID,ArrayList<Integer> categoryId) {
 
-        showLoadingBarAlert();
+       // showLoadingBarAlert();
 
         JSONObject parameters = new JSONObject();
         try {
@@ -3043,7 +3070,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                         if(status == 200){
 
-                           Toasty.success(Job_Seeker_Dashboard.this,"Category updated successfully!",Toast.LENGTH_LONG, true).show();
+                          // Toasty.success(Job_Seeker_Dashboard.this,"Category updated successfully!",Toast.LENGTH_LONG, true).show();
 
                             //Intent openJobSeekerSignUp = new Intent(Job_Seeker_Dashboard.this, Job_Seeker_Dashboard.class);
                             //startActivity(openJobSeekerSignUp);
@@ -3055,7 +3082,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                         }
 
-                        hideLoadingBar();
+                      //  hideLoadingBar();
 
 
 
@@ -3068,7 +3095,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                         // TODO: Handle error
                         Toasty.error(Job_Seeker_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
-                        hideLoadingBar();
+                      //  hideLoadingBar();
 
                     }
                 }){
@@ -3113,6 +3140,114 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
         UpdateJobSeekerCategory(Integer.parseInt(userIdLocal),categoryForServer);
 
     }
+
+
+    //-- Get category all
+    // this method will store the info of user to  database
+    private void getCategoryAll() {
+
+
+        showLoadingBarAlert();
+
+
+
+
+
+
+        //--
+
+        // Initialize a new RequestQueue instance
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize a new JsonArrayRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConstantsHolder.rawServer+ ConstantsHolder.findCategoryAll,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Log.d(TAG,response.toString());
+
+
+
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject student = response.optJSONObject(i);
+
+                                // Get the current student (json object) data
+                                String name = student.getString("name");
+
+                                //Log.e(TAG,name);
+
+                                categoryFromServerNormalArray.add(name);
+                                // categoryFromServerNormalArray[i] = name;
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+                        //--
+
+                        String[] mStringArray = new String[categoryFromServerNormalArray.size()];
+                        mStringArray = categoryFromServerNormalArray.toArray(mStringArray);
+
+                        readyCategorySpinner(mStringArray);
+
+
+
+                        //---------------
+
+                        hideLoadingBar();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+
+                        Toasty.error(Job_Seeker_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }
+        );
+
+
+
+        //--------------------
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.getCache().clear();
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    public void readyCategorySpinner(String[] temp){
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, temp);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        categoryBox.setAdapter(spinnerArrayAdapter);
+
+        int position = originalCategory - 1;
+        if(position < 0){
+            position = 0;
+        }
+        categoryBox.setSelection(position);
+    }
+
 
 
 
