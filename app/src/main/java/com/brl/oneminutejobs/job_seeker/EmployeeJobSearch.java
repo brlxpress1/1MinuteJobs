@@ -245,7 +245,15 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
                             if(dataList.equalsIgnoreCase("[]")){
 
-                                Toasty.warning(EmployeeJobSearch.this, "No job data available!", Toast.LENGTH_LONG, true).show();
+                                Toasty.warning(EmployeeJobSearch.this, "No job data available! Please complete your profile to see available jobs for you.", Toast.LENGTH_LONG, true).show();
+
+                                Intent openDashboard = new Intent(EmployeeJobSearch.this,Job_Seeker_Dashboard.class);
+                                startActivity(openDashboard);
+                                finish();
+
+
+
+
                             }else{
 
                                 //parseFetchData(response.optJSONObject("jobpostList"));

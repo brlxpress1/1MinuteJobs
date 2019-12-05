@@ -481,6 +481,9 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                 String deadlineTxt = job_deadline.getText().toString();
                 int catagoryTxt = job_catagory.getSelectedItemPosition()+1;
 
+                descriptionTxt = descriptionTxt.replace("*","");
+                educationalQualificationTxt = educationalQualificationTxt.replace("*","");
+
 
 
                 //--
@@ -772,7 +775,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     @Override
                     public void onResponse(JSONObject response) {
                         String respo=response.toString();
-                        Log.d(TAG,respo);
+                        Log.e(TAG,respo);
 
                         //Log.d(TAG,respo);
 
@@ -866,7 +869,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_title.add(newObj.optString("title"));
                     server_job_description.add(newObj.optString("description"));
                     server_job_qualification.add(newObj.optString("educationQualification"));
-                    server_job_jobTypeId.add(newObj.optInt("jobTypeId"));
+                    server_job_jobTypeId.add(newObj.optInt("jobType"));
                     server_job_noOfOpening.add(newObj.optInt("noOfOpening"));
                     server_job_timing.add(newObj.optInt("timing"));
                     server_job_salary.add((float)newObj.optInt("salary"));
@@ -883,7 +886,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     server_job_title_temp.add(newObj.optString("title"));
                     server_job_description_temp.add(newObj.optString("description"));
                     server_job_qualification_temp.add(newObj.optString("educationQualification"));
-                    server_job_jobTypeId_temp.add(newObj.optInt("jobTypeId"));
+                    server_job_jobTypeId_temp.add(newObj.optInt("jobType"));
                     server_job_noOfOpening_temp.add(newObj.optInt("noOfOpening"));
                     server_job_timing_temp.add(newObj.optInt("timing"));
                     server_job_salary_temp.add((float)newObj.optInt("salary"));
@@ -1078,6 +1081,9 @@ public void openDetailsWindow(int postID, int anotherID){
         descriptionShow.setText(furnishedString(server_job_description.get(postID)));
         qualificationShow.setText(furnishedString(server_job_qualification.get(postID)));
 
+
+   // Log.e(TAG,server_job_jobTypeId.toString());//turzo
+     //   Log.e(TAG,String.valueOf(server_job_jobTypeId.get(postID)));
         if(server_job_jobTypeId.get(postID) == 1){
 
             jobTypeShow.setText(String.valueOf("Office"));
@@ -1232,6 +1238,7 @@ public void finishThis(){
     // this method will store the info of user to  database
     private void editJobPost(int idP,String titleP,String descriptionP,String qualificationP,int jobTypeP,int vacancyP,int timeP,float salaryP, String locationP,String deadlineP,int catagoryP,int priority) {
 
+        //Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
 
         showLoadingBarAlert();
 
@@ -1247,6 +1254,7 @@ public void finishThis(){
             parameters.put("description", descriptionP);
             parameters.put("educationQualification",qualificationP);
             parameters.put("jobTypeId", jobTypeP);
+            parameters.put("timing", timeP);
             parameters.put("noOfOpening", vacancyP);
             parameters.put("salary", salaryP);
             parameters.put("location", locationP);
@@ -1277,7 +1285,7 @@ public void finishThis(){
                     @Override
                     public void onResponse(JSONObject response) {
                         String respo=response.toString();
-                        Log.d(TAG,respo);
+                        Log.e(TAG,respo);
 
 
                         String status =response.optString("status");
@@ -1317,7 +1325,7 @@ public void finishThis(){
                     }
                 }){
 
-            /** Passing some request headers* */
+
             @Override
             public Map getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
@@ -1374,12 +1382,73 @@ public void finishThis(){
         //job_time = (Spinner)findViewById(R.id.job_time);;
         //job_time_opener = (ImageView)findViewById(R.id.job_time_opener);;
 
+        if(server_job_timing.get(position) == 1){
+
+            job_time.setSelection(0);
+
+        }else{
+
+            job_time.setSelection(1);
+        }
+
+
         job_salary.setText(String.valueOf(String.valueOf(server_job_salary.get(position))));
 
         job_location.setText(server_job_location.get(position));
         //job_location_opener = (ImageView)findViewById(R.id.job_location_opener);
 
-        job_deadline.setText(String.valueOf(server_job_deadline.get(position)));
+
+        try{
+
+
+            String deadLineOriginalTxt = server_job_deadline.get(position);
+            if(deadLineOriginalTxt.equalsIgnoreCase("") || deadLineOriginalTxt.equalsIgnoreCase("null") || deadLineOriginalTxt == null){
+
+                job_deadline.setText("Please select a deadline for this job");
+
+            }else{
+
+                String date = "";
+                String month = "";
+                String year = "";
+                deadLineOriginalTxt = deadLineOriginalTxt.replace("-","");
+
+
+                for(int i=0; i<deadLineOriginalTxt.length(); i++){
+
+                    if(i <= 3){
+
+                        year = year + deadLineOriginalTxt.charAt(i);
+                    }
+
+                    if(i > 3 && i <= 5){
+
+                        month = month + deadLineOriginalTxt.charAt(i);
+                    }
+
+                    if(i > 5){
+
+                        date = date + deadLineOriginalTxt.charAt(i);
+                    }
+
+                }
+                String saturatedDate = date +"-"+ month +"-"+ year;
+
+                job_deadline.setText(saturatedDate);//turzo
+            }
+
+
+
+        }catch (Exception ex){
+
+
+
+            Log.d(TAG,ex.toString());
+        }
+
+
+        //Log.e(TAG,server_job_deadline.get(position));
+
         //job_deadline_opener = (ImageView)findViewById(R.id.job_deadline_opener);;
 
         //job_catagory = (Spinner)findViewById(R.id.job_catagory);;

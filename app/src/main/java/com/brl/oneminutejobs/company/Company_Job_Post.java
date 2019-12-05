@@ -219,6 +219,22 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
             }
         });
 
+        job_time_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                job_time.performClick();
+            }
+        });
+
+        job_catagory_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                job_catagory.performClick();
+            }
+        });
+
         //--
         job_post_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -441,7 +457,8 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
         String day1 = completeNumber(dayOfMonth);
         String month1 = completeNumber(month+1);
 
-        String niceFormat = day1+"-"+month1+"-"+year;
+       String niceFormat = day1+"-"+month1+"-"+year;
+        //String niceFormat = year+"-"+month1+"-"+day1;
 
         job_deadline.setText(niceFormat);
 
@@ -540,6 +557,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
             parameters.put("description", descriptionP);
             parameters.put("educationQualification",qualificationP);
             parameters.put("jobTypeId", jobTypeP);
+            parameters.put("timing", timeP);
             parameters.put("noOfOpening", vacancyP);
             parameters.put("salary", salaryP);
             parameters.put("location", locationP);

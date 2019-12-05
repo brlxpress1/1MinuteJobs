@@ -333,7 +333,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".5"
                                     android:fontFamily="serif"
-                                    android:text="Location (years)"
+                                    android:text="Location"
                                     android:textColor="@color/color2"
                                     android:textSize="16sp" />
 

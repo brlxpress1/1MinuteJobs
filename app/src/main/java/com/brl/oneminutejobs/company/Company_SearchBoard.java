@@ -391,6 +391,33 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             }
         });
 
+/*
+        secondarySearchBox.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            //addCourseFromTextBox();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+        */
+
 
 
         //-----------------------
@@ -577,6 +604,8 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         }else {
             // Go to Login
         }
+
+
     }
 
     private void parseSkillSetFromJsonArray(JSONArray sd) {

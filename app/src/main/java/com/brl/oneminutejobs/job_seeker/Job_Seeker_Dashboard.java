@@ -1293,9 +1293,9 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
        // String date2 = dayOfMonth+"-"+month+"-"+year;
 
         String day1 = completeNumber(dayOfMonth);
-        String month1 = completeNumber(month);
+        String month1 = completeNumber(month+1);
 
-        String niceFormat = day1+"-"+month1+"-"+year;
+        String niceFormat = day1+"-"+month1+"-"+(year);
 
         dateBox.setText(niceFormat);
 

@@ -394,7 +394,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_black"
-                    android:text="LOCATION"
+                    android:text="PREFERRED LOCATION"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/holo_blue_light"
                     android:textSize="14sp" />
