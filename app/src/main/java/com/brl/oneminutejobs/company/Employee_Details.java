@@ -189,7 +189,7 @@ public class Employee_Details extends AppCompatActivity {
         if(localSkills.equalsIgnoreCase("donot")){
 
             //skillsDisplay.setVisibility(View.GONE);
-           // Toasty.info(Employee_Details.this,localSkills,Toasty.LENGTH_LONG,true).show();
+           // Toasty.info(Employee_Details.this,localSkills,Toasty.LENGTH_SHORT,true).show();
             panel_4_skills.setVisibility(View.GONE);
 
         }else{

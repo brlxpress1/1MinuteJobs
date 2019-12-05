@@ -217,7 +217,8 @@ public class EmployeeJobSearch extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.d(TAG,parameters.toString());
+        Log.e(TAG,parameters.toString());
+        Log.e(TAG,ConstantsHolder.rawServer+ ConstantsHolder.findEmployeeAllPost);
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -422,7 +423,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
         showPanels(2);
 
         String canBeApplied = server_job_applied.get(position);
-        //Toasty.info(EmployeeJobSearch.this,canBeApplied,Toasty.LENGTH_LONG,false).show();
+        //Toasty.info(EmployeeJobSearch.this,canBeApplied,Toasty.LENGTH_SHORT,false).show();
 
         if(canBeApplied.equalsIgnoreCase("false")){
 
@@ -473,9 +474,17 @@ public class EmployeeJobSearch extends AppCompatActivity {
         deadlineShow.setText(server_job_deadline.get(position));
 
 
-        String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+        Log.e(TAG,server_job_category.toString());
+        Log.e(TAG,String.valueOf(server_job_category.get(position)));
+        getCateforyName(server_job_category.get(position));
 
-        categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+
+        //String[] stringArray = getResources().getStringArray(R.array.catagory_array);
+
+       /// categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+        //Log.e(TAG,server_job_category.toString());
+        //Log.e(TAG,String.valueOf(position));
+        //Toasty.info(EmployeeJobSearch.this,String.valueOf(server_job_category.get(postID)),Toasty.LENGTH_SHORT).show();
 
         /*
 
@@ -772,6 +781,86 @@ public class EmployeeJobSearch extends AppCompatActivity {
                             Toasty.error(EmployeeJobSearch.this, "Server not responding, please turn on your internet connection and try again.", Toast.LENGTH_LONG, true).show();
 
                         }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(EmployeeJobSearch.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
+
+    }
+
+
+    // this method will store the info of user to  database
+    private void getCateforyName(int categoryID) {
+
+        //showLoadingBarAlert();
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("id", categoryID);
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.findCategory, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+
+
+                       if(respo.equalsIgnoreCase("")){
+
+                       }else{
+
+                           String categoryName = response.optString("name");
+                           categoryShow.setText(categoryName);
+                       }
 
 
 

@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
@@ -115,6 +117,10 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
     private int backButtonValue = 0;
     private int whichList = 0;
+
+    ArrayList<String> categoryFromServerNormalArray2 = new ArrayList<String>();
+    ArrayList<String> categoryFromServerNormalArray = new ArrayList<String>();
+    private int originalCategory = 1;
 
 
 
@@ -527,16 +533,9 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            locationShow.setText(server_job_location.get(position));
            deadlineShow.setText(server_job_deadline.get(position));
 
-           String[] stringArray = getResources().getStringArray(R.array.catagory_array);
-
-           try{
-
-               categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
-
-           }catch (Resources.NotFoundException ex){
-
-               Log.d(TAG,"Category array conflicted......");
-           }
+           Log.e(TAG,server_job_category.toString());
+           Log.e(TAG,String.valueOf(server_job_category.get(position)));
+           getCateforyName(server_job_category.get(position));
 
 
            /*
@@ -606,9 +605,9 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            locationShow.setText(server_job_location2.get(position));
            deadlineShow.setText(server_job_deadline2.get(position));
 
-           String[] stringArray = getResources().getStringArray(R.array.catagory_array);
-
-           categoryShow.setText(stringArray[(server_job_category.get(position-1))]);
+           Log.e(TAG,server_job_category.toString());
+           Log.e(TAG,String.valueOf(server_job_category.get(position)));
+           getCateforyName(server_job_category.get(position));
 
            /*
 
@@ -712,6 +711,173 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
             detailsPanel.setVisibility(View.VISIBLE);
         }
     }
+
+    //-- Get category all
+    // this method will store the info of user to  database
+    private void getCategoryAll2() {
+
+
+        //showLoadingBarAlert();
+
+        categoryFromServerNormalArray.clear();
+
+
+
+
+
+        //--
+
+        // Initialize a new RequestQueue instance
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize a new JsonArrayRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConstantsHolder.rawServer+ ConstantsHolder.findCategoryAll,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Do something with response
+                        //mTextView.setText(response.toString());
+
+                        Log.d(TAG,response.toString());
+
+
+
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject student = response.optJSONObject(i);
+
+                                // Get the current student (json object) data
+                                String name = student.getString("name");
+
+                                //Log.e(TAG,name);
+
+                                //categoryShow.setText(name);
+                                categoryFromServerNormalArray2.add(name);
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+
+                        //---------------
+
+                        // hideLoadingBar();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+
+                        Toasty.error(JobSeekerAppliedJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        // hideLoadingBar();
+
+                    }
+                }
+        );
+
+
+
+        //--------------------
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.getCache().clear();
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    // this method will store the info of user to  database
+    private void getCateforyName(int categoryID) {
+
+        //showLoadingBarAlert();
+
+        JSONObject parameters = new JSONObject();
+        try {
+
+
+            parameters.put("id", categoryID);
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG,parameters.toString());
+
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, ConstantsHolder.rawServer+ ConstantsHolder.findCategory, parameters, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String respo=response.toString();
+                        Log.d(TAG,respo);
+
+                        //Log.d(TAG,respo);
+
+
+                        //parseFetchData(response);
+                        // Log.d(TAG,respo);
+
+
+                        if(respo.equalsIgnoreCase("")){
+
+                        }else{
+
+                            String categoryName = response.optString("name");
+                            categoryShow.setText(categoryName);
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Toasty.error(JobSeekerAppliedJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,error.toString());
+                        hideLoadingBar();
+
+                    }
+                }){
+
+            /** Passing some request headers* */
+            @Override
+            public Map getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                //headers.put("apiKey", "xxxxxxxxxxxxxxx");
+                return headers;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rq.getCache().clear();
+        rq.add(jsonObjectRequest);
+
+        //-----------------
+
+    }
+
+
 
     @Override
     public void onBackPressed() {

@@ -355,7 +355,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                 if(titleFlag && descriptionFlag && educationalQualificationFlag && vacancyFlag && locationFlag && deadlineFlag){
 
                     // to do
-                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_LONG,true).show();
+                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
 
                     addJobPost(titleTxt,descriptionTxt,educationalQualificationTxt,jobTypeValue,vacancyVlue,jobTimeValue,jobSalaryValue,locationTxt,deadlineTxt,catagoryTxt);
 
@@ -575,7 +575,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
                         if(status.equalsIgnoreCase("200")){
 
-                            Toasty.success(Company_Job_Post.this,"Job posted successfully",Toasty.LENGTH_LONG,true).show();
+                            Toasty.success(Company_Job_Post.this,"Job posted successfully",Toasty.LENGTH_SHORT,true).show();
 
                             Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_Fetch_All_Jobs.class);
                             startActivity(openJobSeekerSignUp);
@@ -583,7 +583,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
                         }else{
 
-                            Toasty.error(Company_Job_Post.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
+                            Toasty.error(Company_Job_Post.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
                         }
 
                         hideLoadingBar();

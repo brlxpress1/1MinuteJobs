@@ -585,7 +585,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                 if(titleFlag && descriptionFlag && educationalQualificationFlag && vacancyFlag && locationFlag && deadlineFlag){
 
                     // to do
-                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_LONG,true).show();
+                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
 
                     editJobPost(temp_id,titleTxt,descriptionTxt,educationalQualificationTxt,jobTypeValue,vacancyVlue,jobTimeValue,jobSalaryValue,locationTxt,deadlineTxt,catagoryTxt,temp_priority);
 
@@ -1106,77 +1106,25 @@ public void openDetailsWindow(int postID, int anotherID){
         locationShow.setText(server_job_location.get(postID));
         deadlineShow.setText(server_job_deadline.get(postID));
 
-    String[] stringArray = getResources().getStringArray(R.array.catagory_array);
-
-    /*
-    for(int i=0; i<stringArray.length; i++){
-
-        Log.e(TAG,stringArray[i]);
-    }
-    */
-   // Log.e(TAG,"Value from server "+server_job_category.get(postID-1));
 
 
-/*
-    if(server_job_category.get(postID) <= 0){
-
-        categoryShow.setText(stringArray[0]);
-    }else{
-
-        categoryShow.setText(stringArray[server_job_category.get(postID-1)]);
-    }
-    */
-//Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(server_job_category.get(postID)),Toasty.LENGTH_SHORT,true).show(); //turzo
-
-   // categoryShow.setText(categoryFromServerNormalArray.get(postID));
-    //Log.e(TAG,categoryFromServerNormalArray.toString());
-
-    for(int i=0; i<server_job_category.size(); i++){
-
-        /*
-        if(server_job_category.get(i) == postID){
-
-            categoryShow.setText(server_job_category.get(i));
-        }
-        */
 
 
-    }
-
-   Log.e(TAG,"_____________"+server_job_category.toString());
-  Log.e(TAG,"_____________"+String.valueOf(server_job_category.get(postID)));
   int id = server_job_category.get(postID);
-    Log.e(TAG,"_____________"+String.valueOf(id));
-
-    id--;
+  id--;
 
 
     if(id < 0){
 
-        //Log.e(TAG,"No category selected");
+
         categoryShow.setText("No category selected");
 
     }else{
 
 
         categoryShow.setText(categoryFromServerNormalArray2.get(id));
-        //Log.e(TAG,categoryFromServerNormalArray2.get(id));
+
     }
-
-   // categoryShow.setText(categoryFromServerNormalArray2.get(server_job_category.get(postID)));
-
-
-
-
-    /*
-        if(server_job_category.get(postID) == 1){
-
-            categoryShow.setText("IT/Telecommunication");
-        }else{
-
-            categoryShow.setText("Industrial");
-        }
-        */
 
 
         //detailsPanel.setVisibility(View.VISIBLE);
@@ -1308,7 +1256,7 @@ public void finishThis(){
             parameters.put("status", 1);
            // parameters.put("creator", 1);
             //parameters.put("applicantList", applicantList);
-           // Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
+           // Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_SHORT).show();
 
 
 
@@ -1336,7 +1284,7 @@ public void finishThis(){
 
                         if(status.equalsIgnoreCase("200")){//turzo
 
-                            Toasty.success(Company_Fetch_All_Jobs.this,"Job updated successfully",Toasty.LENGTH_LONG,true).show();
+                            Toasty.success(Company_Fetch_All_Jobs.this,"Job updated successfully",Toasty.LENGTH_SHORT,true).show();
 
                             hideLoadingBar();
 
@@ -1347,7 +1295,7 @@ public void finishThis(){
 
                         }else{
 
-                            Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_LONG,true).show();
+                            Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
 
                             hideLoadingBar();
 
@@ -1411,7 +1359,7 @@ public void finishThis(){
 
     public void openEditWindow(int id, int position){
 
-        //Toasty.info(this,server_job_title.get(position),Toasty.LENGTH_LONG,true).show();
+        //Toasty.info(this,server_job_title.get(position),Toasty.LENGTH_SHORT,true).show();
         backButtonValue = 1;
 
         job_title.setText(server_job_title.get(position));
@@ -1462,7 +1410,7 @@ public void finishThis(){
         postEditPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
         detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
         listViewPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-        //Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(i),Toasty.LENGTH_LONG).show();
+        //Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(i),Toasty.LENGTH_SHORT).show();
 
 
         if(i == 1){
@@ -1697,7 +1645,7 @@ public void finishThis(){
 
         if(jbj.toString().equalsIgnoreCase("[]")){
 
-            Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_LONG,true).show();
+            Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
         }else{
 
             int size  = jbj.length();
@@ -1719,7 +1667,7 @@ public void finishThis(){
 
             }else{
 
-                Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_LONG,true).show();
+                Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
             }
         }
 
@@ -1933,7 +1881,7 @@ public void finishThis(){
     public void onBackPressed() {
         //super.onBackPressed();
 
-       // Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(backButtonValue),Toasty.LENGTH_LONG,false).show();
+       // Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(backButtonValue),Toasty.LENGTH_SHORT,false).show();
         //backButtonValue--;
         if(backButtonValue == 1){
             showLayout(4);

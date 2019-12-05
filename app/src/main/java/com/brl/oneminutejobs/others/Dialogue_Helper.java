@@ -714,7 +714,7 @@ public class Dialogue_Helper {
 
 
                 company_fetch_all_jobs.openEditWindow(id,position);
-               // Toasty.success(ct,String.valueOf(position),Toasty.LENGTH_LONG,true).show();
+               // Toasty.success(ct,String.valueOf(position),Toasty.LENGTH_SHORT,true).show();
 
 
             }

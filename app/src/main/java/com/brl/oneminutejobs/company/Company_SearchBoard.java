@@ -277,7 +277,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 //openLocationInput(locationBox);
-                //Toasty.info(Company_SearchBoard.this,"Clicked",Toasty.LENGTH_LONG,false).show();
+                //Toasty.info(Company_SearchBoard.this,"Clicked",Toasty.LENGTH_SHORT,false).show();
                // turzo
 
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
