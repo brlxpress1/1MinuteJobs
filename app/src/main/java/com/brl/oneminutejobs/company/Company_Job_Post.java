@@ -453,12 +453,10 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         //String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
         // String date2 = dayOfMonth+"-"+month+"-"+year;
-
         String day1 = completeNumber(dayOfMonth);
         String month1 = completeNumber(month+1);
 
-       String niceFormat = day1+"-"+month1+"-"+year;
-        //String niceFormat = year+"-"+month1+"-"+day1;
+        String niceFormat = day1+"-"+month1+"-"+year;
 
         job_deadline.setText(niceFormat);
 

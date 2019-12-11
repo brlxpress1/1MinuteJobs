@@ -42,6 +42,7 @@ import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
 import com.brl.oneminutejobs.adapters.SearchResultExample;
 import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
 import com.brl.oneminutejobs.others.ConstantsHolder;
+import com.brl.oneminutejobs.others.DateConversion;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -449,6 +450,14 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                 showDatePickerDialog();
 
+            }
+        });
+
+        job_catagory_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                job_catagory.performClick();
             }
         });
 
@@ -1110,7 +1119,7 @@ public void openDetailsWindow(int postID, int anotherID){
         jobSalaryShow.setText(String.valueOf(server_job_salary.get(postID)));
 
         locationShow.setText(server_job_location.get(postID));
-        deadlineShow.setText(server_job_deadline.get(postID));
+        deadlineShow.setText(DateConversion.organizeDate(server_job_deadline.get(postID)));
 
 
 
@@ -1154,19 +1163,26 @@ public void openDetailsWindow(int postID, int anotherID){
 
 public String furnishedString(String original){
 
+
+
         String furnished = "";
         String tempText = "";
 
-        for(int i=0; i<original.length(); i++){
+        String tempS = original.trim();
 
-            if(original.charAt(i) == '\r' || original.charAt(i) == '\n'){
+        for(int i=0; i<tempS.length(); i++){
+
+            if(tempS.charAt(i) == '\r' || tempS.charAt(i) == '\n'){
+
+                tempText = tempText + "\n";
 
             }else{
-                tempText = tempText + original.charAt(i);
+                tempText = tempText + tempS.charAt(i);
 
             }
         }
 
+        /*
         for(int i=0; i<tempText.length(); i++){
 
             if(i==0){
@@ -1193,9 +1209,9 @@ public String furnishedString(String original){
 
             }
         }
+*/
 
-
-        return  furnished;
+        return  tempText;
 }
 
 public void finishThis(){

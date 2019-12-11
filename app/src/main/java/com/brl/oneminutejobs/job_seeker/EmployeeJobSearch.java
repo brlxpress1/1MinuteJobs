@@ -35,6 +35,7 @@ import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
 import com.brl.oneminutejobs.adapters.FetchJobsForEmployeeAdapter;
 import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.others.ConstantsHolder;
+import com.brl.oneminutejobs.others.DateConversion;
 import com.ybs.countrypicker.CountryPicker;
 
 import org.json.JSONArray;
@@ -479,7 +480,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
         jobSalaryShow.setText(String.valueOf(server_job_salary.get(position)));
 
         locationShow.setText(server_job_location.get(position));
-        deadlineShow.setText(server_job_deadline.get(position));
+        deadlineShow.setText(DateConversion.organizeDate(server_job_deadline.get(position)));
 
 
         Log.e(TAG,server_job_category.toString());

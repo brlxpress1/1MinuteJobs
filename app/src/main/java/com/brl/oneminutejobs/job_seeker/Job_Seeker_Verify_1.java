@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.brl.oneminutejobs.company.Company_Signup_1;
 import com.hbb20.CountryCodePicker;
 import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
@@ -76,6 +80,10 @@ public class Job_Seeker_Verify_1 extends AppCompatActivity {
 
     private  TextView login_helper_txt;
 
+    private CheckBox termsCheck;
+    private boolean is_checkboxClicked = false;
+    private TextView term_text;
+
 
 
 
@@ -97,6 +105,9 @@ public class Job_Seeker_Verify_1 extends AppCompatActivity {
         countryCodePanel = (LinearLayout)findViewById(R.id.country_code_panel);
 
         login_helper_txt = (TextView)findViewById(R.id.login_helper_txt);
+
+        termsCheck = (CheckBox)findViewById(R.id.termsCheck);
+        term_text = (TextView)findViewById(R.id.term_text);
 
         //-- initial calls
 /*
@@ -206,36 +217,55 @@ public class Job_Seeker_Verify_1 extends AppCompatActivity {
                             Toasty.error(Job_Seeker_Verify_1.this, "Please enter your phone number!", Toast.LENGTH_LONG, true).show();
                         }else {
 
+                            if(is_checkboxClicked){
 
-                            String tempName = name.getText().toString();
-                            //String tempPhone = ccp.getSelectedCountryCodeWithPlus()+phone_number.getText().toString().trim();
-                            String tempPhone = countryCode.getText().toString().trim()+phone_number.getText().toString().trim();
+                                //--
 
-                            //Toasty.success(Job_Seeker_Verify_1.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
+                                String tempName = name.getText().toString();
+                                //String tempPhone = ccp.getSelectedCountryCodeWithPlus()+phone_number.getText().toString().trim();
+                                String tempPhone = countryCode.getText().toString().trim()+phone_number.getText().toString().trim();
 
-                            //showLoadingBarAlert();
-                            //-- task
-                            userName = tempName;
-                            userPhone = tempPhone;
-                            userPurePhone = removePlusFromPhone(userPhone);
+                                //Toasty.success(Job_Seeker_Verify_1.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
 
-                            SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
-                            editor.putString("username", userName);
-                            editor.putString("userphone", userPhone);
-                            editor.putString("userphonepure", userPurePhone);
+                                //showLoadingBarAlert();
+                                //-- task
+                                userName = tempName;
+                                userPhone = tempPhone;
+                                userPurePhone = removePlusFromPhone(userPhone);
 
-                            editor.apply();
+                                SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
+                                editor.putString("username", userName);
+                                editor.putString("userphone", userPhone);
+                                editor.putString("userphonepure", userPurePhone);
 
-                            /*
+                                editor.apply();
+
+                                /*
 
 
-                             */
+                                 */
 
-                           // Intent openSecondVerifier = new Intent(Job_Seeker_Verify_1.this,Job_Seeker_Verify_2.class);
-                           // startActivity(openSecondVerifier);
-                           // finish();
+                                // Intent openSecondVerifier = new Intent(Job_Seeker_Verify_1.this,Job_Seeker_Verify_2.class);
+                                // startActivity(openSecondVerifier);
+                                // finish();
 
-                            phone_number_check(removePlusFromPhone(userPhone));
+                                phone_number_check(removePlusFromPhone(userPhone));
+
+
+
+
+                                //-------------
+
+                            }else{
+
+
+                                Toasty.error(Job_Seeker_Verify_1.this, "Please agree with our Terms & Conditions!", Toast.LENGTH_LONG, true).show();
+
+
+                            }
+
+
+
                         }
 
                     }
@@ -295,6 +325,40 @@ public class Job_Seeker_Verify_1 extends AppCompatActivity {
                     }
                 }
                 return false;
+            }
+        });
+
+
+        termsCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                                  @Override
+                                                  public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+
+                                                      if(isChecked){
+
+                                                         // Toasty.info(Job_Seeker_Verify_1.this,"Agreed",Toasty.LENGTH_SHORT).show();
+                                                          is_checkboxClicked = true;
+
+                                                      }else{
+
+                                                          //Toasty.info(Job_Seeker_Verify_1.this,"Opps!",Toasty.LENGTH_SHORT).show();
+                                                          is_checkboxClicked = false;
+
+                                                      }
+
+                                                  }
+                                              }
+        );
+
+        term_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                term_text.startAnimation(buttonClick);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://brlbd.com/oneminutejobs/privacy.html"));
+                startActivity(intent);
             }
         });
 

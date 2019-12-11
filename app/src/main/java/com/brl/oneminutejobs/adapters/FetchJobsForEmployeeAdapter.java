@@ -175,7 +175,7 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
 
 
         holder.title.setText(server_job_title.get(position));
-        holder.deadline.setText("Deadline : "+server_job_deadline.get(position));
+        holder.deadline.setText("Deadline : "+ organizeDate(server_job_deadline.get(position) ));
 
 
 
@@ -245,6 +245,37 @@ public class FetchJobsForEmployeeAdapter extends BaseAdapter {
 
         return rowView;
 
+
+    }
+
+    private String organizeDate(String original){
+
+        String tempS = "";
+
+        tempS = original.replace("-","");
+
+        String year = "";
+        String month = "";
+        String date = "";
+
+        for(int i=0; i<= 3; i++){
+
+            year = year +  tempS.charAt(i);
+        }
+
+        for(int i=4; i<= 5; i++){
+
+            month = month +  tempS.charAt(i);
+        }
+
+        for(int i=6; i<= 7; i++){
+
+            date = date +  tempS.charAt(i);
+        }
+
+        tempS = date+"-"+month+"-"+year;
+
+        return  tempS;
 
     }
 

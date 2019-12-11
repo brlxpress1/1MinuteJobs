@@ -124,5 +124,7 @@
 
     <string name="applicant_list"><font fgcolor='#0000FF'><u>Applicant List</u></font></string>
 
+    <string name="terms">I agree with all <font fgcolor='#0000FF'><u>Terms &amp; Conditions</u></font></string>
+
 
 </resources>

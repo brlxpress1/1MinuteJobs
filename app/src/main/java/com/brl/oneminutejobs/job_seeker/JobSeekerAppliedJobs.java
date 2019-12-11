@@ -33,6 +33,7 @@ import com.brl.oneminutejobs.adapters.FetchJobSeekerAllJobsAdapter;
 import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
 import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.others.ConstantsHolder;
+import com.brl.oneminutejobs.others.DateConversion;
 import com.google.firebase.database.DatabaseReference;
 
 import org.json.JSONArray;
@@ -116,7 +117,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
     private LinearLayout listViewPanel;
 
     private int backButtonValue = 0;
-    private int whichList = 0;
+    private int whichList = 1;
 
     ArrayList<String> categoryFromServerNormalArray2 = new ArrayList<String>();
     ArrayList<String> categoryFromServerNormalArray = new ArrayList<String>();
@@ -531,7 +532,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            jobSalaryShow.setText(String.valueOf(server_job_salary.get(position)));
 
            locationShow.setText(server_job_location.get(position));
-           deadlineShow.setText(server_job_deadline.get(position));
+           deadlineShow.setText(DateConversion.organizeDate(server_job_deadline.get(position)));
 
            Log.e(TAG,server_job_category.toString());
            Log.e(TAG,String.valueOf(server_job_category.get(position)));
@@ -650,19 +651,26 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
     public String furnishedString(String original){
 
+
+
         String furnished = "";
         String tempText = "";
 
-        for(int i=0; i<original.length(); i++){
+        String tempS = original.trim();
 
-            if(original.charAt(i) == '\r' || original.charAt(i) == '\n'){
+        for(int i=0; i<tempS.length(); i++){
+
+            if(tempS.charAt(i) == '\r' || tempS.charAt(i) == '\n'){
+
+                tempText = tempText + "\n";
 
             }else{
-                tempText = tempText + original.charAt(i);
+                tempText = tempText + tempS.charAt(i);
 
             }
         }
 
+        /*
         for(int i=0; i<tempText.length(); i++){
 
             if(i==0){
@@ -689,9 +697,9 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
             }
         }
+*/
 
-
-        return  furnished;
+        return  tempText;
     }
 
     private void showLayout(int i){
