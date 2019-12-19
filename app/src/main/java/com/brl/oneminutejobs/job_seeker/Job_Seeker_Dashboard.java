@@ -1560,11 +1560,37 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                 getCategoryAll();
 
-                tempCategorySaver = jobSeekerModel.optJSONArray("categorys");
+
+                tempCategorySaver = jobSeekerModel.optJSONArray("categorys");//turzo
+
+                if(tempCategorySaver == null){
+
+                    Log.d(TAG,"-------------------- Null Category found! ---------------------");
+
+                   // JSONObject tempJ = new JSONObject();
+                   // tempJ = tempCategorySaver.optJSONObject(0);
+                    originalCategory = 1;
+
+                }else{
+
+                    Log.d(TAG,"-------------------- Category found! :) ---------------------");
+
+                    Log.d(TAG,tempCategorySaver.toString()+"----------------------------");
+                    JSONObject tempJ = new JSONObject();
+                    tempJ = tempCategorySaver.optJSONObject(0);
+                    originalCategory = tempJ.optInt("categoryId");
+
+                }
+
+
+/*
                 Log.d(TAG,tempCategorySaver.toString()+"----------------------------");
                 JSONObject tempJ = new JSONObject();
                 tempJ = tempCategorySaver.optJSONObject(0);
                 originalCategory = tempJ.optInt("categoryId");
+                */
+
+
 
                 /*
                 if(tempInt <= 0){
@@ -3147,7 +3173,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
     private void getCategoryAll() {
 
 
-        showLoadingBarAlert();
+       // showLoadingBarAlert();
 
 
 
@@ -3207,7 +3233,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
 
                         //---------------
 
-                        hideLoadingBar();
+                       // hideLoadingBar();
                     }
                 },
                 new Response.ErrorListener(){
@@ -3217,7 +3243,7 @@ public class Job_Seeker_Dashboard extends AppCompatActivity implements DatePicke
                         Toasty.error(Job_Seeker_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
-                        hideLoadingBar();
+                       // hideLoadingBar();
 
                     }
                 }

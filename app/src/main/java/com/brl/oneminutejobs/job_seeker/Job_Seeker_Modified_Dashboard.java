@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -259,7 +260,11 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
         }else if(id == R.id.privacy_policy){
 
-            Toasty.info(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+            //Toasty.info(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://brlbd.com/oneminutejobs/privacy.html"));
+            startActivity(intent);
 
         }else if(id == R.id.log_out){
 

@@ -8,8 +8,8 @@ android {
         applicationId "com.brl.oneminutejobs"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.9"
+        versionCode 10
+        versionName "1.10"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
