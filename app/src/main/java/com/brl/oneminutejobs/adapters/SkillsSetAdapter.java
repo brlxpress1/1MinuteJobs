@@ -2,8 +2,6 @@ package com.brl.oneminutejobs.adapters;
 
 import android.content.Context;
 
-import android.util.Log;
-
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -12,19 +10,15 @@ import android.view.ViewGroup;
 
 import android.widget.BaseAdapter;
 
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import android.widget.TextView;
 
 
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.others.Skill_Selector;
+import com.brl.oneminutejobs.others.SkillSelector;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class SkillsSetAdapter extends BaseAdapter {
@@ -41,7 +35,7 @@ public class SkillsSetAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater=null;
 
-    public SkillsSetAdapter(Skill_Selector mainActivity, int count1, ArrayList<String> skillName1) {
+    public SkillsSetAdapter(SkillSelector mainActivity, int count1, ArrayList<String> skillName1) {
 
         // TODO Auto-generated constructor stub
 
@@ -142,7 +136,7 @@ public class SkillsSetAdapter extends BaseAdapter {
 
 
 
-                ((Skill_Selector)context).deleteSkillFromList(skillName.get(position));
+                ((SkillSelector)context).deleteSkillFromList(skillName.get(position));
 
             }
 

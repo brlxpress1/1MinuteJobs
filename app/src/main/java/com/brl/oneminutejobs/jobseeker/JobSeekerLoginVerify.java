@@ -1,4 +1,4 @@
-package com.brl.oneminutejobs.company;
+package com.brl.oneminutejobs.jobseeker;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -26,12 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Login;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Login_Verify;
 import com.brl.oneminutejobs.others.Connectivity;
+import com.brl.oneminutejobs.others.ConstantsHolder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +35,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class Company_Login_2 extends AppCompatActivity {
+public class JobSeekerLoginVerify extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
-    private String TAG = "Company_Login_2";
+    private String TAG = "JobSeekerLoginVerify";
 
 
     private Dialog dialog;
@@ -57,15 +53,16 @@ public class Company_Login_2 extends AppCompatActivity {
 
     private String otpID;
     private FirebaseAuth fbAuth;
-    private LinearLayout verifyPanel;
-    private String tempCompanyIDforDestroy = "";
+    private LinearLayout  verifyPanel;
+    private String tempUserIDforDestroyApp = "";
+    private String tempUserTypeforDestroyApp = "";
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_login_2);
+        setContentView(R.layout.activity_job_seeker_verify_2);
 
 
         otpCodeInput = (EditText)findViewById(R.id.otp_code_input);
@@ -74,7 +71,6 @@ public class Company_Login_2 extends AppCompatActivity {
         verifyPanel = (LinearLayout)findViewById(R.id.verifyPanel);
 
         verifyPanel.setVisibility(View.INVISIBLE);
-
 
         //-- Changing selection effect of input fields
         otpCodeInput.setOnFocusChangeListener((view, b) -> {
@@ -100,7 +96,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
         showLoadingBarAlert();
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
         String userPhone = prefs.getString("userphone", "");
 
@@ -115,14 +111,14 @@ public class Company_Login_2 extends AppCompatActivity {
 
                 verifyButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(Company_Login_2.this)) {
+                if (Connectivity.isConnected(JobSeekerLoginVerify.this)) {
 
 
                     verifyCode();
 
                 } else {
 
-                    Toasty.error(Company_Login_2.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerLoginVerify.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
@@ -135,23 +131,26 @@ public class Company_Login_2 extends AppCompatActivity {
 
                 resendButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(Company_Login_2.this)) {
+                if (Connectivity.isConnected(JobSeekerLoginVerify.this)) {
 
 
                     resendCode();
 
                 } else {
 
-                    Toasty.error(Company_Login_2.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerLoginVerify.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
             }
         });
 
+        //SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
-        tempCompanyIDforDestroy = prefs.getString("userid", "");
+       // logOutTheUser();
+        tempUserIDforDestroyApp = prefs.getString("userid", "");
         logOutTheUser();
+
 
 
 
@@ -161,7 +160,7 @@ public class Company_Login_2 extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_Login_2.this);
+        dialog = new Dialog(JobSeekerLoginVerify.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -196,7 +195,7 @@ public class Company_Login_2 extends AppCompatActivity {
     private void send_otp_by_firebase(String number){
 
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
         //Log.d(TAG,prefs.getString("userid", "null"));
 
         String userName = prefs.getString("username", "");
@@ -207,9 +206,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
             // Go to sign up page
 
-            Intent introOpener = new Intent(Company_Login_2.this, Company_Login_1.class);
-            startActivity(introOpener);
-            finish();
+
         }else {
 
 
@@ -232,6 +229,7 @@ public class Company_Login_2 extends AppCompatActivity {
                     verificationCallbacks);
 
             startCountDownTimer();
+
 
 
 
@@ -301,15 +299,15 @@ public class Company_Login_2 extends AppCompatActivity {
 
                 //Toast.makeText(Verification.this, "Enter Correct Number.", Toast.LENGTH_SHORT).show();
 
-                Toasty.error(Company_Login_2.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
+                Toasty.error(JobSeekerLoginVerify.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
 
 
-                SharedPreferences.Editor editor = getSharedPreferences("CompanyData", MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
                 editor.putString("userid", "");
                 //editor.putString("userphone", userPhone);
                 editor.apply();
 
-                Intent openSecondVerifier = new Intent(Company_Login_2.this, Job_Seeker_Login.class);
+                Intent openSecondVerifier = new Intent(JobSeekerLoginVerify.this, JobSeekerLogin.class);
                 startActivity(openSecondVerifier);
                 finish();
 
@@ -362,7 +360,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
                 otpID = verificationId;
 
-                Toasty.info(Company_Login_2.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
+                Toasty.info(JobSeekerLoginVerify.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
                 verifyPanel.setVisibility(View.VISIBLE);
                 hideLoadingBar();
 
@@ -402,19 +400,19 @@ public class Company_Login_2 extends AppCompatActivity {
 
 
 
-                            SharedPreferences.Editor editor = getSharedPreferences("CompanyData", MODE_PRIVATE).edit();
-                            editor.putString("userid", tempCompanyIDforDestroy);
-                            //editor.putString("username", nam);
-                            //editor.putString("userphone", userPhone);
+                            //--
+
+                            SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
+                            editor.putString("userid", tempUserIDforDestroyApp);
+                            //editor.putString("userphone", "");
                             editor.apply();
 
 
                             SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-                            typeEditor.putInt("type", 1);
+                            typeEditor.putInt("type", 2);
                             typeEditor.apply();
 
-                            //--
-                            Intent openSecondVerifier = new Intent(Company_Login_2.this,Company_SearchBoard.class);
+                            Intent openSecondVerifier = new Intent(JobSeekerLoginVerify.this, JobSeekerModifiedDashboard.class);
                             startActivity(openSecondVerifier);
                             finish();
 
@@ -438,7 +436,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
                                 //Toast.makeText(Verification.this, "Verification code is invalid!", Toast.LENGTH_LONG).show();
 
-                                Toasty.error(Company_Login_2.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
+                                Toasty.error(JobSeekerLoginVerify.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
                                 hideLoadingBar();
 
 
@@ -469,7 +467,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
             //Toast.makeText(Verification.this, "You must enter the verification code!", Toast.LENGTH_SHORT).show();
 
-            Toasty.error(Company_Login_2.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
+            Toasty.error(JobSeekerLoginVerify.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
 
 
 
@@ -497,7 +495,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
 
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
         //Log.d(TAG,prefs.getString("userid", ""));
 
 
@@ -512,7 +510,7 @@ public class Company_Login_2 extends AppCompatActivity {
         }else {
 
 
-            //Toasty.success(Job_Seeker_Login_Verify.this, "OTP code was sent to your phone number, please check.", Toast.LENGTH_LONG, true).show();
+            //Toasty.success(JobSeekerLoginVerify.this, "OTP code was sent to your phone number, please check.", Toast.LENGTH_LONG, true).show();
 
             send_otp_by_firebase(temp);
 
@@ -525,7 +523,6 @@ public class Company_Login_2 extends AppCompatActivity {
 
 
     //-------------------------
-
 
     public void startCountDownTimer(){
 
@@ -543,20 +540,17 @@ public class Company_Login_2 extends AppCompatActivity {
         }.start();
     }
 
-
     public void logOutTheUser(){
 
-        SharedPreferences.Editor editor = getSharedPreferences("CompanyData", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
         editor.putString("userid", "");
-        //editor.putString("username", nam);
-       // editor.putString("userphone", userPhone);
         editor.apply();
-
 
         SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
         typeEditor.putInt("type", 0);
         typeEditor.apply();
     }
+
 
 
 
@@ -567,7 +561,7 @@ public class Company_Login_2 extends AppCompatActivity {
 
 
 
-        Intent openSecondVerifier = new Intent(Company_Login_2.this,Company_Login_1.class);
+        Intent openSecondVerifier = new Intent(JobSeekerLoginVerify.this, JobSeekerLogin.class);
         startActivity(openSecondVerifier);
         finish();
 

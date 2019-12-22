@@ -1,7 +1,5 @@
-package com.brl.oneminutejobs.job_seeker;
+package com.brl.oneminutejobs.jobseeker;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,15 +9,9 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,18 +31,11 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.company.Company_Dashboard;
-import com.brl.oneminutejobs.company.Company_Login_1;
-import com.brl.oneminutejobs.company.Company_SearchBoard;
-import com.brl.oneminutejobs.company.Company_Signup_1;
-import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
-import com.brl.oneminutejobs.others.ImagePickerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,11 +45,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
-public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class JobSeekerModifiedDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Job_Seeker_Modified_Dashboard";
+    private String TAG = "JobSeekerModifiedDashboard";
 
 
     private NavigationView navigationView;
@@ -126,7 +111,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
                 profilePhoto2.startAnimation(buttonClick);
 
-                Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Job_Seeker_Dashboard.class);
+                Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, JobSeekerDashboard.class);
                 startActivity(openJobSeekerSignUp);
                 finish();
 
@@ -141,7 +126,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
                 avatarPhoto.startAnimation(buttonClick);
 
-                Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Job_Seeker_Dashboard.class);
+                Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, JobSeekerDashboard.class);
                 startActivity(openJobSeekerSignUp);
                 finish();
 
@@ -159,7 +144,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
         } else {
 
             //Go to Log in
-            Intent openCompanySignup = new Intent(this, Job_Seeker_Login.class);
+            Intent openCompanySignup = new Intent(this, JobSeekerLogin.class);
             startActivity(openCompanySignup);
             finish();
 
@@ -184,7 +169,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
                 edit_profile.startAnimation(buttonClick);
 
-                Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Job_Seeker_Dashboard.class);
+                Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, JobSeekerDashboard.class);
                 startActivity(openJobSeekerSignUp);
                 finish();
 
@@ -199,7 +184,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
                 updateCV.startAnimation(buttonClick);
 
-                Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Job_Seeker_CV_Upload_2.class);
+                Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, JobSeekerCVUpload2.class);
                 startActivity(openJobSeekerSignUp);
                 finish();
 
@@ -211,7 +196,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
             public void onClick(View view) {
 
                 settings.startAnimation(buttonClick);
-                Toasty.success(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+                Toasty.success(JobSeekerModifiedDashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
 
 
             }
@@ -223,8 +208,8 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
             public void onClick(View view) {
 
                 whoVisitedClick.startAnimation(buttonClick);
-                //Toasty.success(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
-                Intent openSearchJob = new Intent(Job_Seeker_Modified_Dashboard.this,EmployeeJobSearch.class);
+                //Toasty.success(JobSeekerModifiedDashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+                Intent openSearchJob = new Intent(JobSeekerModifiedDashboard.this,EmployeeJobSearch.class);
                 startActivity(openSearchJob);
                 finish();
             }
@@ -236,7 +221,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
 
                 whowDownloadedClick.startAnimation(buttonClick);
 
-                Intent openSearchJob = new Intent(Job_Seeker_Modified_Dashboard.this,JobSeekerAppliedJobs.class);
+                Intent openSearchJob = new Intent(JobSeekerModifiedDashboard.this,JobSeekerAppliedJobs.class);
                 startActivity(openSearchJob);
                 finish();
             }
@@ -254,13 +239,13 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
         if(id == R.id.my_profile){
 
 
-            Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Job_Seeker_Dashboard.class);
+            Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, JobSeekerDashboard.class);
             startActivity(openJobSeekerSignUp);
             finish();
 
         }else if(id == R.id.privacy_policy){
 
-            //Toasty.info(Job_Seeker_Modified_Dashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+            //Toasty.info(JobSeekerModifiedDashboard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
 
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://brlbd.com/oneminutejobs/privacy.html"));
@@ -277,7 +262,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
             typeEditor.apply();
 
 
-            Intent openJobSeekerSignUp = new Intent(Job_Seeker_Modified_Dashboard.this, Intro.class);
+            Intent openJobSeekerSignUp = new Intent(JobSeekerModifiedDashboard.this, Intro.class);
             startActivity(openJobSeekerSignUp);
             finish();
         }
@@ -323,7 +308,7 @@ public class Job_Seeker_Modified_Dashboard extends AppCompatActivity implements 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        //Toasty.error(Company_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toasty.error(CompanyDashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         // hideLoadingBar();
 

@@ -1,24 +1,19 @@
-package com.brl.oneminutejobs.job_seeker;
+package com.brl.oneminutejobs.jobseeker;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +26,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
 import com.brl.oneminutejobs.adapters.FetchJobsForEmployeeAdapter;
-import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.DateConversion;
-import com.ybs.countrypicker.CountryPicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -248,7 +240,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
                                 Toasty.warning(EmployeeJobSearch.this, "No job data available! Please complete your profile to see available jobs for you.", Toast.LENGTH_LONG, true).show();
 
-                                Intent openDashboard = new Intent(EmployeeJobSearch.this,Job_Seeker_Dashboard.class);
+                                Intent openDashboard = new Intent(EmployeeJobSearch.this, JobSeekerDashboard.class);
                                 startActivity(openDashboard);
                                 finish();
 
@@ -918,7 +910,7 @@ public class EmployeeJobSearch extends AppCompatActivity {
 
         }else{
 
-            Intent openSearchJob = new Intent(EmployeeJobSearch.this,Job_Seeker_Modified_Dashboard.class);
+            Intent openSearchJob = new Intent(EmployeeJobSearch.this, JobSeekerModifiedDashboard.class);
             startActivity(openSearchJob);
             finish();
 

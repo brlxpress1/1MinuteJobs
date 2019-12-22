@@ -1,4 +1,4 @@
-package com.brl.oneminutejobs.job_seeker;
+package com.brl.oneminutejobs.jobseeker;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -21,8 +21,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -38,22 +36,20 @@ import com.obsez.android.lib.filechooser.ChooserDialog;
 
 import java.io.File;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
+public class JobSeekerCVUpload2 extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
-    private String TAG = "Job_Seeker_CV_Upload_2";
+    private String TAG = "JobSeekerCVUpload2";
 
 
     private Button uploadButton;
@@ -103,7 +99,7 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
 
                 cvChooser.startAnimation(buttonClick);
 
-                if (ContextCompat.checkSelfPermission(Job_Seeker_CV_Upload_2.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(JobSeekerCVUpload2.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted
 
@@ -151,7 +147,7 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
 
                 if(masterFilePath.equalsIgnoreCase("")){
 
-                    Toasty.error(Job_Seeker_CV_Upload_2.this, "Select a file first!", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerCVUpload2.this, "Select a file first!", Toast.LENGTH_LONG, true).show();
 
                 }else {
 
@@ -160,7 +156,7 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
 
                 }
 
-                //Toasty.success(Job_Seeker_CV_Upload_2.this,"Your CV uploaded successfully!",Toast.LENGTH_LONG, true).show();
+                //Toasty.success(JobSeekerCVUpload2.this,"Your CV uploaded successfully!",Toast.LENGTH_LONG, true).show();
             }
         });
 
@@ -191,11 +187,11 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
                 }else {
 
                     filePath.setText(fileNameSeperator(""));
-                    Toasty.error(Job_Seeker_CV_Upload_2.this, "File is too large! Maximum file size limit 5MB", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerCVUpload2.this, "File is too large! Maximum file size limit 5MB", Toast.LENGTH_LONG, true).show();
                 }
             }else {
 
-                Toasty.error(Job_Seeker_CV_Upload_2.this, "File type not supported!\n Supported formats : pdf,docx,jpg,png", Toast.LENGTH_LONG, true).show();
+                Toasty.error(JobSeekerCVUpload2.this, "File type not supported!\n Supported formats : pdf,docx,jpg,png", Toast.LENGTH_LONG, true).show();
                 filePath.setText("");
             }
             */
@@ -337,21 +333,21 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
                 public void onResponse(Call<UploadFileResponse> call,
                                        Response<UploadFileResponse> response) {
                     //Log.v("112233", response.body().getFileName()+"-------- "+response.body().getFileDownloadUri());
-                    //Toasty.success(Job_Seeker_CV_Upload_2.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
+                    //Toasty.success(JobSeekerCVUpload2.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
                     Log.d(TAG,response.body().getFileDownloadUri());
 
 
                     if(response.body().getStatus() == 200){
 
                         //--success
-                        Toasty.success(Job_Seeker_CV_Upload_2.this,"CV uploaded successfully!",Toast.LENGTH_LONG, true).show();
-                        Intent openSecondVerifier = new Intent(Job_Seeker_CV_Upload_2.this,Job_Seeker_Modified_Dashboard.class);
+                        Toasty.success(JobSeekerCVUpload2.this,"CV uploaded successfully!",Toast.LENGTH_LONG, true).show();
+                        Intent openSecondVerifier = new Intent(JobSeekerCVUpload2.this, JobSeekerModifiedDashboard.class);
                         startActivity(openSecondVerifier);
                         finish();
 
                     }else{
 
-                        Toasty.error(Job_Seeker_CV_Upload_2.this,"User not created yet!",Toast.LENGTH_LONG, true).show();
+                        Toasty.error(JobSeekerCVUpload2.this,"User not created yet!",Toast.LENGTH_LONG, true).show();
                     }
 
 
@@ -400,7 +396,7 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Job_Seeker_CV_Upload_2.this);
+        dialog = new Dialog(JobSeekerCVUpload2.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -430,12 +426,12 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
 
     public void chooseFileFromStorage(){
 
-        new ChooserDialog(Job_Seeker_CV_Upload_2.this)
+        new ChooserDialog(JobSeekerCVUpload2.this)
                 //.withStartFile(path)
                 .withChosenListener(new ChooserDialog.Result() {
                     @Override
                     public void onChoosePath(String path, File pathFile) {
-                       /// Toast.makeText(Job_Seeker_CV_Upload_2.this, "FILE: " + path, Toast.LENGTH_SHORT).show();
+                       /// Toast.makeText(JobSeekerCVUpload2.this, "FILE: " + path, Toast.LENGTH_SHORT).show();
 
                         //--
 
@@ -449,11 +445,11 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
                             }else {
 
                                 filePath.setText(fileNameSeperator(""));
-                                Toasty.error(Job_Seeker_CV_Upload_2.this, "File is too large! Maximum file size limit 5MB", Toast.LENGTH_LONG, true).show();
+                                Toasty.error(JobSeekerCVUpload2.this, "File is too large! Maximum file size limit 5MB", Toast.LENGTH_LONG, true).show();
                             }
                         }else {
 
-                            Toasty.error(Job_Seeker_CV_Upload_2.this, "File type not supported!\n Supported formats : pdf,docx,jpg,png", Toast.LENGTH_LONG, true).show();
+                            Toasty.error(JobSeekerCVUpload2.this, "File type not supported!\n Supported formats : pdf,docx,jpg,png", Toast.LENGTH_LONG, true).show();
                             filePath.setText("");
                         }
 
@@ -477,7 +473,7 @@ public class Job_Seeker_CV_Upload_2 extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent openSecondVerifier = new Intent(Job_Seeker_CV_Upload_2.this,Job_Seeker_Modified_Dashboard.class);
+        Intent openSecondVerifier = new Intent(JobSeekerCVUpload2.this, JobSeekerModifiedDashboard.class);
         startActivity(openSecondVerifier);
         finish();
     }

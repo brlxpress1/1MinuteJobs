@@ -1,17 +1,15 @@
-package com.brl.oneminutejobs.job_seeker;
+package com.brl.oneminutejobs.jobseeker;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,11 +28,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.adapters.FetchJobSeekerAllJobsAdapter;
-import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
-import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.DateConversion;
-import com.google.firebase.database.DatabaseReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -897,7 +892,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
             backButtonValue = 0;
         }else{
 
-            Intent openSearchJob = new Intent(JobSeekerAppliedJobs.this,Job_Seeker_Modified_Dashboard.class);
+            Intent openSearchJob = new Intent(JobSeekerAppliedJobs.this, JobSeekerModifiedDashboard.class);
             startActivity(openSearchJob);
             finish();
 

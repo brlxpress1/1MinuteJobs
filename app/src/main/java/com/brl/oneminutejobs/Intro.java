@@ -5,9 +5,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -16,15 +14,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.brl.oneminutejobs.company.Company_Login_1;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Login;
+import com.brl.oneminutejobs.company.CompanyLogin1BeforeCode;
+import com.brl.oneminutejobs.jobseeker.JobSeekerLogin;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.brl.oneminutejobs.company.Company_Signup_1;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_CV_Upload;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_1;
 import com.brl.oneminutejobs.others.Connectivity;
-import com.brl.oneminutejobs.others.Skill_Selector;
 
 import es.dmoral.toasty.Toasty;
 
@@ -67,7 +60,7 @@ public class Intro extends AppCompatActivity {
                 if (Connectivity.isConnected(Intro.this)) {
 
 
-                    Intent openJobSeekerSignUp = new Intent(Intro.this, Company_Login_1.class);
+                    Intent openJobSeekerSignUp = new Intent(Intro.this, CompanyLogin1BeforeCode.class);
                     startActivity(openJobSeekerSignUp);
                     finish();
 
@@ -92,7 +85,7 @@ public class Intro extends AppCompatActivity {
                 if (Connectivity.isConnected(Intro.this)) {
 
 
-                    Intent openJobSeekerSignUp = new Intent(Intro.this, Job_Seeker_Login.class);
+                    Intent openJobSeekerSignUp = new Intent(Intro.this, JobSeekerLogin.class);
                     startActivity(openJobSeekerSignUp);
                     finish();
 

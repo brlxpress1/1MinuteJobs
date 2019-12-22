@@ -1,23 +1,18 @@
 package com.brl.oneminutejobs.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
-import com.brl.oneminutejobs.company.Company_SearchBoard;
-import com.brl.oneminutejobs.others.Dialogue_Helper;
+import com.brl.oneminutejobs.company.CompanyFetchAllJobs;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -43,7 +38,7 @@ public class FetchJobsAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater=null;
 
-    public FetchJobsAdapter(Company_Fetch_All_Jobs company_fetch_all_jobs, int count1, ArrayList<Integer> server_job_id1,ArrayList<String> server_job_title1,ArrayList<String> server_job_deadline1,ArrayList<Integer> server_job_priority1) {
+    public FetchJobsAdapter(CompanyFetchAllJobs company_fetch_all_jobs, int count1, ArrayList<Integer> server_job_id1, ArrayList<String> server_job_title1, ArrayList<String> server_job_deadline1, ArrayList<Integer> server_job_priority1) {
 
         // TODO Auto-generated constructor stub
 
@@ -187,9 +182,9 @@ public class FetchJobsAdapter extends BaseAdapter {
 
 
                 //(int userID, String photoUrl, String userName, String email, String Experience, String expectedSalary)
-                //((Company_SearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
+                //((CompanySearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
 
-                ((Company_Fetch_All_Jobs)context).showApplicantList(position);
+                ((CompanyFetchAllJobs)context).showApplicantList(position);
 
             }
 
@@ -210,7 +205,7 @@ public class FetchJobsAdapter extends BaseAdapter {
                 int temp = server_job_id.get(position);
 
 
-                ((Company_Fetch_All_Jobs)context).openDetailsWindow(position,temp);
+                ((CompanyFetchAllJobs)context).openDetailsWindow(position,temp);
 
 
             }
@@ -223,13 +218,13 @@ public class FetchJobsAdapter extends BaseAdapter {
             public boolean onLongClick(View v) {
                 //Toast.makeText( context, "Long click!", Toast.LENGTH_SHORT).show();
                 int id = server_job_id.get(position);
-                //Company_Fetch_All_Jobs company_fetch_all_jobs = new Company_Fetch_All_Jobs();
+                //CompanyFetchAllJobs company_fetch_all_jobs = new CompanyFetchAllJobs();
 
 
-                //Dialogue_Helper dh = new Dialogue_Helper();
+                //DialogueHelper dh = new DialogueHelper();
                 //dh.job_post_popup(context,id, company_fetch_all_jobs,server_job_priority.get(position),position);
 
-                ((Company_Fetch_All_Jobs)context).showPopUp(server_job_id.get(position),position,server_job_priority.get(position));
+                ((CompanyFetchAllJobs)context).showPopUp(server_job_id.get(position),position,server_job_priority.get(position));
 
                 return true;
             }

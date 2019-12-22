@@ -2,7 +2,6 @@ package com.brl.oneminutejobs.company;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -27,12 +26,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_CV_Upload;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_1;
-import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 
 import java.io.BufferedInputStream;
@@ -51,11 +45,11 @@ import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
-public class Employee_Details extends AppCompatActivity {
+public class EmployeeDetails extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Employee_Details";
+    private String TAG = "EmployeeDetails";
 
 
 
@@ -189,7 +183,7 @@ public class Employee_Details extends AppCompatActivity {
         if(localSkills.equalsIgnoreCase("donot")){
 
             //skillsDisplay.setVisibility(View.GONE);
-           // Toasty.info(Employee_Details.this,localSkills,Toasty.LENGTH_SHORT,true).show();
+           // Toasty.info(EmployeeDetails.this,localSkills,Toasty.LENGTH_SHORT,true).show();
             panel_4_skills.setVisibility(View.GONE);
 
         }else{
@@ -202,7 +196,7 @@ public class Employee_Details extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (ContextCompat.checkSelfPermission(Employee_Details.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(EmployeeDetails.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted
 
@@ -211,7 +205,7 @@ public class Employee_Details extends AppCompatActivity {
 
                 }else{
 
-                    if (ContextCompat.checkSelfPermission(Employee_Details.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if (ContextCompat.checkSelfPermission(EmployeeDetails.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
                         // Permission is not granted
 
@@ -300,7 +294,7 @@ public class Employee_Details extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            this.progressDialog = new ProgressDialog(Employee_Details.this);
+            this.progressDialog = new ProgressDialog(EmployeeDetails.this);
             this.progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.progressDialog.setCancelable(false);
             this.progressDialog.show();
@@ -412,7 +406,7 @@ public class Employee_Details extends AppCompatActivity {
         // to do task
         if(localCVUrl.equalsIgnoreCase("") || localCVUrl == null){
 
-            Toasty.error(Employee_Details.this,"Resume not available for download now! Try again later.",Toast.LENGTH_LONG, true).show();
+            Toasty.error(EmployeeDetails.this,"Resume not available for download now! Try again later.",Toast.LENGTH_LONG, true).show();
 
         }else {
 

@@ -6,14 +6,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,17 +21,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.adapters.SkillsSetAdapter;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.models.Skill;
+import com.brl.oneminutejobs.jobseeker.JobSeekerDashboard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,15 +33,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class Skill_Selector extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class SkillSelector extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    public String TAG = "Skill_Selector";
+    public String TAG = "SkillSelector";
     private Dialog dialog;
     String[] options;
 
@@ -92,7 +82,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        options = Skill_Selector.this.getResources().getStringArray(R.array.Animals);
+        options = SkillSelector.this.getResources().getStringArray(R.array.Animals);
         */
 
         saveExit.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +94,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
 
 
 
-                    Toasty.error(Skill_Selector.this,"Select at least 1 skill",Toast.LENGTH_LONG, true).show();
+                    Toasty.error(SkillSelector.this,"Select at least 1 skill",Toast.LENGTH_LONG, true).show();
                 }else {
 
 
@@ -188,7 +178,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Skill_Selector.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(SkillSelector.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
 
                     }
@@ -268,7 +258,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Skill_Selector.this);
+        dialog = new Dialog(SkillSelector.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -446,15 +436,15 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
 
                         if(status == 200){
 
-                            Toasty.success(Skill_Selector.this,"Skills updated successfully!",Toast.LENGTH_LONG, true).show();
+                            Toasty.success(SkillSelector.this,"Skills updated successfully!",Toast.LENGTH_LONG, true).show();
 
-                            Intent openJobSeekerSignUp = new Intent(Skill_Selector.this, Job_Seeker_Dashboard.class);
+                            Intent openJobSeekerSignUp = new Intent(SkillSelector.this, JobSeekerDashboard.class);
                             startActivity(openJobSeekerSignUp);
                             finish();
 
                         }else {
 
-                            Toasty.error(Skill_Selector.this,"Can't update Birth-date! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
+                            Toasty.error(SkillSelector.this,"Can't update Birth-date! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
 
                         }
 
@@ -469,7 +459,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Skill_Selector.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(SkillSelector.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -513,7 +503,7 @@ public class Skill_Selector extends AppCompatActivity implements AdapterView.OnI
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent openJobSeekerSignUp = new Intent(Skill_Selector.this, Job_Seeker_Dashboard.class);
+        Intent openJobSeekerSignUp = new Intent(SkillSelector.this, JobSeekerDashboard.class);
         startActivity(openJobSeekerSignUp);
         finish();
 

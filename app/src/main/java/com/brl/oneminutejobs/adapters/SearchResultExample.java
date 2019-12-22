@@ -9,11 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.brl.oneminutejobs.company.CompanySearchBoard;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.company.Company_SearchBoard;
-import com.brl.oneminutejobs.others.Skill_Selector;
 
 import java.util.ArrayList;
 
@@ -39,7 +38,7 @@ public class SearchResultExample extends BaseAdapter {
 
     private static LayoutInflater inflater=null;
 
-    public SearchResultExample(Company_SearchBoard company_searchBoard, int count1, ArrayList<Integer> jobSeekerId1, ArrayList<String> jobSeekerPhotoUrl1, ArrayList<String> jobSeekerName1, ArrayList<String> jobSeekerDesignation1, ArrayList<Integer> jobSeekerExperience1, ArrayList<Integer> jobSeekerExpectedSalary1) {
+    public SearchResultExample(CompanySearchBoard company_searchBoard, int count1, ArrayList<Integer> jobSeekerId1, ArrayList<String> jobSeekerPhotoUrl1, ArrayList<String> jobSeekerName1, ArrayList<String> jobSeekerDesignation1, ArrayList<Integer> jobSeekerExperience1, ArrayList<Integer> jobSeekerExpectedSalary1) {
 
         // TODO Auto-generated constructor stub
 
@@ -178,7 +177,7 @@ public class SearchResultExample extends BaseAdapter {
                 String temp = String.valueOf(jobSeekerId.get(position));
 
                 //(int userID, String photoUrl, String userName, String email, String Experience, String expectedSalary)
-                ((Company_SearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
+                ((CompanySearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
 
             }
 

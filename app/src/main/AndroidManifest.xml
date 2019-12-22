@@ -37,28 +37,28 @@
         </activity>
 
         <activity android:name=".Intro" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Verify_1" android:theme="@style/AppTheme" android:label="Job Seeker Sign Up" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Verify_2" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_CV_Upload" android:theme="@style/AppTheme" android:label="Upload Resume" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Dashboard" android:theme="@style/RadioButton1" android:label="Welcome" android:screenOrientation="portrait"></activity>
-        <activity android:name=".others.Skill_Selector" android:theme="@style/RadioButton1" android:label="Skills" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_CV_Upload_2" android:theme="@style/AppTheme" android:label="Upload Resume" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Login" android:theme="@style/AppTheme" android:label="Job Seeker Log In" android:screenOrientation="portrait" ></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Login_Verify" android:theme="@style/AppTheme" android:label="Job Seeker Log In" android:screenOrientation="portrait" ></activity>
+        <activity android:name=".jobseeker.JobSeekerVerify1BeforeCode" android:theme="@style/AppTheme" android:label="Job Seeker Sign Up" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".jobseeker.JobSeekerVerify2AfterCode" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".jobseeker.JobSeekerCVUpload" android:theme="@style/AppTheme" android:label="Upload Resume" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.JobSeekerDashboard" android:theme="@style/RadioButton1" android:label="Welcome" android:screenOrientation="portrait"></activity>
+        <activity android:name=".others.SkillSelector" android:theme="@style/RadioButton1" android:label="Skills" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.JobSeekerCVUpload2" android:theme="@style/AppTheme" android:label="Upload Resume" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.JobSeekerLogin" android:theme="@style/AppTheme" android:label="Job Seeker Log In" android:screenOrientation="portrait" ></activity>
+        <activity android:name=".jobseeker.JobSeekerLoginVerify" android:theme="@style/AppTheme" android:label="Job Seeker Log In" android:screenOrientation="portrait" ></activity>
 
-        <activity android:name=".company.Company_Dashboard" android:theme="@style/AppTheme" android:label="Welcome" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_Login_1" android:theme="@style/AppTheme" android:label="Company Log In" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_Login_2" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_Signup_1" android:theme="@style/AppTheme" android:label="Company Sign Up" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".company.Company_Signup_2" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".company.Company_SearchBoard" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Employee_Details" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.Job_Seeker_Modified_Dashboard" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_Job_Post" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_Fetch_All_Jobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.EmployeeJobSearch" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".job_seeker.JobSeekerAppliedJobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
-        <activity android:name=".company.Company_applicant_list" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyDashboard" android:theme="@style/AppTheme" android:label="Welcome" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyLogin1BeforeCode" android:theme="@style/AppTheme" android:label="Company Log In" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyLogin2AfterCode" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanySignup1BeforeCode" android:theme="@style/AppTheme" android:label="Company Sign Up" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".company.CompanySignup2AfterCode" android:theme="@style/AppTheme" android:label="Verify Number" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".company.CompanySearchBoard" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.EmployeeDetails" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.JobSeekerModifiedDashboard" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyJobPost" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyFetchAllJobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.EmployeeJobSearch" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".jobseeker.JobSeekerAppliedJobs" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
+        <activity android:name=".company.CompanyApplicationList" android:theme="@style/AppTheme" android:label="" android:screenOrientation="portrait"></activity>
 
 
 

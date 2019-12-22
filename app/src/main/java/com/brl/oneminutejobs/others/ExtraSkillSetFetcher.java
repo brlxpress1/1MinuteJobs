@@ -2,8 +2,6 @@ package com.brl.oneminutejobs.others;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -13,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
+import com.brl.oneminutejobs.jobseeker.JobSeekerDashboard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +29,7 @@ public class ExtraSkillSetFetcher {
     ArrayList<String> finalNameList = new ArrayList<String>();
 
 
-    public void fetch_skill_list(ArrayList<String> skillIds, Activity act, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void fetch_skill_list(ArrayList<String> skillIds, Activity act, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -74,7 +72,7 @@ public class ExtraSkillSetFetcher {
 
     }
 
-    private void parseFetchData(JSONObject jobj, Job_Seeker_Dashboard jobSeekerDashboard,ArrayList<String> skillIds){
+    private void parseFetchData(JSONObject jobj, JobSeekerDashboard jobSeekerDashboard, ArrayList<String> skillIds){
 
         if(skillNameList.size() > 0){
             skillNameList.clear();

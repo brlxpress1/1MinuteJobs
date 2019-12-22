@@ -1,15 +1,10 @@
 package com.brl.oneminutejobs.company;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -35,18 +29,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.EmployeeJobSearch;
 import com.brl.oneminutejobs.others.ConstantsHolder;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.google.android.material.snackbar.Snackbar;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
@@ -54,31 +38,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
-public class Company_Job_Post extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class CompanyJobPost extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Company_Job_Post";
+    private String TAG = "CompanyJobPost";
 
     private EditText job_title;
     private  EditText job_description;
@@ -263,7 +236,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                 String locationTxt = job_location.getText().toString();
                 String deadlineTxt = job_deadline.getText().toString();
                 int catagoryTxt = job_catagory.getSelectedItemPosition()+1;
-                //Toasty.info(Company_Job_Post.this,String.valueOf(catagoryTxt),Toasty.LENGTH_SHORT).show();
+                //Toasty.info(CompanyJobPost.this,String.valueOf(catagoryTxt),Toasty.LENGTH_SHORT).show();
 
 
 
@@ -371,7 +344,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                 if(titleFlag && descriptionFlag && educationalQualificationFlag && vacancyFlag && locationFlag && deadlineFlag){
 
                     // to do
-                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
+                    //Toasty.success(CompanyJobPost.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
 
                     addJobPost(titleTxt,descriptionTxt,educationalQualificationTxt,jobTypeValue,vacancyVlue,jobTimeValue,jobSalaryValue,locationTxt,deadlineTxt,catagoryTxt);
 
@@ -503,7 +476,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_Job_Post.this);
+        dialog = new Dialog(CompanyJobPost.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -591,15 +564,15 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
 
                         if(status.equalsIgnoreCase("200")){
 
-                            Toasty.success(Company_Job_Post.this,"Job posted successfully",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.success(CompanyJobPost.this,"Job posted successfully",Toasty.LENGTH_SHORT,true).show();
 
-                            Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_Fetch_All_Jobs.class);
+                            Intent openJobSeekerSignUp = new Intent(CompanyJobPost.this, CompanyFetchAllJobs.class);
                             startActivity(openJobSeekerSignUp);
                             finish();
 
                         }else{
 
-                            Toasty.error(Company_Job_Post.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.error(CompanyJobPost.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
                         }
 
                         hideLoadingBar();
@@ -611,7 +584,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Job_Post.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyJobPost.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -709,7 +682,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
                     @Override
                     public void onErrorResponse(VolleyError error){
 
-                        Toasty.error(Company_Job_Post.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyJobPost.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                         hideLoadingBar();
@@ -742,7 +715,7 @@ public class Company_Job_Post extends AppCompatActivity implements DatePickerDia
     @Override
     public void onBackPressed() {
 
-        Intent openJobSeekerSignUp = new Intent(Company_Job_Post.this, Company_SearchBoard.class);
+        Intent openJobSeekerSignUp = new Intent(CompanyJobPost.this, CompanySearchBoard.class);
         startActivity(openJobSeekerSignUp);
         finish();
 

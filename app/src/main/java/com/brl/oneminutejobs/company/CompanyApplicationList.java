@@ -25,11 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.others.ConstantsHolder;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.database.DatabaseReference;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,17 +36,17 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class Company_applicant_list extends AppCompatActivity {
+public class CompanyApplicationList extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Company_applicant_list";
+    private String TAG = "CompanyApplicationList";
 
     String[] listItem;
 
     private ArrayList<Integer> applicant_list_show_id = new ArrayList<Integer>();
     private   ArrayList<String> applicant_list_show_name = new ArrayList<String>();
-    //Company_Fetch_All_Jobs company_fetch_all_jobs;
+    //CompanyFetchAllJobs company_fetch_all_jobs;
 
     private ListView applicantList;
     private Dialog dialog;
@@ -68,8 +64,8 @@ public class Company_applicant_list extends AppCompatActivity {
 
 
 
-        applicant_list_show_id = Company_Fetch_All_Jobs.applicant_list_show_id;
-        applicant_list_show_name = Company_Fetch_All_Jobs.applicant_list_show_name;
+        applicant_list_show_id = CompanyFetchAllJobs.applicant_list_show_id;
+        applicant_list_show_name = CompanyFetchAllJobs.applicant_list_show_name;
 
 
         String[] mStringArray = new String[applicant_list_show_name.size()];
@@ -136,7 +132,7 @@ public class Company_applicant_list extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_applicant_list.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyApplicationList.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -179,7 +175,7 @@ public class Company_applicant_list extends AppCompatActivity {
             editor.putString("skillset", jobSeekerSkillSet.get(position));
             editor.apply();
 
-            Intent openSecondVerifier = new Intent(Company_SearchBoard.this,Employee_Details.class);
+            Intent openSecondVerifier = new Intent(CompanySearchBoard.this,EmployeeDetails.class);
             startActivity(openSecondVerifier);
             //finish();
             */
@@ -238,7 +234,7 @@ public class Company_applicant_list extends AppCompatActivity {
                 editor.apply();
                 Log.d(TAG,fullName+"------------------------  ");
 
-                Intent openSecondVerifier = new Intent(Company_applicant_list.this,Employee_Details.class);
+                Intent openSecondVerifier = new Intent(CompanyApplicationList.this, EmployeeDetails.class);
                 startActivity(openSecondVerifier);
 
                 //parseSkillSetFromJsonArray(listData.getJSONArray("skillsList"));
@@ -280,7 +276,7 @@ public class Company_applicant_list extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_applicant_list.this);
+        dialog = new Dialog(CompanyApplicationList.this);
 
         dialog.setContentView(R.layout.custom_profile_dashboard_loading1);
 

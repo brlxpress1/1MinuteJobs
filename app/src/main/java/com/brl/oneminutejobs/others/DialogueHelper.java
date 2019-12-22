@@ -7,17 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.Intent;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -29,26 +25,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.company.Company_Fetch_All_Jobs;
-import com.brl.oneminutejobs.company.Company_SearchBoard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
+import com.brl.oneminutejobs.company.CompanyFetchAllJobs;
+import com.brl.oneminutejobs.company.CompanySearchBoard;
+import com.brl.oneminutejobs.jobseeker.JobSeekerDashboard;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.security.auth.callback.Callback;
 
 import es.dmoral.toasty.Toasty;
 
 
-public class Dialogue_Helper {
+public class DialogueHelper {
 
-    public String TAG = "Dialogue_Helper";
+    public String TAG = "DialogueHelper";
     private Dialog dialog;
 
 
@@ -58,7 +50,7 @@ public class Dialogue_Helper {
 
 
     //-- Showing name input
-    public void askingForName(Activity actv, EditText edt, Job_Seeker_Dashboard job_seeker_dashboard ) {
+    public void askingForName(Activity actv, EditText edt, JobSeekerDashboard job_seeker_dashboard ) {
 
 
 
@@ -131,7 +123,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing Email input
-    public void askingForEmail(Activity actv, EditText edt, Job_Seeker_Dashboard job_seeker_dashboard) {
+    public void askingForEmail(Activity actv, EditText edt, JobSeekerDashboard job_seeker_dashboard) {
 
 
 
@@ -203,7 +195,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing Experience input
-    public void askingForExperience(Activity actv, EditText edt, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void askingForExperience(Activity actv, EditText edt, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -275,7 +267,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing salary input
-    public void askingForSalary(Activity actv, EditText edt, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void askingForSalary(Activity actv, EditText edt, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -347,7 +339,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing current company input
-    public void askingForCurrentCompany(Activity actv, EditText edt, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void askingForCurrentCompany(Activity actv, EditText edt, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -421,7 +413,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing current designation input
-    public void askingForDesignation(Activity actv, EditText edt, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void askingForDesignation(Activity actv, EditText edt, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -495,7 +487,7 @@ public class Dialogue_Helper {
     //-------------------
 
     //-- Showing prepered location input
-    public void askingForPreperedLocation(Activity actv, EditText edt, Job_Seeker_Dashboard jobSeekerDashboard) {
+    public void askingForPreperedLocation(Activity actv, EditText edt, JobSeekerDashboard jobSeekerDashboard) {
 
 
 
@@ -574,7 +566,7 @@ public class Dialogue_Helper {
     }
 
     //-- Showing prepered location input
-    public void showLocationSearch(Activity actv, EditText edt, Company_SearchBoard company_searchBoard) {
+    public void showLocationSearch(Activity actv, EditText edt, CompanySearchBoard company_searchBoard) {
 
 
 
@@ -653,7 +645,7 @@ public class Dialogue_Helper {
     }
 
     //-- Showing prepered location input
-    public void job_post_popup(Context ct, int id, Company_Fetch_All_Jobs company_fetch_all_jobs,int priority,int position) {
+    public void job_post_popup(Context ct, int id, CompanyFetchAllJobs company_fetch_all_jobs, int priority, int position) {
 
 
 
@@ -780,7 +772,7 @@ public class Dialogue_Helper {
 
     //-------------------
 
-    public void setFavourite(int postID, int statusMod, Context ct, Company_Fetch_All_Jobs company_fetch_all_jobs){
+    public void setFavourite(int postID, int statusMod, Context ct, CompanyFetchAllJobs company_fetch_all_jobs){
 
 
         showLoadingBarAlert(ct);
@@ -826,7 +818,7 @@ public class Dialogue_Helper {
                             }
 
 
-                            Intent reload = new Intent(ct,Company_Fetch_All_Jobs.class);
+                            Intent reload = new Intent(ct, CompanyFetchAllJobs.class);
                             ct.startActivity(reload);
                             company_fetch_all_jobs.finishThis();
 
@@ -901,7 +893,7 @@ public class Dialogue_Helper {
 
     }
 
-    public void setStatus(int postID, int statusMod, Context ct, Company_Fetch_All_Jobs company_fetch_all_jobs){
+    public void setStatus(int postID, int statusMod, Context ct, CompanyFetchAllJobs company_fetch_all_jobs){
 
 
         showLoadingBarAlert(ct);
@@ -943,7 +935,7 @@ public class Dialogue_Helper {
                             Toasty.success(ct, "Post deleted successfully!", Toast.LENGTH_LONG, true).show();
 
 
-                            Intent reload = new Intent(ct,Company_Fetch_All_Jobs.class);
+                            Intent reload = new Intent(ct, CompanyFetchAllJobs.class);
                             ct.startActivity(reload);
                             company_fetch_all_jobs.finishThis();
 

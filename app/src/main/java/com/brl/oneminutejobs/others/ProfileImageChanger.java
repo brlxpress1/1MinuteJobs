@@ -27,16 +27,16 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile_Image_Changer {
+public class ProfileImageChanger {
 
-    public String TAG = "Profile_Image_Changer";
+    public String TAG = "ProfileImageChanger";
     public static final int REQUEST_IMAGE = 100;
 
     //Context ct;
     Activity mainActivity;
     CircleImageView imgV;
 
-    public Profile_Image_Changer(Context ct, Activity mainActivity,CircleImageView imgV){
+    public ProfileImageChanger(Context ct, Activity mainActivity, CircleImageView imgV){
 
         //ct = this.ct;
         mainActivity = this.mainActivity;

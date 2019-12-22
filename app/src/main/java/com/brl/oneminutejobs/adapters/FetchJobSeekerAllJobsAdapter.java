@@ -12,8 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.EmployeeJobSearch;
-import com.brl.oneminutejobs.job_seeker.JobSeekerAppliedJobs;
+import com.brl.oneminutejobs.jobseeker.JobSeekerAppliedJobs;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -191,7 +190,7 @@ public class FetchJobSeekerAllJobsAdapter extends BaseAdapter {
 
 
                 //(int userID, String photoUrl, String userName, String email, String Experience, String expectedSalary)
-                //((Company_SearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
+                //((CompanySearchBoard)context).searchItemClick(position,holder.masterLayout,Integer.parseInt(temp),jobSeekerPhotoUrl.get(position),jobSeekerName.get(position),jobSeekerDesignation.get(position),String.valueOf(jobSeekerExperience.get(position)),String.valueOf(jobSeekerExpectedSalary.get(position)));
 
 
 
@@ -214,7 +213,7 @@ public class FetchJobSeekerAllJobsAdapter extends BaseAdapter {
                 int temp = server_job_id.get(position);
 
 
-                // ((Company_Fetch_All_Jobs)context).openDetailsWindow(position);
+                // ((CompanyFetchAllJobs)context).openDetailsWindow(position);
                 ((JobSeekerAppliedJobs)context).showDetailedWindow(server_job_id.get(position),position,server_job_priority.get(position));
 
 
@@ -228,10 +227,10 @@ public class FetchJobSeekerAllJobsAdapter extends BaseAdapter {
             public boolean onLongClick(View v) {
                 //Toast.makeText( context, "Long click!", Toast.LENGTH_SHORT).show();
                 int id = server_job_id.get(position);
-                //Company_Fetch_All_Jobs company_fetch_all_jobs = new Company_Fetch_All_Jobs();
+                //CompanyFetchAllJobs company_fetch_all_jobs = new CompanyFetchAllJobs();
 
 
-                //Dialogue_Helper dh = new Dialogue_Helper();
+                //DialogueHelper dh = new DialogueHelper();
                 //dh.job_post_popup(context,id, company_fetch_all_jobs,server_job_priority.get(position),position);
 
                 //((EmployeeJobSearch)context).showDetailedWindow(server_job_id.get(position),position,server_job_priority.get(position));

@@ -4,12 +4,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.CpuUsageInfo;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -39,14 +36,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
-import com.brl.oneminutejobs.adapters.SearchResultExample;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.DateConversion;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.google.firebase.database.DatabaseReference;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
@@ -67,11 +59,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class CompanyFetchAllJobs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Company_Fetch_All_Jobs";
+    private String TAG = "CompanyFetchAllJobs";
     private Dialog dialog;
 
     private ListView all_job_list;
@@ -335,7 +327,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                 }else{
 
-                    Toasty.warning(Company_Fetch_All_Jobs.this, "No jobs post data available!", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(CompanyFetchAllJobs.this, "No jobs post data available!", Toast.LENGTH_LONG, true).show();
                 }
             }
         });
@@ -362,7 +354,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                 }else{
 
-                    Toasty.warning(Company_Fetch_All_Jobs.this, "No current job post available!", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(CompanyFetchAllJobs.this, "No current job post available!", Toast.LENGTH_LONG, true).show();
                 }
             }
         });
@@ -387,7 +379,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                 }else{
 
-                    Toasty.warning(Company_Fetch_All_Jobs.this, "No expired job post available!", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(CompanyFetchAllJobs.this, "No expired job post available!", Toast.LENGTH_LONG, true).show();
                 }
             }
         });
@@ -597,7 +589,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                 if(titleFlag && descriptionFlag && educationalQualificationFlag && vacancyFlag && locationFlag && deadlineFlag){
 
                     // to do
-                    //Toasty.success(Company_Job_Post.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
+                    //Toasty.success(CompanyJobPost.this,"Ready to submut",Toasty.LENGTH_SHORT,true).show();
 
                     editJobPost(temp_id,titleTxt,descriptionTxt,educationalQualificationTxt,jobTypeValue,vacancyVlue,jobTimeValue,jobSalaryValue,locationTxt,deadlineTxt,catagoryTxt,temp_priority);
 
@@ -731,7 +723,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_Fetch_All_Jobs.this);
+        dialog = new Dialog(CompanyFetchAllJobs.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -801,7 +793,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
                             if(dataList.equalsIgnoreCase("[]")){
 
-                                Toasty.warning(Company_Fetch_All_Jobs.this, "No jobs post data available!", Toast.LENGTH_LONG, true).show();
+                                Toasty.warning(CompanyFetchAllJobs.this, "No jobs post data available!", Toast.LENGTH_LONG, true).show();
                             }else{
 
                                 //parseFetchData(response.optJSONObject("jobpostList"));
@@ -828,7 +820,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                         hideLoadingBar();
@@ -949,7 +941,7 @@ public class Company_Fetch_All_Jobs extends AppCompatActivity implements DatePic
 
         }else{
 
-            Toasty.warning(Company_Fetch_All_Jobs.this, "No job post data available!", Toast.LENGTH_LONG, true).show();
+            Toasty.warning(CompanyFetchAllJobs.this, "No job post data available!", Toast.LENGTH_LONG, true).show();
 
         }
 
@@ -1254,7 +1246,7 @@ public void finishThis(){
     // this method will store the info of user to  database
     private void editJobPost(int idP,String titleP,String descriptionP,String qualificationP,int jobTypeP,int vacancyP,int timeP,float salaryP, String locationP,String deadlineP,int catagoryP,int priority) {
 
-        //Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_LONG).show();
+        //Toasty.info(CompanyFetchAllJobs.this,deadlineP,Toasty.LENGTH_LONG).show();
 
         showLoadingBarAlert();
 
@@ -1280,7 +1272,7 @@ public void finishThis(){
             parameters.put("status", 1);
            // parameters.put("creator", 1);
             //parameters.put("applicantList", applicantList);
-           // Toasty.info(Company_Fetch_All_Jobs.this,deadlineP,Toasty.LENGTH_SHORT).show();
+           // Toasty.info(CompanyFetchAllJobs.this,deadlineP,Toasty.LENGTH_SHORT).show();
 
 
 
@@ -1308,18 +1300,18 @@ public void finishThis(){
 
                         if(status.equalsIgnoreCase("200")){//turzo
 
-                            Toasty.success(Company_Fetch_All_Jobs.this,"Job updated successfully",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.success(CompanyFetchAllJobs.this,"Job updated successfully",Toasty.LENGTH_SHORT,true).show();
 
                             hideLoadingBar();
 
-                            Intent openAgain = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            Intent openAgain = new Intent(CompanyFetchAllJobs.this, CompanyFetchAllJobs.class);
                             startActivity(openAgain);
                             finish();
 
 
                         }else{
 
-                            Toasty.error(Company_Fetch_All_Jobs.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.error(CompanyFetchAllJobs.this,"Problem with the server",Toasty.LENGTH_SHORT,true).show();
 
                             hideLoadingBar();
 
@@ -1334,7 +1326,7 @@ public void finishThis(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -1495,7 +1487,7 @@ public void finishThis(){
         postEditPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
         detailsPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
         listViewPanel.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-        //Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(i),Toasty.LENGTH_SHORT).show();
+        //Toasty.info(CompanyFetchAllJobs.this,String.valueOf(i),Toasty.LENGTH_SHORT).show();
 
 
         if(i == 1){
@@ -1583,19 +1575,19 @@ public void finishThis(){
                         if(status == 200){
 
                             if(priorityStatus > 0){
-                                Toasty.success(Company_Fetch_All_Jobs.this, "Post added to your favourite list!", Toast.LENGTH_LONG, true).show();
+                                Toasty.success(CompanyFetchAllJobs.this, "Post added to your favourite list!", Toast.LENGTH_LONG, true).show();
                             }else{
-                                Toasty.success(Company_Fetch_All_Jobs.this, "Post removed from your favourite list!", Toast.LENGTH_LONG, true).show();
+                                Toasty.success(CompanyFetchAllJobs.this, "Post removed from your favourite list!", Toast.LENGTH_LONG, true).show();
                             }
 
 
-                            Intent reload = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            Intent reload = new Intent(CompanyFetchAllJobs.this, CompanyFetchAllJobs.class);
                             startActivity(reload);
                             finish();
 
                         }else{
 
-                            Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                            Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         }
 
 
@@ -1606,7 +1598,7 @@ public void finishThis(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                         hideLoadingBar();
@@ -1672,16 +1664,16 @@ public void finishThis(){
 
                         if(status == 200){
 
-                            Toasty.success(Company_Fetch_All_Jobs.this, "Post deleted successfully!", Toast.LENGTH_LONG, true).show();
+                            Toasty.success(CompanyFetchAllJobs.this, "Post deleted successfully!", Toast.LENGTH_LONG, true).show();
 
 
-                            Intent reload = new Intent(Company_Fetch_All_Jobs.this,Company_Fetch_All_Jobs.class);
+                            Intent reload = new Intent(CompanyFetchAllJobs.this, CompanyFetchAllJobs.class);
                             startActivity(reload);
                             finish();
 
                         }else{
 
-                            Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                            Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         }
 
 
@@ -1692,7 +1684,7 @@ public void finishThis(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                         hideLoadingBar();
@@ -1730,7 +1722,7 @@ public void finishThis(){
 
         if(jbj.toString().equalsIgnoreCase("[]")){
 
-            Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
+            Toasty.warning(CompanyFetchAllJobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
         }else{
 
             int size  = jbj.length();
@@ -1745,14 +1737,14 @@ public void finishThis(){
                     //Log.e(TAG,"REsdfdsfdsfdf " + newObj.optString("name"));
                 }
 
-                Intent openApplicantList = new Intent(Company_Fetch_All_Jobs.this,Company_applicant_list.class);
+                Intent openApplicantList = new Intent(CompanyFetchAllJobs.this, CompanyApplicationList.class);
                 startActivity(openApplicantList);
                 backButtonValue = 0;
 
 
             }else{
 
-                Toasty.warning(Company_Fetch_All_Jobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
+                Toasty.warning(CompanyFetchAllJobs.this,"No one applied till now!",Toasty.LENGTH_SHORT,true).show();
             }
         }
 
@@ -1836,7 +1828,7 @@ public void finishThis(){
                     @Override
                     public void onErrorResponse(VolleyError error){
 
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                         hideLoadingBar();
@@ -1922,7 +1914,7 @@ public void finishThis(){
                     @Override
                     public void onErrorResponse(VolleyError error){
 
-                        Toasty.error(Company_Fetch_All_Jobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyFetchAllJobs.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         Log.e(TAG,error.toString());
                        // hideLoadingBar();
@@ -1966,14 +1958,14 @@ public void finishThis(){
     public void onBackPressed() {
         //super.onBackPressed();
 
-       // Toasty.info(Company_Fetch_All_Jobs.this,String.valueOf(backButtonValue),Toasty.LENGTH_SHORT,false).show();
+       // Toasty.info(CompanyFetchAllJobs.this,String.valueOf(backButtonValue),Toasty.LENGTH_SHORT,false).show();
         //backButtonValue--;
         if(backButtonValue == 1){
             showLayout(4);
             backButtonValue  = 0;
         }else{
 
-            Intent openJobSeekerSignUp = new Intent(Company_Fetch_All_Jobs.this, Company_SearchBoard.class);
+            Intent openJobSeekerSignUp = new Intent(CompanyFetchAllJobs.this, CompanySearchBoard.class);
             startActivity(openJobSeekerSignUp);
             finish();
         }

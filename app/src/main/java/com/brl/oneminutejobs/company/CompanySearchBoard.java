@@ -1,21 +1,16 @@
 package com.brl.oneminutejobs.company;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,7 +20,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,27 +29,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.brl.oneminutejobs.others.ImagePickerActivity;
+import com.brl.oneminutejobs.others.DialogueHelper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.Splash;
 import com.brl.oneminutejobs.adapters.SearchResultExample;
-import com.brl.oneminutejobs.adapters.SkillsSetAdapter;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Modified_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_1;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_2;
-import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
-import com.brl.oneminutejobs.others.Dialogue_Helper;
-import com.brl.oneminutejobs.others.Skill_Selector;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
@@ -68,17 +52,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
-public class Company_SearchBoard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CompanySearchBoard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Company_SearchBoard";
+    private String TAG = "CompanySearchBoard";
 
 
     private NavigationView navigationView;
@@ -214,7 +197,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         }else{
 
             //Go to Log in
-            Intent openCompanySignup = new Intent(this, Company_Login_1.class);
+            Intent openCompanySignup = new Intent(this, CompanyLogin1BeforeCode.class);
             startActivity(openCompanySignup);
             finish();
 
@@ -227,7 +210,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                 avatarPhoto.startAnimation(buttonClick);
 
-                Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Dashboard.class);
+                Intent openJobSeekerSignUp = new Intent(CompanySearchBoard.this, CompanyDashboard.class);
                 startActivity(openJobSeekerSignUp);
                 finish();
 
@@ -278,7 +261,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 //openLocationInput(locationBox);
-                //Toasty.info(Company_SearchBoard.this,"Clicked",Toasty.LENGTH_SHORT,false).show();
+                //Toasty.info(CompanySearchBoard.this,"Clicked",Toasty.LENGTH_SHORT,false).show();
                // turzo
 
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
@@ -307,7 +290,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                 if(s1.equalsIgnoreCase("") || s1 == null){
 
-                    Toasty.error(Company_SearchBoard.this, "Please choose a skill first!", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(CompanySearchBoard.this, "Please choose a skill first!", Toast.LENGTH_LONG, true).show();
 
                 }else {
 
@@ -386,7 +369,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View view) {
 
-               // Toasty.info(Company_SearchBoard.this,"Working",Toasty.LENGTH_SHORT,true).show();
+               // Toasty.info(CompanySearchBoard.this,"Working",Toasty.LENGTH_SHORT,true).show();
                 drawer_opener.startAnimation(buttonClick);
                 drawer_layout.openDrawer(Gravity.LEFT);
             }
@@ -429,7 +412,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
     public void openLocationInput(EditText editText){
 
-        Dialogue_Helper dh = new Dialogue_Helper();
+        DialogueHelper dh = new DialogueHelper();
         dh.showLocationSearch(this,editText,this);
     }
 
@@ -480,7 +463,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                         if(response.toString().contains("\"status\": 500,")){
 
-                            Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                            Toasty.error(CompanySearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                             hideLoadingBar();
 
                         }else {
@@ -497,7 +480,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanySearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -540,7 +523,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             int totalElements =jobj.optInt("totalElements");
             if(totalElements < 1) {
 
-                Toasty.info(Company_SearchBoard.this, "No result found! Please try later.", Toast.LENGTH_LONG, true).show();
+                Toasty.info(CompanySearchBoard.this, "No result found! Please try later.", Toast.LENGTH_LONG, true).show();
                 //panel_1_normal_search.getLayoutParams().height = 0;
 
             }else {
@@ -581,7 +564,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toasty.info(Company_SearchBoard.this, "A problem occurred while loading the info. Please try again", Toast.LENGTH_LONG, true).show();
+                    Toasty.info(CompanySearchBoard.this, "A problem occurred while loading the info. Please try again", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -721,7 +704,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                         if(response.toString().contains("\"status\": 500,")){
 
-                            Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                            Toasty.error(CompanySearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                             hideLoadingBar();
                             showLayout(1);
 
@@ -739,7 +722,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanySearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -773,7 +756,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             int totalElements =jobj.optInt("totalElement");
             if(totalElements < 1) {
 
-                Toasty.info(Company_SearchBoard.this, "No result found! Please try later.", Toast.LENGTH_LONG, true).show();
+                Toasty.info(CompanySearchBoard.this, "No result found! Please try later.", Toast.LENGTH_LONG, true).show();
                 //panel_1_normal_search.getLayoutParams().height = 0;
 
             }else {
@@ -819,7 +802,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toasty.info(Company_SearchBoard.this, "A problem occurred while loading the info. Please try again", Toast.LENGTH_LONG, true).show();
+                    Toasty.info(CompanySearchBoard.this, "A problem occurred while loading the info. Please try again", Toast.LENGTH_LONG, true).show();
                 }
 
 
@@ -852,7 +835,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_SearchBoard.this);
+        dialog = new Dialog(CompanySearchBoard.this);
 
         dialog.setContentView(R.layout.custom_profile_dashboard_loading1);
 
@@ -917,14 +900,14 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
 
         if(id == R.id.my_profile){
 
-            //Toasty.success(Company_SearchBoard.this, "My Profile", Toast.LENGTH_LONG, true).show();
-            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Dashboard.class);
+            //Toasty.success(CompanySearchBoard.this, "My Profile", Toast.LENGTH_LONG, true).show();
+            Intent openJobSeekerSignUp = new Intent(CompanySearchBoard.this, CompanyDashboard.class);
             startActivity(openJobSeekerSignUp);
             finish();
 
         }else if(id == R.id.privacy_policy){
 
-            //Toasty.info(Company_SearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+            //Toasty.info(CompanySearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
 
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://brlbd.com/oneminutejobs/privacy.html"));
@@ -941,24 +924,24 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
             typeEditor.apply();
 
 
-            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Intro.class);
+            Intent openJobSeekerSignUp = new Intent(CompanySearchBoard.this, Intro.class);
             startActivity(openJobSeekerSignUp);
             finish();
 
 
         }else if(id == R.id.post_a_job){
 
-            //Toasty.info(Company_SearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+            //Toasty.info(CompanySearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
 
-            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Job_Post.class);
+            Intent openJobSeekerSignUp = new Intent(CompanySearchBoard.this, CompanyJobPost.class);
             startActivity(openJobSeekerSignUp);
             finish();
 
         }else if(id == R.id.posted_jobs){
 
-            //Toasty.info(Company_SearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
+            //Toasty.info(CompanySearchBoard.this, "Coming soon!", Toast.LENGTH_LONG, true).show();
 
-            Intent openJobSeekerSignUp = new Intent(Company_SearchBoard.this, Company_Fetch_All_Jobs.class);
+            Intent openJobSeekerSignUp = new Intent(CompanySearchBoard.this, CompanyFetchAllJobs.class);
             startActivity(openJobSeekerSignUp);
             finish();
 
@@ -1005,7 +988,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        //Toasty.error(Company_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        //Toasty.error(CompanyDashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                        // hideLoadingBar();
 
@@ -1152,7 +1135,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_SearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanySearchBoard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
 
                     }
@@ -1239,7 +1222,7 @@ public class Company_SearchBoard extends AppCompatActivity implements Navigation
         editor.putString("skillset", jobSeekerSkillSet.get(position));
         editor.apply();
 
-        Intent openSecondVerifier = new Intent(Company_SearchBoard.this,Employee_Details.class);
+        Intent openSecondVerifier = new Intent(CompanySearchBoard.this, EmployeeDetails.class);
         startActivity(openSecondVerifier);
         //finish();
 

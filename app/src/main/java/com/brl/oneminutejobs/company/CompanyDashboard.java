@@ -20,7 +20,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_CV_Upload_2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.karumi.dexter.Dexter;
@@ -43,13 +41,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Login;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_1;
 import com.brl.oneminutejobs.models.UploadFileResponse;
-import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.FileUploadService;
 import com.brl.oneminutejobs.others.ImagePickerActivity;
@@ -80,11 +73,11 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class Company_Dashboard extends AppCompatActivity {
+public class CompanyDashboard extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
-    private String TAG = "Company_Dashboard";
+    private String TAG = "CompanyDashboard";
     private int REQUEST_IMAGE = 100;
 
     private Dialog dialog;
@@ -207,7 +200,7 @@ public class Company_Dashboard extends AppCompatActivity {
         }else{
 
             //Go to Log in
-            Intent openCompanySignup = new Intent(this, Company_Login_1.class);
+            Intent openCompanySignup = new Intent(this, CompanyLogin1BeforeCode.class);
             startActivity(openCompanySignup);
             finish();
         }
@@ -271,13 +264,13 @@ public class Company_Dashboard extends AppCompatActivity {
                         int status = response.optInt("status");
                         if(status == 200){
 
-                            Toasty.success(Company_Dashboard.this,"Your info updated successfully!",Toast.LENGTH_LONG, true).show();
+                            Toasty.success(CompanyDashboard.this,"Your info updated successfully!",Toast.LENGTH_LONG, true).show();
 
 
                         }else {
 
 
-                            Toasty.error(Company_Dashboard.this,"Can't update info! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
+                            Toasty.error(CompanyDashboard.this,"Can't update info! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
                         }
 
                         hideLoadingBar();
@@ -291,7 +284,7 @@ public class Company_Dashboard extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyDashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -324,7 +317,7 @@ public class Company_Dashboard extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(Company_Dashboard.this);
+        dialog = new Dialog(CompanyDashboard.this);
 
         dialog.setContentView(R.layout.custom_profile_dashboard_loading1);
 
@@ -397,7 +390,7 @@ public class Company_Dashboard extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(Company_Dashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyDashboard.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         hideLoadingBar();
 
@@ -546,7 +539,7 @@ public class Company_Dashboard extends AppCompatActivity {
             @Override
            public void onTakeCameraSelected() {
 
-                if (ContextCompat.checkSelfPermission(Company_Dashboard.this, Manifest.permission.CAMERA)
+                if (ContextCompat.checkSelfPermission(CompanyDashboard.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted
 
@@ -608,7 +601,7 @@ public class Company_Dashboard extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
 
-                    if (ContextCompat.checkSelfPermission(Company_Dashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if (ContextCompat.checkSelfPermission(CompanyDashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
                         // Permission is not granted
 
@@ -718,21 +711,21 @@ public class Company_Dashboard extends AppCompatActivity {
                 public void onResponse(Call<UploadFileResponse> call,
                                        retrofit2.Response<UploadFileResponse> response) {
                     Log.v(TAG, response.body().getFileName()+"-------- "+response.body().getFileDownloadUri());
-                    //Toasty.success(Job_Seeker_CV_Upload.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
+                    //Toasty.success(JobSeekerCVUpload.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
                     Log.d(TAG,response.body().getFileDownloadUri());
 
 
                     if(response.body().getStatus() == 200){
 
                         //--success
-                        Toasty.success(Company_Dashboard.this,"Profile image updated!",Toast.LENGTH_LONG, true).show();
+                        Toasty.success(CompanyDashboard.this,"Profile image updated!",Toast.LENGTH_LONG, true).show();
 
                         // loading profile image from local cache
                         loadProfile(file1.getAbsolutePath());
 
                     }else{
 
-                        Toasty.error(Company_Dashboard.this,"Can't upload profile image at this time! Try again later.",Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyDashboard.this,"Can't upload profile image at this time! Try again later.",Toast.LENGTH_LONG, true).show();
                     }
 
 
@@ -804,7 +797,7 @@ public class Company_Dashboard extends AppCompatActivity {
 
 
                             SaveImage saveImage = new SaveImage();
-                            File file = saveImage.saveBitMap(getApplicationContext(),Company_Dashboard.this,bitmap,getCurrentTimeStamp());
+                            File file = saveImage.saveBitMap(getApplicationContext(), CompanyDashboard.this,bitmap,getCurrentTimeStamp());
                             uploadImageWithId(file, getCurrentTimeStamp());
                             //Log.d("11111",file.getAbsolutePath());
 
@@ -873,7 +866,7 @@ public class Company_Dashboard extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent openJobSeekerSignUp = new Intent(Company_Dashboard.this, Company_SearchBoard.class);
+        Intent openJobSeekerSignUp = new Intent(CompanyDashboard.this, CompanySearchBoard.class);
         startActivity(openJobSeekerSignUp);
         finish();
     }

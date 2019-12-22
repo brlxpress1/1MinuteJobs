@@ -2,38 +2,28 @@ package com.brl.oneminutejobs;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.brl.oneminutejobs.company.CompanySignup1BeforeCode;
+import com.brl.oneminutejobs.jobseeker.JobSeekerVerify1BeforeCode;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.brl.oneminutejobs.company.Company_Dashboard;
-import com.brl.oneminutejobs.company.Company_SearchBoard;
-import com.brl.oneminutejobs.company.Company_Signup_1;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Modified_Dashboard;
-import com.brl.oneminutejobs.job_seeker.Job_Seeker_Verify_1;
+import com.brl.oneminutejobs.company.CompanySearchBoard;
+import com.brl.oneminutejobs.jobseeker.JobSeekerModifiedDashboard;
 import com.brl.oneminutejobs.others.Connectivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import es.dmoral.toasty.Toasty;
 
 public class Splash extends AppCompatActivity {
 
@@ -116,13 +106,13 @@ public class Splash extends AppCompatActivity {
 
                                 if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_SearchBoard.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, CompanySearchBoard.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
 
                                 }else {
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Company_Signup_1.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, CompanySignup1BeforeCode.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
                                 }
@@ -137,13 +127,13 @@ public class Splash extends AppCompatActivity {
 
                                 if(userIdLocal != null && !userIdLocal.equalsIgnoreCase("")){
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Modified_Dashboard.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, JobSeekerModifiedDashboard.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
 
                                 }else {
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, Job_Seeker_Verify_1.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, JobSeekerVerify1BeforeCode.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
                                 }
