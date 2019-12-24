@@ -37,9 +37,9 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class CompanyLogin1BeforeCode extends AppCompatActivity {
+public class CompanyLoginBeforeCode extends AppCompatActivity {
 
-    private String TAG = "CompanyLogin1BeforeCode";
+    private String TAG = "CompanyLoginBeforeCode";
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
 
 
@@ -147,7 +147,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
                 next.startAnimation(buttonClick);
 
                 //-- Check if user is connected with the internet
-                if (Connectivity.isConnected(CompanyLogin1BeforeCode.this)) {
+                if (Connectivity.isConnected(CompanyLoginBeforeCode.this)) {
 
 
                     //-- Check if name input field is empty
@@ -157,7 +157,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
                     String temp2 = phone_number.getText().toString().trim();
                     if(temp2.equalsIgnoreCase("") || temp2 == null){
 
-                        Toasty.error(CompanyLogin1BeforeCode.this, "Please enter your phone number!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyLoginBeforeCode.this, "Please enter your phone number!", Toast.LENGTH_LONG, true).show();
                     }else {
 
 
@@ -165,7 +165,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
                         //String tempPhone = ccp.getSelectedCountryCodeWithPlus()+phone_number.getText().toString().trim();
                         String tempPhone = countryCode.getText().toString().trim()+phone_number.getText().toString().trim();
 
-                        //Toasty.success(JobSeekerVerify1BeforeCode.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
+                        //Toasty.success(JobSeekerVerifyBeforeCode.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
 
                         //showLoadingBarAlert();
                         //-- task
@@ -180,7 +180,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
 
                          */
 
-                        // Intent openSecondVerifier = new Intent(JobSeekerVerify1BeforeCode.this,JobSeekerVerify2AfterCode.class);
+                        // Intent openSecondVerifier = new Intent(JobSeekerVerifyBeforeCode.this,JobSeekerVerifyAfterCode.class);
                         // startActivity(openSecondVerifier);
                         // finish();
 
@@ -193,7 +193,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
                 } else {
 
 
-                    Toasty.error(CompanyLogin1BeforeCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(CompanyLoginBeforeCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
@@ -222,7 +222,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent openCVwindow = new Intent(CompanyLogin1BeforeCode.this, CompanySignup1BeforeCode.class);
+                Intent openCVwindow = new Intent(CompanyLoginBeforeCode.this, CompanySignupBeforeCode.class);
                 startActivity(openCVwindow);
                 finish();
             }
@@ -236,7 +236,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(CompanyLogin1BeforeCode.this);
+        dialog = new Dialog(CompanyLoginBeforeCode.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -301,7 +301,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(CompanyLogin1BeforeCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(CompanyLoginBeforeCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
                         // hideLoadingBar();
 
@@ -347,7 +347,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
 
 
 
-            Intent openSecondVerifier = new Intent(this, CompanyLogin2AfterCode.class);
+            Intent openSecondVerifier = new Intent(this, CompanyLoginAfterCode.class);
             startActivity(openSecondVerifier);
             finish();
 
@@ -357,7 +357,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
 
         }else {
 
-            Toasty.error(CompanyLogin1BeforeCode.this,"We can't recognize this number! Try Sign Up now.",Toast.LENGTH_LONG, true).show();
+            Toasty.error(CompanyLoginBeforeCode.this,"We can't recognize this number! Try Sign Up now.",Toast.LENGTH_LONG, true).show();
 
 
         }
@@ -388,7 +388,7 @@ public class CompanyLogin1BeforeCode extends AppCompatActivity {
 
 
 
-        Intent introOpener = new Intent(CompanyLogin1BeforeCode.this, Intro.class);
+        Intent introOpener = new Intent(CompanyLoginBeforeCode.this, Intro.class);
         startActivity(introOpener);
         finish();
 

@@ -36,10 +36,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class CompanyLogin2AfterCode extends AppCompatActivity {
+public class CompanyLoginAfterCode extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
-    private String TAG = "CompanyLogin2AfterCode";
+    private String TAG = "CompanyLoginAfterCode";
 
 
     private Dialog dialog;
@@ -112,14 +112,14 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
                 verifyButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(CompanyLogin2AfterCode.this)) {
+                if (Connectivity.isConnected(CompanyLoginAfterCode.this)) {
 
 
                     verifyCode();
 
                 } else {
 
-                    Toasty.error(CompanyLogin2AfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(CompanyLoginAfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
@@ -132,14 +132,14 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
                 resendButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(CompanyLogin2AfterCode.this)) {
+                if (Connectivity.isConnected(CompanyLoginAfterCode.this)) {
 
 
                     resendCode();
 
                 } else {
 
-                    Toasty.error(CompanyLogin2AfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(CompanyLoginAfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
@@ -158,7 +158,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(CompanyLogin2AfterCode.this);
+        dialog = new Dialog(CompanyLoginAfterCode.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -204,7 +204,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
             // Go to sign up page
 
-            Intent introOpener = new Intent(CompanyLogin2AfterCode.this, CompanyLogin1BeforeCode.class);
+            Intent introOpener = new Intent(CompanyLoginAfterCode.this, CompanyLoginBeforeCode.class);
             startActivity(introOpener);
             finish();
         }else {
@@ -298,7 +298,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
                 //Toast.makeText(Verification.this, "Enter Correct Number.", Toast.LENGTH_SHORT).show();
 
-                Toasty.error(CompanyLogin2AfterCode.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
+                Toasty.error(CompanyLoginAfterCode.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
 
 
                 SharedPreferences.Editor editor = getSharedPreferences("CompanyData", MODE_PRIVATE).edit();
@@ -306,7 +306,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
                 //editor.putString("userphone", userPhone);
                 editor.apply();
 
-                Intent openSecondVerifier = new Intent(CompanyLogin2AfterCode.this, JobSeekerLogin.class);
+                Intent openSecondVerifier = new Intent(CompanyLoginAfterCode.this, JobSeekerLogin.class);
                 startActivity(openSecondVerifier);
                 finish();
 
@@ -359,7 +359,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
                 otpID = verificationId;
 
-                Toasty.info(CompanyLogin2AfterCode.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
+                Toasty.info(CompanyLoginAfterCode.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
                 verifyPanel.setVisibility(View.VISIBLE);
                 hideLoadingBar();
 
@@ -411,7 +411,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
                             typeEditor.apply();
 
                             //--
-                            Intent openSecondVerifier = new Intent(CompanyLogin2AfterCode.this, CompanySearchBoard.class);
+                            Intent openSecondVerifier = new Intent(CompanyLoginAfterCode.this, CompanySearchBoard.class);
                             startActivity(openSecondVerifier);
                             finish();
 
@@ -435,7 +435,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
                                 //Toast.makeText(Verification.this, "Verification code is invalid!", Toast.LENGTH_LONG).show();
 
-                                Toasty.error(CompanyLogin2AfterCode.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
+                                Toasty.error(CompanyLoginAfterCode.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
                                 hideLoadingBar();
 
 
@@ -466,7 +466,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
             //Toast.makeText(Verification.this, "You must enter the verification code!", Toast.LENGTH_SHORT).show();
 
-            Toasty.error(CompanyLogin2AfterCode.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
+            Toasty.error(CompanyLoginAfterCode.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
 
 
 
@@ -564,7 +564,7 @@ public class CompanyLogin2AfterCode extends AppCompatActivity {
 
 
 
-        Intent openSecondVerifier = new Intent(CompanyLogin2AfterCode.this, CompanyLogin1BeforeCode.class);
+        Intent openSecondVerifier = new Intent(CompanyLoginAfterCode.this, CompanyLoginBeforeCode.class);
         startActivity(openSecondVerifier);
         finish();
 

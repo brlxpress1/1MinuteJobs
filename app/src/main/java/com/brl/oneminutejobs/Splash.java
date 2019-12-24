@@ -9,8 +9,8 @@ import android.view.animation.AlphaAnimation;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.brl.oneminutejobs.company.CompanySignup1BeforeCode;
-import com.brl.oneminutejobs.jobseeker.JobSeekerVerify1BeforeCode;
+import com.brl.oneminutejobs.company.CompanySignupBeforeCode;
+import com.brl.oneminutejobs.jobseeker.JobSeekerVerifyBeforeCode;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -112,7 +112,7 @@ public class Splash extends AppCompatActivity {
 
                                 }else {
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, CompanySignup1BeforeCode.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, CompanySignupBeforeCode.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
                                 }
@@ -133,7 +133,7 @@ public class Splash extends AppCompatActivity {
 
                                 }else {
 
-                                    Intent openJobSeekerSignUp = new Intent(Splash.this, JobSeekerVerify1BeforeCode.class);
+                                    Intent openJobSeekerSignUp = new Intent(Splash.this, JobSeekerVerifyBeforeCode.class);
                                     startActivity(openJobSeekerSignUp);
                                     finish();
                                 }

@@ -200,7 +200,7 @@ public class CompanyDashboard extends AppCompatActivity {
         }else{
 
             //Go to Log in
-            Intent openCompanySignup = new Intent(this, CompanyLogin1BeforeCode.class);
+            Intent openCompanySignup = new Intent(this, CompanyLoginBeforeCode.class);
             startActivity(openCompanySignup);
             finish();
         }

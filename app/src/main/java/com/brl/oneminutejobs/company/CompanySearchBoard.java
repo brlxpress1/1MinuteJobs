@@ -197,7 +197,7 @@ public class CompanySearchBoard extends AppCompatActivity implements NavigationV
         }else{
 
             //Go to Log in
-            Intent openCompanySignup = new Intent(this, CompanyLogin1BeforeCode.class);
+            Intent openCompanySignup = new Intent(this, CompanyLoginBeforeCode.class);
             startActivity(openCompanySignup);
             finish();
 

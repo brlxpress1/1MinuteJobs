@@ -165,7 +165,7 @@ public class JobSeekerLogin extends AppCompatActivity {
                             //String tempPhone = ccp.getSelectedCountryCodeWithPlus()+phone_number.getText().toString().trim();
                             String tempPhone = countryCode.getText().toString().trim()+phone_number.getText().toString().trim();
 
-                            //Toasty.success(JobSeekerVerify1BeforeCode.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
+                            //Toasty.success(JobSeekerVerifyBeforeCode.this, "Name : "+tempName+"\nPhone : "+tempPhone, Toast.LENGTH_LONG, true).show();
 
                             //showLoadingBarAlert();
                             //-- task
@@ -180,7 +180,7 @@ public class JobSeekerLogin extends AppCompatActivity {
 
                              */
 
-                            // Intent openSecondVerifier = new Intent(JobSeekerVerify1BeforeCode.this,JobSeekerVerify2AfterCode.class);
+                            // Intent openSecondVerifier = new Intent(JobSeekerVerifyBeforeCode.this,JobSeekerVerifyAfterCode.class);
                             // startActivity(openSecondVerifier);
                             // finish();
 
@@ -222,7 +222,7 @@ public class JobSeekerLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent openCVwindow = new Intent(JobSeekerLogin.this, JobSeekerVerify1BeforeCode.class);
+                Intent openCVwindow = new Intent(JobSeekerLogin.this, JobSeekerVerifyBeforeCode.class);
                 startActivity(openCVwindow);
                 finish();
             }
@@ -312,7 +312,7 @@ public class JobSeekerLogin extends AppCompatActivity {
 
 
 
-                            Intent openSecondVerifier = new Intent(JobSeekerLogin.this,JobSeekerVerify2AfterCode.class);
+                            Intent openSecondVerifier = new Intent(JobSeekerLogin.this,JobSeekerVerifyAfterCode.class);
                             startActivity(openSecondVerifier);
                             finish();
 
@@ -324,7 +324,7 @@ public class JobSeekerLogin extends AppCompatActivity {
                             Toasty.error(JobSeekerLogin.this,"We can't recognize this number! Try Sign Up now.",Toast.LENGTH_LONG, true).show();
 
 
-                            // Toasty.error(JobSeekerVerify1BeforeCode.this,"Can't update location! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
+                            // Toasty.error(JobSeekerVerifyBeforeCode.this,"Can't update location! Please check your internet connection & try again.",Toast.LENGTH_LONG, true).show();
                             // Log.d(TAG,"Ready to verify");
 
 

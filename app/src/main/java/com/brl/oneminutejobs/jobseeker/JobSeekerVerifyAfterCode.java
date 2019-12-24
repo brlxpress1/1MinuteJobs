@@ -1,9 +1,12 @@
-package com.brl.oneminutejobs.company;
+package com.brl.oneminutejobs.jobseeker;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -37,6 +40,7 @@ import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.others.Connectivity;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,14 +48,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
-public class CompanySignup2AfterCode extends AppCompatActivity {
+
+public class JobSeekerVerifyAfterCode extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.6F);
-    private String TAG = "CompanySignup2AfterCode";
+    private String TAG = "JobSeekerVerifyAfterCode";
 
 
     private Dialog dialog;
@@ -73,13 +76,15 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_signup_2);
+        setContentView(R.layout.activity_job_seeker_verify_2);
 
 
         otpCodeInput = (EditText)findViewById(R.id.otp_code_input);
         verifyButton = (Button)findViewById(R.id.verify_button);
         resendButton = (TextView)findViewById(R.id.resend_button);
         verifyPanel = (LinearLayout)findViewById(R.id.verifyPanel);
+
+        verifyPanel.setVisibility(View.INVISIBLE);
 
 
         //-- Changing selection effect of input fields
@@ -106,7 +111,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
         showLoadingBarAlert();
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
         String userPhone = prefs.getString("userphone", "");
 
@@ -121,14 +126,14 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                 verifyButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(CompanySignup2AfterCode.this)) {
+                if (Connectivity.isConnected(JobSeekerVerifyAfterCode.this)) {
 
 
                     verifyCode();
 
                 } else {
 
-                    Toasty.error(CompanySignup2AfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerVerifyAfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
@@ -141,21 +146,19 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                 resendButton.startAnimation(buttonClick);
 
-                if (Connectivity.isConnected(CompanySignup2AfterCode.this)) {
+                if (Connectivity.isConnected(JobSeekerVerifyAfterCode.this)) {
 
 
                     resendCode();
 
                 } else {
 
-                    Toasty.error(CompanySignup2AfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
+                    Toasty.error(JobSeekerVerifyAfterCode.this, "You have no internet access! Please turn on your WiFi or mobile data.", Toast.LENGTH_LONG, true).show();
 
                 }
 
             }
         });
-
-        verifyPanel.setVisibility(View.INVISIBLE);
 
 
 
@@ -165,7 +168,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
     private void showLoadingBarAlert(){
 
 
-        dialog = new Dialog(CompanySignup2AfterCode.this);
+        dialog = new Dialog(JobSeekerVerifyAfterCode.this);
 
         dialog.setContentView(R.layout.loading);
 
@@ -200,7 +203,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
     private void send_otp_by_firebase(String number){
 
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
 
         String userName = prefs.getString("username", "");
@@ -222,19 +225,19 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
 
 
-                verificationCallBack();
+        verificationCallBack();
 
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
 
-                        number,        // Phone number to verify
+                number,        // Phone number to verify
 
-                        60,                 // Timeout duration
+                60,                 // Timeout duration
 
-                        TimeUnit.SECONDS,   // Unit of timeout
+                TimeUnit.SECONDS,   // Unit of timeout
 
-                        this,               // Activity (for callback binding)
+                this,               // Activity (for callback binding)
 
-                        verificationCallbacks);
+                verificationCallbacks);
 
                 startCountDownTimer();
 
@@ -242,7 +245,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
 
 
-                //--
+        //--
 
 
             }
@@ -308,9 +311,9 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                 //Toast.makeText(Verification.this, "Enter Correct Number.", Toast.LENGTH_SHORT).show();
 
-                Toasty.error(CompanySignup2AfterCode.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
+                Toasty.error(JobSeekerVerifyAfterCode.this, "Enter a valid phone number!", Toast.LENGTH_LONG, true).show();
 
-                Intent openSecondVerifier = new Intent(CompanySignup2AfterCode.this, CompanySignup1BeforeCode.class);
+                Intent openSecondVerifier = new Intent(JobSeekerVerifyAfterCode.this, JobSeekerVerifyBeforeCode.class);
                 startActivity(openSecondVerifier);
                 finish();
 
@@ -363,7 +366,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                 otpID = verificationId;
 
-                Toasty.info(CompanySignup2AfterCode.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
+                Toasty.info(JobSeekerVerifyAfterCode.this, "OTP code sent to your phone number, please enter the code.", Toast.LENGTH_LONG, true).show();
                 verifyPanel.setVisibility(View.VISIBLE);
                 hideLoadingBar();
 
@@ -414,15 +417,15 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
                             // after successfully verified
 /*
                             hideLoadingBar();
-                            //Toasty.success(JobSeekerVerify2AfterCode.this,"Sign up successful with you provided phone number!",Toast.LENGTH_LONG, true).show();
-                            Intent openCVwindow = new Intent(JobSeekerVerify2AfterCode.this,JobSeekerCVUpload.class);
+                            //Toasty.success(JobSeekerVerifyAfterCode.this,"Sign up successful with you provided phone number!",Toast.LENGTH_LONG, true).show();
+                            Intent openCVwindow = new Intent(JobSeekerVerifyAfterCode.this,JobSeekerCVUpload.class);
                             startActivity(openCVwindow);
                             finish();
                             //--
                             */
 
                             //--
-                            SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+                            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
 
                             String userName = prefs.getString("username", "");
@@ -448,7 +451,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                             //---------------------
 
-                            // registerUser(userNameLocal,userPhoneLocal);
+                           // registerUser(userNameLocal,userPhoneLocal);
 
 
 
@@ -466,7 +469,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
                                 //Toast.makeText(Verification.this, "Verification code is invalid!", Toast.LENGTH_LONG).show();
 
-                                Toasty.error(CompanySignup2AfterCode.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
+                                Toasty.error(JobSeekerVerifyAfterCode.this, "OTP code is invalid! Please enter correct OTP code.", Toast.LENGTH_LONG, true).show();
 
                                 hideLoadingBar();
 
@@ -497,7 +500,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
             //Toast.makeText(Verification.this, "You must enter the verification code!", Toast.LENGTH_SHORT).show();
 
-            Toasty.error(CompanySignup2AfterCode.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
+            Toasty.error(JobSeekerVerifyAfterCode.this, "Enter the verification code first!", Toast.LENGTH_LONG, true).show();
 
 
 
@@ -525,7 +528,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
 
 
-        SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
 
 
@@ -540,7 +543,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
         }else {
 
 
-            //Toasty.success(JobSeekerVerify2AfterCode.this, "OTP code was sent to your phone number, please check.", Toast.LENGTH_LONG, true).show();
+            //Toasty.success(JobSeekerVerifyAfterCode.this, "OTP code was sent to your phone number, please check.", Toast.LENGTH_LONG, true).show();
 
             send_otp_by_firebase(temp);
 
@@ -558,19 +561,91 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
     // this method will store the info of user to  database
     private void registerUser(String userName, String userPhone) {
 
+        //--
+/*
+        API_Retrofit service =
+                ServiceGenerator.createService(API_Retrofit.class);
 
-        JSONObject parameters = new JSONObject();
+
+        JSONObject parameters1 = new JSONObject();
         try {
-            parameters.put("fullName", userName);
-            parameters.put("phoneNumber", userPhone);
-            parameters.put("userType",1);
+            parameters1.put("fullName", "Mahbubur Rahman Turzo");
+            parameters1.put("phoneNumber", "8801834261758");
+            parameters1.put("userType",0);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        Log.d(TAG,parameters.toString());
+
+
+        //Log.d(TAG,parameters1.toString());
+
+        // finally, execute the request
+        //Call<ResponseBody> call = service.upload(description, body);
+        Call<SignUpResponse> call = service.signUpJobSeeker(parameters1);
+        call.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(Call<SignUpResponse> call,
+                                   Response<SignUpResponse> response) {
+                Log.v(TAG, response.body().getStatus().toString()+" ---------------- "+response.body().getUserId().toString());
+                //Toasty.success(JobSeekerCVUpload.this,response.body().toString(),Toast.LENGTH_LONG, true).show();
+                if(response.body().getStatus() == 200){
+
+
+                    Log.d(TAG,"########## Newly created job seeker id : "+response.body().getUserId().toString());
+
+                    SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
+                    editor.putString("userid", response.body().getUserId().toString());
+
+                    editor.apply();
+
+
+                    Intent openCVwindow = new Intent(JobSeekerVerifyAfterCode.this,JobSeekerCVUpload.class);
+                    startActivity(openCVwindow);
+                    finish();
+
+
+
+
+
+
+                }else{
+
+                    Toasty.error(JobSeekerVerifyAfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+
+                }
+
+                //hideLoadingBar();
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+                //hideLoadingBar();
+            }
+        });
+
+
+        //-----------------
+
+*/
+
+
+
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put("fullName", userName);
+            parameters.put("phoneNumber", userPhone);
+            parameters.put("userType",0);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("For_Testing",parameters.toString());
 
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -579,7 +654,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         String respo=response.toString();
-                        Log.d(TAG,respo);
+                        Log.d("For_Testing",respo);
 
                         parseSignUpData(respo);
 
@@ -590,7 +665,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Toasty.error(CompanySignup2AfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                        Toasty.error(JobSeekerVerifyAfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
                         //Toast.makeText(Login_A.this, "Something wrong with Api", Toast.LENGTH_SHORT).show();
 
                     }
@@ -624,38 +699,62 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
             if(userExist.equalsIgnoreCase("200")){
 
-                SharedPreferences.Editor editor = getSharedPreferences("CompanyData", MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
                 editor.putString("userid", jsonObject.optString("userId"));
-                editor.putString("username", jsonObject.optString("userName"));
+
                 editor.apply();
 
+
                 SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-                typeEditor.putInt("type", 1);
+                typeEditor.putInt("type", 2);
                 typeEditor.apply();
 
 
-                //Toasty.success(JobSeekerVerify2AfterCode.this,"Sign up successful with you provided phone number!",Toast.LENGTH_LONG, true).show();
-                Intent openCVwindow = new Intent(CompanySignup2AfterCode.this, CompanySearchBoard.class);
+                //Toasty.success(JobSeekerVerifyAfterCode.this,"Sign up successful with you provided phone number!",Toast.LENGTH_LONG, true).show();
+
+                /*
+                Intent openCVwindow = new Intent(JobSeekerVerifyAfterCode.this,JobSeekerCVUpload.class);
                 startActivity(openCVwindow);
                 finish();
+                */
+                SharedPreferences prefs1 = getSharedPreferences("sign_up_condition", MODE_PRIVATE);
+                int is_dashboard_shown = prefs1.getInt("is_dashboard_shown", 0);
+                Log.d(TAG,"Dashboard condition : "+String.valueOf(is_dashboard_shown));
+                if(is_dashboard_shown == 0 ){
+
+                    Intent openCVwindow = new Intent(JobSeekerVerifyAfterCode.this, JobSeekerDashboard.class);
+                    startActivity(openCVwindow);
+                    finish();
+
+                    SharedPreferences.Editor prefs12 = getSharedPreferences("sign_up_condition", MODE_PRIVATE).edit();
+                    prefs12.putInt("is_dashboard_shown", 1);
+                    prefs12.apply();
+
+
+                }else{
+
+                    Intent openCVwindow = new Intent(JobSeekerVerifyAfterCode.this, JobSeekerModifiedDashboard.class);
+                    startActivity(openCVwindow);
+                    finish();
+                }
 
 
             }else {
 
                 /*
-                //Toasty.success(JobSeekerVerify1BeforeCode.this, "You can open a new account", Toast.LENGTH_LONG, true).show();
-                Intent openSecondVerifier = new Intent(JobSeekerVerify1BeforeCode.this,JobSeekerVerify2AfterCode.class);
+                //Toasty.success(JobSeekerVerifyBeforeCode.this, "You can open a new account", Toast.LENGTH_LONG, true).show();
+                Intent openSecondVerifier = new Intent(JobSeekerVerifyBeforeCode.this,JobSeekerVerifyAfterCode.class);
                 startActivity(openSecondVerifier);
                 finish();
                 */
-                Toasty.error(CompanySignup2AfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+                Toasty.error(JobSeekerVerifyAfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
 
             }
 
         } catch (JSONException e) {
 
             hideLoadingBar();
-            Toasty.error(CompanySignup2AfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
+            Toasty.error(JobSeekerVerifyAfterCode.this, "Server error,please check your internet connection!", Toast.LENGTH_LONG, true).show();
             e.printStackTrace();
         }
 
@@ -668,7 +767,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
                 resendButton.setText(String.valueOf(millisUntilFinished / 1000) );
-                // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+               // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -679,6 +778,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
     }
 
 
+
     //---------------
 
     @Override
@@ -686,7 +786,7 @@ public class CompanySignup2AfterCode extends AppCompatActivity {
 
 
 
-        Intent openSecondVerifier = new Intent(CompanySignup2AfterCode.this, CompanySignup1BeforeCode.class);
+        Intent openSecondVerifier = new Intent(JobSeekerVerifyAfterCode.this, JobSeekerVerifyBeforeCode.class);
         startActivity(openSecondVerifier);
         finish();
 

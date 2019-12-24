@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.brl.oneminutejobs.company.CompanyLogin1BeforeCode;
+import com.brl.oneminutejobs.company.CompanyLoginBeforeCode;
 import com.brl.oneminutejobs.jobseeker.JobSeekerLogin;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.brl.oneminutejobs.others.Connectivity;
@@ -60,7 +60,7 @@ public class Intro extends AppCompatActivity {
                 if (Connectivity.isConnected(Intro.this)) {
 
 
-                    Intent openJobSeekerSignUp = new Intent(Intro.this, CompanyLogin1BeforeCode.class);
+                    Intent openJobSeekerSignUp = new Intent(Intro.this, CompanyLoginBeforeCode.class);
                     startActivity(openJobSeekerSignUp);
                     finish();
 
