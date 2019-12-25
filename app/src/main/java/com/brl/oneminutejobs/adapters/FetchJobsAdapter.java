@@ -1,6 +1,7 @@
 package com.brl.oneminutejobs.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.company.CompanyFetchAllJobs;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -145,7 +147,7 @@ public class FetchJobsAdapter extends BaseAdapter {
 
         Glide
                 .with(context)
-                .load(putImage(temp))
+                .load(OtherUtils.putImage(temp))
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.default_avatar)
                         .fitCenter())
@@ -159,7 +161,8 @@ public class FetchJobsAdapter extends BaseAdapter {
         holder.title.setText(server_job_title.get(position));
 
 
-        holder.deadline.setText("Deadline : "+ organizeDate(server_job_deadline.get(position) ));
+        holder.deadline.setText("Deadline : "+ OtherUtils.organizeDate((server_job_deadline.get(position) )));
+        Log.d("Turzo","Working utils putimage");
 
         if(server_job_priority.get(position) > 0){
 
@@ -237,7 +240,7 @@ public class FetchJobsAdapter extends BaseAdapter {
 
     }
 
-
+/*
     private String organizeDate(String original){
 
         String tempS = "";
@@ -268,9 +271,10 @@ public class FetchJobsAdapter extends BaseAdapter {
         return  tempS;
 
     }
+    */
 
 
-
+/*
 
   private int putImage(char value){
 
@@ -440,6 +444,8 @@ public class FetchJobsAdapter extends BaseAdapter {
 
         return returnValue;
   }
+
+  */
 
 
 
