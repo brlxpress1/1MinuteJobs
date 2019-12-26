@@ -2,6 +2,8 @@ package com.brl.oneminutejobs.utils;
 
 import com.brl.oneminutejobs.R;
 
+import java.io.File;
+
 public class OtherUtils {
 
 
@@ -206,4 +208,127 @@ public class OtherUtils {
 
         return returnValue;
     }
+
+
+    public static String completeNumber(int data){
+        String temp = "";
+        if(data < 10 ){
+
+            temp = "0"+String.valueOf(data);
+        }else {
+
+            temp = String.valueOf(data);
+        }
+
+        return temp;
+    }
+
+    public static String removePlusFromPhone(String ph){
+
+        String temp = "";
+
+        for(int i=0; i<ph.length(); i++){
+
+            if(i==0){
+
+            }else{
+                temp = temp + ph.charAt(i);
+            }
+        }
+
+        return  temp;
+    }
+
+    //--
+    public static String furnishedString(String original){
+
+
+
+        String furnished = "";
+        String tempText = "";
+
+        String tempS = original.trim();
+
+        for(int i=0; i<tempS.length(); i++){
+
+            if(tempS.charAt(i) == '\r' || tempS.charAt(i) == '\n'){
+
+                tempText = tempText + "\n";
+
+            }else{
+                tempText = tempText + tempS.charAt(i);
+
+            }
+        }
+
+        return  tempText;
+    }
+
+    //--
+
+    public static boolean fileExtentionCheck(String st){
+
+        Boolean tempFlag = false;
+
+        if(st.endsWith(".pdf") || st.endsWith(".docx") || st.endsWith(".jpg") || st.endsWith(".jpeg") || st.endsWith(".png")
+                || st.endsWith(".PDF") || st.endsWith(".DOCX") || st.endsWith(".JPG") || st.endsWith(".JPEG") || st.endsWith(".PNG")){
+
+            tempFlag = true;
+        }else{
+
+            tempFlag = false;
+        }
+
+        return tempFlag;
+    }
+
+    public static String fileNameSeperator(String st){
+
+        String tempS = "";
+
+
+        for(int i=st.length()-1; i >= 0; i--){
+
+            if(st.charAt(i) == '/'){
+                break;
+            }else {
+                tempS = tempS + st.charAt(i);
+            }
+        }
+
+        if(tempS != null || !tempS.equalsIgnoreCase("")){
+
+            String tempS2 = "";
+            for(int i=tempS.length()-1; i>=0; i--){
+
+
+                tempS2 = tempS2 + tempS.charAt(i);
+
+            }
+
+            tempS = tempS2;
+        }
+
+
+
+        return tempS;
+
+    }
+
+    public static boolean fileSizeFinder(String pth){
+
+        boolean tempFlag = false;
+        File file = new File(pth);
+        int file_size = Integer.parseInt(String.valueOf(file.length()/1024));
+        if(file_size <= 5120){
+
+            tempFlag = true;
+        }else {
+            tempFlag = false;
+        }
+
+        return tempFlag;
+    }
+
+    //---------------
 }

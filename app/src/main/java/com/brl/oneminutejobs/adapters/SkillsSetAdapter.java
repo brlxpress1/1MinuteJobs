@@ -149,16 +149,4 @@ public class SkillsSetAdapter extends BaseAdapter {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 }

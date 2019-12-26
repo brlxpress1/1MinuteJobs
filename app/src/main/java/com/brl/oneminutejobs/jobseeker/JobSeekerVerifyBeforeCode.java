@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.hbb20.CountryCodePicker;
 import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
@@ -223,7 +224,7 @@ public class JobSeekerVerifyBeforeCode extends AppCompatActivity {
                                 //-- task
                                 userName = tempName;
                                 userPhone = tempPhone;
-                                userPurePhone = removePlusFromPhone(userPhone);
+                                userPurePhone = OtherUtils.removePlusFromPhone(userPhone);
 
                                 SharedPreferences.Editor editor = getSharedPreferences("UserData", MODE_PRIVATE).edit();
                                 editor.putString("username", userName);
@@ -241,7 +242,7 @@ public class JobSeekerVerifyBeforeCode extends AppCompatActivity {
                                 // startActivity(openSecondVerifier);
                                 // finish();
 
-                                phone_number_check(removePlusFromPhone(userPhone));
+                                phone_number_check(OtherUtils.removePlusFromPhone(userPhone));
 
 
 
@@ -565,21 +566,6 @@ public class JobSeekerVerifyBeforeCode extends AppCompatActivity {
     }
 
 
-   private String removePlusFromPhone(String ph){
-
-        String temp = "";
-
-        for(int i=0; i<ph.length(); i++){
-
-            if(i==0){
-
-            }else{
-                temp = temp + ph.charAt(i);
-            }
-        }
-
-        return  temp;
-   }
 
 
 

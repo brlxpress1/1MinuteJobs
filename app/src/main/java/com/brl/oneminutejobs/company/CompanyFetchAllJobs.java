@@ -38,6 +38,7 @@ import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.adapters.FetchJobsAdapter;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.DateConversion;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
@@ -1217,8 +1218,8 @@ public void finishThis(){
         //String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
         // String date2 = dayOfMonth+"-"+month+"-"+year;
 
-        String day1 = completeNumber(dayOfMonth);
-        String month1 = completeNumber(month+1);
+        String day1 = OtherUtils.completeNumber(dayOfMonth);
+        String month1 = OtherUtils.completeNumber(month+1);
 
         String niceFormat = day1+"-"+month1+"-"+year;
 
@@ -1229,18 +1230,7 @@ public void finishThis(){
 
     }
 
-    private String completeNumber(int data){
-        String temp = "";
-        if(data < 10 ){
 
-            temp = "0"+String.valueOf(data);
-        }else {
-
-            temp = String.valueOf(data);
-        }
-
-        return temp;
-    }
 
     //-- edit job post
     // this method will store the info of user to  database

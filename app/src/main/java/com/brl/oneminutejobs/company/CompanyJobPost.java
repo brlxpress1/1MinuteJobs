@@ -30,6 +30,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.others.ConstantsHolder;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
@@ -426,8 +427,8 @@ public class CompanyJobPost extends AppCompatActivity implements DatePickerDialo
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         //String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
         // String date2 = dayOfMonth+"-"+month+"-"+year;
-        String day1 = completeNumber(dayOfMonth);
-        String month1 = completeNumber(month+1);
+        String day1 = OtherUtils.completeNumber(dayOfMonth);
+        String month1 = OtherUtils.completeNumber(month+1);
 
         String niceFormat = day1+"-"+month1+"-"+year;
 
@@ -438,18 +439,7 @@ public class CompanyJobPost extends AppCompatActivity implements DatePickerDialo
 
     }
 
-    private String completeNumber(int data){
-        String temp = "";
-        if(data < 10 ){
 
-            temp = "0"+String.valueOf(data);
-        }else {
-
-            temp = String.valueOf(data);
-        }
-
-        return temp;
-    }
 
     public void showErrortDialogue(String msg){
 

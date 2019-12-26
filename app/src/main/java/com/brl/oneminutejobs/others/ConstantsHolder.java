@@ -47,6 +47,10 @@ public class ConstantsHolder {
     public static String findCategoryAll = "findCategoryAll";
     public static String findCategory = "findCategory";
 
+    //public static int companyTypeValue = 1;
+    //public static int jobSeekerTypeValue = 2;
+
+
 
 
 

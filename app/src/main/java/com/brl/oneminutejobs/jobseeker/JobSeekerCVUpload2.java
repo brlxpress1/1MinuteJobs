@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -210,85 +211,7 @@ public class JobSeekerCVUpload2 extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
-    public boolean fileExtentionCheck(String st){
 
-        Boolean tempFlag = false;
-
-        if(st.endsWith(".pdf") || st.endsWith(".docx") || st.endsWith(".jpg") || st.endsWith(".jpeg") || st.endsWith(".png")
-                || st.endsWith(".PDF") || st.endsWith(".DOCX") || st.endsWith(".JPG") || st.endsWith(".JPEG") || st.endsWith(".PNG")){
-
-            tempFlag = true;
-        }else{
-
-            tempFlag = false;
-        }
-
-        return tempFlag;
-    }
-
-    public String fileNameSeperator(String st){
-
-        String tempS = "";
-
-
-        for(int i=st.length()-1; i >= 0; i--){
-
-            if(st.charAt(i) == '/'){
-                break;
-            }else {
-                tempS = tempS + st.charAt(i);
-            }
-        }
-
-        if(tempS != null || !tempS.equalsIgnoreCase("")){
-
-            String tempS2 = "";
-            for(int i=tempS.length()-1; i>=0; i--){
-
-
-                tempS2 = tempS2 + tempS.charAt(i);
-
-            }
-
-            tempS = tempS2;
-        }
-
-
-
-        return tempS;
-
-    }
-
-    public boolean fileSizeFinder(String pth){
-
-        boolean tempFlag = false;
-        File file = new File(pth);
-        int file_size = Integer.parseInt(String.valueOf(file.length()/1024));
-        if(file_size <= 5120){
-
-            tempFlag = true;
-        }else {
-            tempFlag = false;
-        }
-
-        return tempFlag;
-    }
-
-    /*
-    public void uploadMultipart(final Context context) {
-        try {
-            String uploadId =
-                    new MultipartUploadRequest(context, "http://upload.server.com/path")
-                            // starting from 3.1+, you can also use content:// URI string instead of absolute file
-                            .addFileToUpload("/absolute/path/to/your/file", "your-param-name")
-                            .setNotificationConfig(new UploadNotificationConfig())
-                            .setMaxRetries(2)
-                            .startUpload();
-        } catch (Exception exc) {
-            Log.e(TAG, exc.getMessage(), exc);
-        }
-    }
-    */
 
     //--
 
@@ -435,16 +358,16 @@ public class JobSeekerCVUpload2 extends AppCompatActivity {
 
                         //--
 
-                        if(fileExtentionCheck(path)){
+                        if(OtherUtils.fileExtentionCheck(path)){
                             //filePath.setText(fileNameSeperator(FilePath));
-                            if(fileSizeFinder(path)){
+                            if(OtherUtils.fileSizeFinder(path)){
 
-                                filePath.setText(fileNameSeperator(path));
+                                filePath.setText(OtherUtils.fileNameSeperator(path));
                                 masterFilePath = path;
 
                             }else {
 
-                                filePath.setText(fileNameSeperator(""));
+                                filePath.setText(OtherUtils.fileNameSeperator(""));
                                 Toasty.error(JobSeekerCVUpload2.this, "File is too large! Maximum file size limit 5MB", Toast.LENGTH_LONG, true).show();
                             }
                         }else {

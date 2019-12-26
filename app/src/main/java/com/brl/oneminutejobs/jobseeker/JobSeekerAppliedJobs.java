@@ -30,6 +30,7 @@ import com.brl.oneminutejobs.R;
 import com.brl.oneminutejobs.adapters.FetchJobSeekerAllJobsAdapter;
 import com.brl.oneminutejobs.others.ConstantsHolder;
 import com.brl.oneminutejobs.others.DateConversion;
+import com.brl.oneminutejobs.utils.OtherUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -498,8 +499,8 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            //--
 
            titleShow.setText(server_job_title.get(position));
-           descriptionShow.setText(furnishedString(server_job_description.get(position)));
-           qualificationShow.setText(furnishedString(server_job_qualification.get(position)));
+           descriptionShow.setText(OtherUtils.furnishedString(server_job_description.get(position)));
+           qualificationShow.setText(OtherUtils.furnishedString(server_job_qualification.get(position)));
 
            if(server_job_jobTypeId.get(position) == 1){
 
@@ -570,8 +571,8 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
            //--
 
            titleShow.setText(server_job_title2.get(position));
-           descriptionShow.setText(furnishedString(server_job_description2.get(position)));
-           qualificationShow.setText(furnishedString(server_job_qualification2.get(position)));
+           descriptionShow.setText(OtherUtils.furnishedString(server_job_description2.get(position)));
+           qualificationShow.setText(OtherUtils.furnishedString(server_job_qualification2.get(position)));
 
            if(server_job_jobTypeId2.get(position) == 1){
 
@@ -644,58 +645,7 @@ public class JobSeekerAppliedJobs extends AppCompatActivity {
 
     }
 
-    public String furnishedString(String original){
 
-
-
-        String furnished = "";
-        String tempText = "";
-
-        String tempS = original.trim();
-
-        for(int i=0; i<tempS.length(); i++){
-
-            if(tempS.charAt(i) == '\r' || tempS.charAt(i) == '\n'){
-
-                tempText = tempText + "\n";
-
-            }else{
-                tempText = tempText + tempS.charAt(i);
-
-            }
-        }
-
-        /*
-        for(int i=0; i<tempText.length(); i++){
-
-            if(i==0){
-
-                furnished = furnished + "* ";
-                furnished =  furnished + tempText.charAt(i);
-
-            }else{
-
-                if(i < tempText.length()-2){
-
-
-                    if(tempText.charAt(i) == '.'){
-
-                        furnished =  furnished +tempText.charAt(i)+"\n\n"+"* ";
-                    }else{
-                        furnished =  furnished + tempText.charAt(i);
-                    }
-                }else{
-
-                    furnished =  furnished + tempText.charAt(i);
-                }
-
-
-            }
-        }
-*/
-
-        return  tempText;
-    }
 
     private void showLayout(int i){
 

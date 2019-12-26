@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.hbb20.CountryCodePicker;
 import com.brl.oneminutejobs.Intro;
 import com.brl.oneminutejobs.R;
@@ -171,7 +172,7 @@ public class JobSeekerLogin extends AppCompatActivity {
                             //-- task
 
                             userPhone = tempPhone;
-                            userPurePhone = removePlusFromPhone(userPhone);
+                            userPurePhone = OtherUtils.removePlusFromPhone(userPhone);
 
 
 
@@ -184,7 +185,7 @@ public class JobSeekerLogin extends AppCompatActivity {
                             // startActivity(openSecondVerifier);
                             // finish();
 
-                            phone_number_check(removePlusFromPhone(userPhone));
+                            phone_number_check(OtherUtils.removePlusFromPhone(userPhone));
                         }
 
 
@@ -406,21 +407,7 @@ public class JobSeekerLogin extends AppCompatActivity {
     }
 
 
-    private String removePlusFromPhone(String ph){
 
-        String temp = "";
-
-        for(int i=0; i<ph.length(); i++){
-
-            if(i==0){
-
-            }else{
-                temp = temp + ph.charAt(i);
-            }
-        }
-
-        return  temp;
-    }
 
 
 

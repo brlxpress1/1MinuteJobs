@@ -54,6 +54,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.brl.oneminutejobs.others.DialogueHelper;
 import com.brl.oneminutejobs.others.SkillSelector;
+import com.brl.oneminutejobs.utils.OtherUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.downloader.Error;
@@ -1276,8 +1277,8 @@ public class JobSeekerDashboard extends AppCompatActivity implements DatePickerD
         //String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
        // String date2 = dayOfMonth+"-"+month+"-"+year;
 
-        String day1 = completeNumber(dayOfMonth);
-        String month1 = completeNumber(month+1);
+        String day1 = OtherUtils.completeNumber(dayOfMonth);
+        String month1 = OtherUtils.completeNumber(month+1);
 
         String niceFormat = day1+"-"+month1+"-"+(year);
 
@@ -1945,8 +1946,8 @@ public class JobSeekerDashboard extends AppCompatActivity implements DatePickerD
 
 
 
-            String day1 = completeNumber(Integer.parseInt(day));
-            String month1 = completeNumber(Integer.parseInt(month));
+            String day1 = OtherUtils.completeNumber(Integer.parseInt(day));
+            String month1 = OtherUtils.completeNumber(Integer.parseInt(month));
 
 
             parameters.put("userId", userID);
@@ -2025,18 +2026,7 @@ public class JobSeekerDashboard extends AppCompatActivity implements DatePickerD
 
     }
 
-    private String completeNumber(int data){
-        String temp = "";
-        if(data < 10 ){
 
-            temp = "0"+String.valueOf(data);
-        }else {
-
-            temp = String.valueOf(data);
-        }
-
-        return temp;
-    }
 
 
     // Experience update
