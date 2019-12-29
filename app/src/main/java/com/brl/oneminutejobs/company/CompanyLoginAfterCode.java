@@ -407,7 +407,7 @@ public class CompanyLoginAfterCode extends AppCompatActivity {
 
 
                             SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-                            typeEditor.putInt("type", 1);
+                            typeEditor.putInt("type", ConstantsHolder.companyTypeValue);
                             typeEditor.apply();
 
                             //--

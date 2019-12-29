@@ -563,7 +563,7 @@ public class CompanySignupAfterCode extends AppCompatActivity {
         try {
             parameters.put("fullName", userName);
             parameters.put("phoneNumber", userPhone);
-            parameters.put("userType",1);
+            parameters.put("userType",ConstantsHolder.companyTypeValue);
 
 
         } catch (JSONException e) {
@@ -630,7 +630,7 @@ public class CompanySignupAfterCode extends AppCompatActivity {
                 editor.apply();
 
                 SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-                typeEditor.putInt("type", 1);
+                typeEditor.putInt("type", ConstantsHolder.companyTypeValue);
                 typeEditor.apply();
 
 

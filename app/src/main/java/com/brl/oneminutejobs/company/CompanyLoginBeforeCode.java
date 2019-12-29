@@ -272,7 +272,7 @@ public class CompanyLoginBeforeCode extends AppCompatActivity {
         JSONObject parameters = new JSONObject();
         try {
             parameters.put("userPhoneNumber", userPhone);
-            parameters.put("userType",1);
+            parameters.put("userType",ConstantsHolder.companyTypeValue);
 
 
         } catch (JSONException e) {
@@ -343,7 +343,7 @@ public class CompanyLoginBeforeCode extends AppCompatActivity {
 
 
             SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-            typeEditor.putInt("type", 1);
+            typeEditor.putInt("type", ConstantsHolder.companyTypeValue);
             typeEditor.apply();
 
 

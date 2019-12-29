@@ -97,7 +97,7 @@ public class Splash extends AppCompatActivity {
                             int userType = prefs1.getInt("type", 0);
                             Log.d(TAG,"Logging with user type : "+ String.valueOf(userType));
 
-                            if(userType == 1){
+                            if(userType == ConstantsHolder.companyTypeValue){
 
                                 //--
                                 SharedPreferences prefs = getSharedPreferences("CompanyData", MODE_PRIVATE);
@@ -118,7 +118,7 @@ public class Splash extends AppCompatActivity {
                                 }
                                 //-------------
 
-                            }else if(userType == 2){
+                            }else if(userType == ConstantsHolder.jobSeekerTypeValue){
 
                                 //--
                                 SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);

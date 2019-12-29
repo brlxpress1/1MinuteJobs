@@ -392,7 +392,7 @@ public class CompanySignupBeforeCode extends AppCompatActivity {
         JSONObject parameters = new JSONObject();
         try {
             parameters.put("userPhoneNumber", userPhone);
-            parameters.put("userType",1);
+            parameters.put("userType",ConstantsHolder.companyTypeValue);
 
 
         } catch (JSONException e) {

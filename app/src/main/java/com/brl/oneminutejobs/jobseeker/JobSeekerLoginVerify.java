@@ -409,7 +409,7 @@ public class JobSeekerLoginVerify extends AppCompatActivity {
 
 
                             SharedPreferences.Editor typeEditor = getSharedPreferences("UserType", MODE_PRIVATE).edit();
-                            typeEditor.putInt("type", 2);
+                            typeEditor.putInt("type", ConstantsHolder.jobSeekerTypeValue);
                             typeEditor.apply();
 
                             Intent openSecondVerifier = new Intent(JobSeekerLoginVerify.this, JobSeekerModifiedDashboard.class);
